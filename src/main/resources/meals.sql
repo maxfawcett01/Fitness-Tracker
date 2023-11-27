@@ -1,1 +1,0 @@
-INSERT INTO meal (id, mealName, mealType, calories, cookingInstructions, ingredientList) VALUES (100, "Beans on Toast", "Breakfast", 50, "Heat up tin of beans, put toast in toaster", "Beans")

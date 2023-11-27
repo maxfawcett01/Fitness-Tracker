@@ -1,6 +1,6 @@
 package fitnesstracker.services;
 
-import fitnesstracker.entities.Meal;
+import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.repositories.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
