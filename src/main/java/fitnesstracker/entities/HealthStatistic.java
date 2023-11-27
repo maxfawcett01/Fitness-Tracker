@@ -1,10 +1,7 @@
 package fitnesstracker.entities;
 
-
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -15,30 +12,35 @@ import java.util.Map;
 public class HealthStatistic {
     @Id
     @GeneratedValue
-    private Long id;
-
+    Long id;
+    @Column
     private LocalDate date;
-
-    private Duration sleep;
-
+    @Column
+    private double sleep;
+    @Column
     private double weight;
+    @Column
     private double bloodPressure;
+    @Column
     private double hydration;
+    @Column
     private double calorieIn;
+    @Column
     private double calorieOut;
+    @Column
     private double heartRate;
+    @Column
     private double stress;
 
     // Map to store dynamic health parameters
-    @ElementCollection
-    private Map<String, String> parameters = new HashMap<>();
+//    @ElementCollection
+//    private Map<String, String> parameters = new HashMap<>();
 
     // constructors
     public HealthStatistic() {
     }
-
-    public HealthStatistic(Long id, LocalDate date, Duration sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
-        this.id = id;
+    @Autowired
+    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
         this.date = date;
         this.sleep = sleep;
         this.weight = weight;
@@ -51,12 +53,15 @@ public class HealthStatistic {
     }
 
     // getters, and setters
+    public Long getId() {
+        return id;
+    }
 
-    public Duration getSleep() {
+    public double getSleep() {
         return sleep;
     }
 
-    public void setSleep(Duration sleep) {
+    public void setSleep(double sleep) {
         this.sleep = sleep;
     }
 
@@ -116,11 +121,11 @@ public class HealthStatistic {
         this.stress = stress;
     }
 
-    public Map<String, String> getParameters() {
-        return parameters;
-    }
+//    public Map<String, String> getParameters() {
+//        return parameters;
+//    }
 
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
-    }
+//    public void setParameters(Map<String, String> parameters) {
+//        this.parameters = parameters;
+//    }
 }
