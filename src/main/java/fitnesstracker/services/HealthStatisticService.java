@@ -1,6 +1,6 @@
 package fitnesstracker.services;
 
-import fitnesstracker.entities.HealthStatistic;
+import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.repositories.HealthStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

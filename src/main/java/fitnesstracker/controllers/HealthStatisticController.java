@@ -1,6 +1,6 @@
 package fitnesstracker.controllers;
 
-import fitnesstracker.entities.HealthStatistic;
+import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/health-statistics")
-@Api(tags = "Health Statistics", description = "Operations related to Health Statistics")
+@Api(tags = "Health Statistics")
 public class HealthStatisticController {
 
     private final HealthStatisticService healthStatisticService ;
