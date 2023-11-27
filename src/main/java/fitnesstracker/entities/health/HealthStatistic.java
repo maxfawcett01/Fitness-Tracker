@@ -1,7 +1,6 @@
 package fitnesstracker.entities.health;
 
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -10,6 +9,7 @@ import java.util.Map;
 
 @Entity
 public class HealthStatistic {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -18,7 +18,6 @@ public class HealthStatistic {
     }
 
     private Duration sleep;
-
     private double weight;
     private double bloodPressure;
     private double hydration;
@@ -36,7 +35,6 @@ public class HealthStatistic {
     }
 
     public HealthStatistic(LocalDate date, Duration sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
-        this.date = date;
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;
@@ -49,11 +47,12 @@ public class HealthStatistic {
 
     // getters, and setters
 
-    public double getSleep() {
+
+    public Duration getSleep() {
         return sleep;
     }
 
-    public void setSleep(double sleep) {
+    public void setSleep(Duration sleep) {
         this.sleep = sleep;
     }
 
