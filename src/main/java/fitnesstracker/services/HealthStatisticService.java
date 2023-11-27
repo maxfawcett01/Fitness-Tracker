@@ -1,6 +1,4 @@
 package fitnesstracker.services;
-
-
 import fitnesstracker.entities.HealthStatistic;
 import fitnesstracker.repositories.HealthStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
