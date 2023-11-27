@@ -1,4 +1,5 @@
 package fitnesstracker.controllers;
+
 import fitnesstracker.entities.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,7 @@ import java.util.List;
 @Api(tags = "Health Statistics", description = "Operations related to Health Statistics")
 public class HealthStatisticController {
 
-    private HealthStatisticService healthStatisticService ;
+    private final HealthStatisticService healthStatisticService ;
 
     @Autowired
     public HealthStatisticController(HealthStatisticService healthStatisticService) {

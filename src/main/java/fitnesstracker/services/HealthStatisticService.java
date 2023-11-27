@@ -1,4 +1,5 @@
 package fitnesstracker.services;
+
 import fitnesstracker.entities.HealthStatistic;
 import fitnesstracker.repositories.HealthStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 @Service
 public class HealthStatisticService {
 
-    private HealthStatisticRepository healthStatisticRepository;
+    private final HealthStatisticRepository healthStatisticRepository;
 
     @Autowired
     public HealthStatisticService(HealthStatisticRepository healthStatisticRepository) {

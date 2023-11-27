@@ -1,6 +1,6 @@
 package fitnesstracker.repositories;
 
-import fitnesstracker.entities.HealthStatistic;
+import fitnesstracker.entities.health.HealthStatistic;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 

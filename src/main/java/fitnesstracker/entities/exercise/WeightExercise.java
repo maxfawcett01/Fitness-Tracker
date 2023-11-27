@@ -1,12 +1,13 @@
-package fitnesstracker.entities;
+package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.User;
 import jakarta.persistence.MappedSuperclass;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class WeightExercise extends Exercise{
+public abstract class WeightExercise extends Exercise {
 
     private int sets;
 

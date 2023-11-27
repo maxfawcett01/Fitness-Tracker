@@ -1,4 +1,4 @@
-package fitnesstracker.entities;
+package fitnesstracker.entities.health;
 
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,35 +12,30 @@ import java.util.Map;
 public class HealthStatistic {
     @Id
     @GeneratedValue
-    Long id;
-    @Column
-    private LocalDate date;
-    @Column
-    private double sleep;
-    @Column
+    private Long id;
+    public Long getId() {
+        return id;
+    }
+
+    private Duration sleep;
+
     private double weight;
-    @Column
     private double bloodPressure;
-    @Column
     private double hydration;
-    @Column
     private double calorieIn;
-    @Column
     private double calorieOut;
-    @Column
     private double heartRate;
-    @Column
     private double stress;
 
     // Map to store dynamic health parameters
-//    @ElementCollection
-//    private Map<String, String> parameters = new HashMap<>();
+    @ElementCollection
+    private Map<String, String> parameters = new HashMap<>();
 
     // constructors
     public HealthStatistic() {
     }
-    @Autowired
-    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
+
+    public HealthStatistic(LocalDate date, Duration sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
         this.date = date;
         this.sleep = sleep;
         this.weight = weight;
@@ -53,9 +48,6 @@ public class HealthStatistic {
     }
 
     // getters, and setters
-    public Long getId() {
-        return id;
-    }
 
     public double getSleep() {
         return sleep;
@@ -121,11 +113,11 @@ public class HealthStatistic {
         this.stress = stress;
     }
 
-//    public Map<String, String> getParameters() {
-//        return parameters;
-//    }
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
 
-//    public void setParameters(Map<String, String> parameters) {
-//        this.parameters = parameters;
-//    }
+    public void setParameters(Map<String, String> parameters) {
+        this.parameters = parameters;
+    }
 }
