@@ -1,5 +1,6 @@
-package fitnesstracker.entities;
+package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.User;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -15,6 +16,9 @@ public abstract class Exercise {
     @Id
     @GeneratedValue
     private Long id;
+    public Long getId() {
+        return id;
+    }
 
     @ManyToOne
     private final User user;
@@ -28,10 +32,6 @@ public abstract class Exercise {
     private LocalDateTime endTime;
 
     private String description;
-
-    public Long getId() {
-        return id;
-    }
 
     public User getUser() {
         return user;

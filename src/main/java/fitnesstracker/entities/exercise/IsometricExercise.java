@@ -1,12 +1,13 @@
-package fitnesstracker.entities;
+package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.User;
 import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class IsometricExercise extends Exercise{
+public class IsometricExercise extends Exercise {
 
     String targetMuscle;
 

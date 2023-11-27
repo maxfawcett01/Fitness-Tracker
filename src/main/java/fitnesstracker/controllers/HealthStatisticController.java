@@ -1,7 +1,7 @@
 package fitnesstracker.controllers;
 
 
-import fitnesstracker.entities.HealthStatistic;
+import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/health-statistics")
 public class HealthStatisticController {
 
-    private HealthStatisticService healthStatisticService ;
+    private final HealthStatisticService healthStatisticService ;
 
     @Autowired
     public HealthStatisticController(HealthStatisticService healthStatisticService) {
