@@ -85,8 +85,6 @@ public class DataPopulator {
         exerciseHistoryService.addExercise(exercise2);
 
         WeightLiftingExercise exercise3 = new WeightLiftingExercise(person1, "Deadlifts", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 100);
-        exercise3.setEquipmentRequired("Barbell and free weights");
-        exercise3.setDescription("Just don't pop your shoulder");
         exerciseHistoryService.addExercise(exercise3);
 
     }
