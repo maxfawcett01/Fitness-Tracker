@@ -9,11 +9,8 @@ import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.ExerciseHistoryService;
 import fitnesstracker.services.HealthStatisticService;
 import fitnesstracker.services.MealService;
-import jakarta.annotation.PostConstruct;
 import fitnesstracker.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -38,7 +35,7 @@ public class DataPopulator {
 
     }
 
-    @EventListener(ContextRefreshedEvent.class)
+
     public void populateData() {
         // Insert sample meals with ingredients
         Meal meal1 = new Meal("Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>());
