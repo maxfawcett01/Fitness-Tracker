@@ -1,23 +1,30 @@
 package fitnesstracker.data;
 
+import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
+import fitnesstracker.repositories.HealthStatisticRepository;
+import fitnesstracker.services.HealthStatisticService;
 import fitnesstracker.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Component
 public class DataPopulator {
 
     private final MealService mealService;
+    private final HealthStatisticService healthStatisticService;
+
 
     @Autowired
-    public DataPopulator(MealService mealService) {
+    public DataPopulator(MealService mealService, HealthStatisticService healthStatisticService) {
         this.mealService = mealService;
+        this.healthStatisticService = healthStatisticService;
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -42,5 +49,10 @@ public class DataPopulator {
         mealService.saveMeal(meal1);
         mealService.saveMeal(meal2);
         mealService.saveMeal(meal3);
+
+//        ******************************************************
+        LocalDate date = null;
+        HealthStatistic healthStatistic1 = new HealthStatistic( date, 23.0,60.0, 80.0, 90.0,480.0, 620.0, 65.0, 10.0);
+        healthStatisticService.createHealthStatistic(healthStatistic1);
     }
 }
