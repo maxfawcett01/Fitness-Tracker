@@ -8,9 +8,6 @@ import java.time.LocalDateTime;
 
 public class StrengthTrainingExercise extends Exercise {
 
-    @ManyToOne
-    Person person;
-
     protected int sets;
 
     protected int reps;
