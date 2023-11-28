@@ -55,4 +55,3 @@ public class HealthStatisticController {
         return ResponseEntity.noContent().build();
     }
 }
-
