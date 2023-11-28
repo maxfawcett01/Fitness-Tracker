@@ -30,9 +30,8 @@ public class IsometricExercise extends Exercise {
         this.targetMuscle = targetMuscle;
     }
 
-    public IsometricExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        super(exerciseName, startTime, endTime);
-        this.person = user;
+    public IsometricExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
+        super(person, exerciseName, startTime, endTime);
     }
 
     public IsometricExercise() {}

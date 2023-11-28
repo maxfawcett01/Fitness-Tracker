@@ -21,9 +21,8 @@ public class DistanceCardioExercise extends CardioExercise {
         this.person = person;
     }
 
-    public DistanceCardioExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, double distanceInKm) {
-        super(exerciseName, startTime, endTime);
-        this.person = user;
+    public DistanceCardioExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, double distanceInKm) {
+        super(person, exerciseName, startTime, endTime);
     }
 
     public DistanceCardioExercise() {}

@@ -31,10 +31,9 @@ public class WeightLiftingExercise extends StrengthTrainingExercise {
         this.weightInKg = weightInKg;
     }
 
-    public WeightLiftingExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps, double weightInKg) {
-        super(exerciseName, startTime, endTime, sets, reps);
+    public WeightLiftingExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps, double weightInKg) {
+        super(person, exerciseName, startTime, endTime, sets, reps);
         this.weightInKg = weightInKg;
-        this.person = user;
     }
 
     public WeightLiftingExercise() {}

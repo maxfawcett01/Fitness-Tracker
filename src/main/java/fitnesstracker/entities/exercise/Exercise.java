@@ -1,5 +1,6 @@
 package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.Person;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ public class Exercise {
 
     protected String description;
 
+
+    @ManyToOne
+    private Person person;
 
     public String getExerciseName() {
         return exerciseName;
@@ -64,10 +68,11 @@ public class Exercise {
         this.description = description;
     }
 
-    public Exercise(String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
+    public Exercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
         this.exerciseName = exerciseName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.person = person;
     }
 
     public Exercise() {}
