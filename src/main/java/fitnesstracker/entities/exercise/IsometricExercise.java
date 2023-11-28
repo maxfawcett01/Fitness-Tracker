@@ -9,21 +9,9 @@ import java.time.LocalDateTime;
 @Entity
 public class IsometricExercise extends Exercise {
 
-    @ManyToOne
-    private Person person;
-
     String targetMuscle;
-
-    public Person getPerson() {
-        return person;
-    }
-
     public String getTargetMuscle() {
         return targetMuscle;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public void setTargetMuscle(String targetMuscle) {
