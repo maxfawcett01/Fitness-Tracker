@@ -19,7 +19,15 @@ public class MealService {
     MealRepository mealRepository;
 
     public List<Meal> findAll() {
-        return this.mealRepository.findAll();
+        try {
+            List<Meal> meals = this.mealRepository.findAll();
+            System.out.println(meals);
+            return this.mealRepository.findAll();
+        } catch (Exception e) {
+            // Log the exception or handle it according to your application's needs
+            e.printStackTrace();
+            throw new RuntimeException("An error occurred while fetching meals", e);
+        }
     }
 
     public  Meal getMealById(long mealId) {
@@ -34,4 +42,6 @@ public class MealService {
 
         return this.mealRepository.save(meal);
     }
+
+
 }

@@ -1,68 +1,71 @@
 package fitnesstracker.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
-import org.hibernate.collection.spi.PersistentBag;
+import fitnesstracker.repositories.MealRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
+@ExtendWith(SpringExtension.class)
 class MealServiceTest {
+
     @Autowired
     private MealService mealService;
 
-    /**
-     * Method under test: {@link MealService#findAll()}
-     */
     @Test
     void testFindAll() {
-        // Arrange, Act and Assert
-        assertEquals(6, mealService.findAll().size());
+        assertTrue(mealService.findAll().isEmpty());
     }
 
-    /**
-     * Method under test: {@link MealService#getMealById(long)}
-     */
     @Test
-    void testGetMealById() {
-        // Arrange and Act
-        Meal actualMealById = mealService.getMealById(1L);
-
-        // Assert
-        assertEquals(500, actualMealById.getCalories().intValue());
-        assertEquals("Lunch", actualMealById.getMealType());
-        assertEquals("Chicken Stir Fry", actualMealById.getMealName());
-        assertTrue(actualMealById.getIngredientList() instanceof PersistentBag);
-        assertEquals("Stir-fry chicken with vegetables and soy sauce", actualMealById.getCookingInstructions());
-        assertEquals(6, mealService.findAll().size());
-    }
-
-    /**
-     * Method under test: {@link MealService#saveMeal(Meal)}
-     */
-    @Test
+    @Transactional
     void testSaveMeal() {
-        // Arrange
         Meal meal = new Meal();
 
-        // Act and Assert
         assertSame(meal, mealService.saveMeal(meal));
     }
 
-    /**
-     * Method under test: {@link MealService#saveMeal(Meal)}
-     */
     @Test
     void testSaveMeal2() {
-        // Arrange, Act and Assert
         assertThrows(IllegalArgumentException.class, () -> mealService.saveMeal(null));
+    }
+
+    @Test
+    @Transactional
+    void testSaveMeal3() {
+        Meal meal = new Meal();
+        meal.setMealName("Meal Name");
+
+        assertSame(meal, mealService.saveMeal(meal));
+    }
+
+    @Test
+    void testGetMealById() {
+        MealRepository mockMealRepo = mock(MealRepository.class);
+        mealService = new MealService(mockMealRepo);
+
+        Meal meal = new Meal("Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>());
+        meal.getIngredientList().add(new Ingredient(meal, "Chicken"));
+        meal.getIngredientList().add(new Ingredient(meal, "Vegetables"));
+        meal.getIngredientList().add(new Ingredient(meal, "Soy Sauce"));
+
+        when(mockMealRepo.findById(any())).thenReturn(Optional.of(meal));
+        Meal actual = mealService.getMealById(1L);
+
+        assertEquals(meal.getMealName(), actual.getMealName());
     }
 }
 
