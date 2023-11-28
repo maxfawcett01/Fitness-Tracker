@@ -1,9 +1,10 @@
 package fitnesstracker.data;
 
+import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
-import fitnesstracker.repositories.HealthStatisticRepository;
+import fitnesstracker.services.ExerciseHistoryService;
 import fitnesstracker.services.HealthStatisticService;
 import fitnesstracker.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Component
@@ -19,12 +21,14 @@ public class DataPopulator {
 
     private final MealService mealService;
     private final HealthStatisticService healthStatisticService;
+    private final ExerciseHistoryService exerciseHistoryService;
 
 
     @Autowired
-    public DataPopulator(MealService mealService, HealthStatisticService healthStatisticService) {
+    public DataPopulator(MealService mealService, HealthStatisticService healthStatisticService, ExerciseHistoryService exerciseHistoryService) {
         this.mealService = mealService;
         this.healthStatisticService = healthStatisticService;
+        this.exerciseHistoryService = exerciseHistoryService;
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -54,5 +58,16 @@ public class DataPopulator {
         LocalDate date = null;
         HealthStatistic healthStatistic1 = new HealthStatistic( date, 23.0,60.0, 80.0, 90.0,480.0, 620.0, 65.0, 10.0);
         healthStatisticService.createHealthStatistic(healthStatistic1);
+
+        Exercise exercise1 = new Exercise("Barbell rows", LocalDateTime.of(2023, 11, 28, 10, 0), LocalDateTime.of(2023, 11, 28, 11, 0));
+        exercise1.setEquipmentRequired("Barbell and free weights");
+        exercise1.setDescription("Just do whatever man");
+        exerciseHistoryService.addExercise(exercise1);
+
+        Exercise exercise2 = new Exercise("Bench press", LocalDateTime.of(2023, 11, 25, 10, 0), LocalDateTime.of(2023, 11, 25, 11, 0));
+        exercise2.setEquipmentRequired("Barbell and free weights");
+        exercise2.setDescription("Just don't pop your shoulder");
+        exerciseHistoryService.addExercise(exercise2);
+
     }
 }

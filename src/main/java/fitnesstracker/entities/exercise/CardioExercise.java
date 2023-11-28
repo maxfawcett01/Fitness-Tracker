@@ -3,7 +3,8 @@ package fitnesstracker.entities.exercise;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public abstract class CardioExercise extends Exercise {
+
+public class CardioExercise extends Exercise {
 
     public Duration getDuration() {
         return Duration.between(startTime, endTime);
