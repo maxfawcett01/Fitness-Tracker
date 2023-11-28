@@ -26,8 +26,11 @@ public class HealthStatisticController {
     @GetMapping
     @ApiOperation("Get all health statistics")
     public List<HealthStatistic> getAllHealthStatistics() {
-        return healthStatisticService.getAllHealthStatistics();
+        List<HealthStatistic> statistics = healthStatisticService.getAllHealthStatistics();
+        System.out.println("Fetched Health Statistics: " + statistics);
+        return statistics;
     }
+
 
     @GetMapping("/{id}")
     @ApiOperation("Get a health statistic by ID")
@@ -54,4 +57,11 @@ public class HealthStatisticController {
         healthStatisticService.deleteHealthStatistic(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/all")
+    @ApiOperation("Get all health statistics for testing purposes")
+    public List<HealthStatistic> getAllHealthStatisticsForTesting() {
+        return healthStatisticService.getAllHealthStatistics();
+    }
+
 }
