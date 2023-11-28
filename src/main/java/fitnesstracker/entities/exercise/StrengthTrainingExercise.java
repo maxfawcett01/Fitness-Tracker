@@ -1,8 +1,12 @@
 package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.Person;
+import jakarta.persistence.ManyToOne;
+
 import java.time.LocalDateTime;
 
-public abstract class StrengthTrainingExercise extends Exercise {
+
+public class StrengthTrainingExercise extends Exercise {
 
     protected int sets;
 
@@ -34,8 +38,8 @@ public abstract class StrengthTrainingExercise extends Exercise {
         this.targetMuscle = targetMuscle;
     }
 
-    public StrengthTrainingExercise(String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
-        super(exerciseName, startTime, endTime);
+    public StrengthTrainingExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
+        super(person, exerciseName, startTime, endTime);
         this.sets = sets;
         this.reps = reps;
     }

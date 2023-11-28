@@ -1,8 +1,18 @@
 package fitnesstracker.entities.exercise;
 
+import fitnesstracker.entities.Person;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-public abstract class Exercise {
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Exercise {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     protected String exerciseName;
 
@@ -13,6 +23,10 @@ public abstract class Exercise {
     protected LocalDateTime endTime;
 
     protected String description;
+
+
+    @ManyToOne
+    private Person person;
 
     public String getExerciseName() {
         return exerciseName;
@@ -54,11 +68,16 @@ public abstract class Exercise {
         this.description = description;
     }
 
-    public Exercise(String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
+    public Exercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
         this.exerciseName = exerciseName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.person = person;
     }
 
     public Exercise() {}
+
+    public Long getId() {
+        return id;
+    }
 }
