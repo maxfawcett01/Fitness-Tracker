@@ -1,4 +1,4 @@
-package fitnesstracker.entities;
+package fitnesstracker.entities.meal;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

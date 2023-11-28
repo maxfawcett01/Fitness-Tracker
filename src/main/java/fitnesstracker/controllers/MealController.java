@@ -1,6 +1,6 @@
 package fitnesstracker.controllers;
 
-import fitnesstracker.entities.Meal;
+import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
