@@ -4,9 +4,9 @@ import fitnesstracker.entities.Person;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
-import fitnesstracker.repositories.HealthStatisticRepository;
 import fitnesstracker.services.HealthStatisticService;
 import fitnesstracker.services.MealService;
+import jakarta.annotation.PostConstruct;
 import fitnesstracker.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -23,7 +23,6 @@ public class DataPopulator {
     private final HealthStatisticService healthStatisticService;
     private final PersonService personService;
 
-
     @Autowired
     public DataPopulator(MealService mealService, HealthStatisticService healthStatisticService, PersonService personService) {
         this.mealService = mealService;
@@ -32,6 +31,7 @@ public class DataPopulator {
     }
 
     @EventListener(ContextRefreshedEvent.class)
+    @PostConstruct
     public void populateData() {
         // Insert sample meals with ingredients
         Meal meal1 = new Meal("Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>());
