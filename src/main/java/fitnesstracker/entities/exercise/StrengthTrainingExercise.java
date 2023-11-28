@@ -2,7 +2,8 @@ package fitnesstracker.entities.exercise;
 
 import java.time.LocalDateTime;
 
-public abstract class StrengthTrainingExercise extends Exercise {
+
+public class StrengthTrainingExercise extends Exercise {
 
     protected int sets;
 

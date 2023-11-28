@@ -1,8 +1,17 @@
 package fitnesstracker.entities.exercise;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-public abstract class Exercise {
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Exercise {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     protected String exerciseName;
 
@@ -13,6 +22,7 @@ public abstract class Exercise {
     protected LocalDateTime endTime;
 
     protected String description;
+
 
     public String getExerciseName() {
         return exerciseName;
@@ -61,4 +71,8 @@ public abstract class Exercise {
     }
 
     public Exercise() {}
+
+    public Long getId() {
+        return id;
+    }
 }
