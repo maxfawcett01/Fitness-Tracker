@@ -1,9 +1,12 @@
 package fitnesstracker.controllers;
 
+import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.services.ExerciseHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/exercises")
@@ -16,8 +19,14 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping
-    public Iterable<Exercise> getAllExercises(){
-        return exerciseHistoryService.getAllExercises();
+    public Iterable<Exercise> getAllExercises() {
+        Iterable<Exercise> exercises = exerciseHistoryService.getAllExercises();
+        for (Exercise exercise : exercises) {
+            Long personId = exercise.getPerson().getId();
+            exercise.setPersonId(personId);
+            return exerciseHistoryService.getAllExercises();
+        }
+        return exercises;
     }
 
     @GetMapping("/{exerciseId}")
@@ -26,12 +35,26 @@ public class ExerciseHistoryController {
         return exercise;
     }
 
+    //TODO: Fix this - Throws exemption
+//    @GetMapping("/{exerciseName}")
+//    public List<Exercise> getExerciseByName(@PathVariable String exerciseName){
+//        List<Exercise> exercises = exerciseHistoryService.getExerciseByName(exerciseName);
+//        return exercises;
+//    }
+
     @PostMapping
     public Exercise addNewExercise(@RequestBody Exercise exercise){
+        Long personId = exercise.getPerson().getId();
+        exercise.setPersonId(personId);
         return exerciseHistoryService.addExercise(exercise);
     }
 
-    //TODO: GetAllExercisesByExerciseName
-    //TODO: DeleteExeriseById
-    //TODO:
+    @DeleteMapping("/{id}")
+    public void deleteExercise(@PathVariable long id){
+        exerciseHistoryService.deleteById(id);
+    }
+
+
+    //TODO: Get Exercise by muscle group
+
 }

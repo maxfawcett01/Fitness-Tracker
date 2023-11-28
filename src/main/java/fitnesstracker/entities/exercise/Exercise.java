@@ -25,8 +25,24 @@ public class Exercise {
     protected String description;
 
 
+    public Person getPerson() {
+        return person;
+    }
+
     @ManyToOne
+    @JoinColumn(name = "person_id")
     private Person person;
+
+    @Transient
+    private Long personId;
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
+    }
 
     public String getExerciseName() {
         return exerciseName;

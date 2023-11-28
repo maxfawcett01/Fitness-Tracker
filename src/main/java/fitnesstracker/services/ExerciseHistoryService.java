@@ -31,5 +31,11 @@ public class ExerciseHistoryService {
         return exerciseHistoryRepository.save(exercise);
     }
 
+    public void deleteById(long id) {
+       exerciseHistoryRepository.deleteById(id);
+    }
 
+//    public List<Exercise> getExerciseByName(String exercise) {
+//        return exerciseHistoryRepository.findExerciseByNameIgnoreCase(exercise);
+//    }
 }
