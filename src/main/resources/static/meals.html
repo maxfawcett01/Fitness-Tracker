@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Tracker</title>
+</head>
+<body>
+
+<div id="mealListContainer">
+    <h2>Meal List</h2>
+    <ul id="mealList" class="list-group">
+    </ul>
+</div>
+
+<button id="addMealButton">Add Meal</button>
+
+<div id="addMealModal" style="display: none;">
+    <h3>Add Meal</h3>
+    <label for="mealName">Meal Name:</label>
+    <input type="text" id="mealName" name="mealName" required>
+    <br>
+    <label for="mealType">Meal Type:</label>
+    <input type="text" id="mealType" name="mealType" required>
+    <br>
+    <label for="calories">Calories:</label>
+    <input type="number" id="calories" name="calories" required>
+    <br>
+    <button id="saveMealButton">Save</button>
+</div>
+
+<script>
+    function fetchAndDisplayMeals() {
+        fetch('/meals')
+            .then(response => response.json())
+            .then(data => {
+                const mealList = document.getElementById('mealList');
+                mealList.innerHTML = '';
+
+                data.forEach(meal => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = `${meal.mealName} - ${meal.mealType} - Calories: ${meal.calories}`;
+                    mealList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching meals:', error));
+    }
+
+    document.getElementById('addMealButton').addEventListener('click', function() {
+        document.getElementById('addMealModal').style.display = 'block';
+    });
+
+    document.getElementById('saveMealButton').addEventListener('click', function() {
+        const mealName = document.getElementById('mealName').value;
+        const mealType = document.getElementById('mealType').value;
+        const calories = document.getElementById('calories').value;
+
+        fetch('/meals', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mealName: mealName,
+                mealType: mealType,
+                calories: calories,
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('mealName').value = '';
+                document.getElementById('mealType').value = '';
+                document.getElementById('calories').value = '';
+
+                document.getElementById('addMealModal').style.display = 'none';
+
+                fetchAndDisplayMeals();
+            } else {
+                console.error('Error saving meal:', response.status);
+            }
+        })
+        .catch(error => console.error('Error saving meal:', error));
+    });
+
+    fetchAndDisplayMeals();
+</script>
+
+</body>
+</html>

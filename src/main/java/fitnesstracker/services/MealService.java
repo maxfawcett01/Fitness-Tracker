@@ -27,4 +27,7 @@ public class MealService {
         return meal.orElse(null);
     }
 
+    public Meal saveMeal(Meal meal) {
+        return this.mealRepository.save(meal);
+    }
 }
