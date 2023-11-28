@@ -4,10 +4,7 @@ import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -30,7 +27,25 @@ public class MealController {
 
     @GetMapping
     public List<Meal> getAllMeals() {
-        return mealService.findAll();
+        List<Meal> meals = mealService.findAll();
+        meals.forEach(meal -> {
+            System.out.println("Meal: " + meal.getMealName());
+            System.out.println("Ingredients: " + meal.getIngredientList());
+        });
+        return meals;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Meal addMeal(@RequestBody Meal meal) {
+        Meal newMeal;
+
+        try {
+            newMeal = this.mealService.saveMeal(meal);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return newMeal;
     }
 
     @GetMapping("/{mealId}")
@@ -40,7 +55,4 @@ public class MealController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Meal not found");
         return meal;
     }
-
-
-
 }
