@@ -1,5 +1,6 @@
 package fitnesstracker.entities.health;
 
+import fitnesstracker.services.MealService;
 import jakarta.persistence.*;
 
 import java.time.Duration;
@@ -13,9 +14,6 @@ public class HealthStatistic {
     @Id
     @GeneratedValue
     private Long id;
-    public Long getId() {
-        return id;
-    }
 
     private LocalDate date;
     private double sleep;
@@ -26,11 +24,6 @@ public class HealthStatistic {
     private double calorieOut;
     private double heartRate;
     private double stress;
-
-
-    // Map to store dynamic health parameters
-    @ElementCollection
-    private Map<String, String> parameters = new HashMap<>();
 
     // constructors
     public HealthStatistic() {
@@ -49,6 +42,10 @@ public class HealthStatistic {
     }
 
     // getters, and setters
+    public Long getId() {
+        return id;
+    }
+
     public double getSleep() {
         return sleep;
     }
@@ -111,14 +108,6 @@ public class HealthStatistic {
 
     public void setStress(double stress) {
         this.stress = stress;
-    }
-
-    public Map<String, String> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
     }
 
     public LocalDate getDate() {
