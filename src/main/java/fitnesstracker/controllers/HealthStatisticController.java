@@ -12,7 +12,7 @@ import io.swagger.annotations.Api;
 import java.util.List;
 
 @RestController
-@RequestMapping("/health-statistics")
+@RequestMapping("/stat")
 @Api(tags = "Health Statistics")
 public class HealthStatisticController {
 
