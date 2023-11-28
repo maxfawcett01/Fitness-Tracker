@@ -28,6 +28,10 @@ public class MealService {
     }
 
     public Meal saveMeal(Meal meal) {
+        if (meal == null) {
+            throw new IllegalArgumentException("Entity must not be null");
+        }
+
         return this.mealRepository.save(meal);
     }
 }
