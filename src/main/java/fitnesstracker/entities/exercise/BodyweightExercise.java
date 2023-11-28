@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 public class BodyweightExercise extends StrengthTrainingExercise {
 
     @ManyToOne
-    private final Person person;
+    private Person person;
 
 
     public Person getPerson() {
         return person;
     }
 
-    public BodyweightExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
-        super(exerciseName, startTime, endTime, sets, reps);
-        this.person = user;
+    public BodyweightExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
+        super(person, exerciseName, startTime, endTime, sets, reps);
     }
 }

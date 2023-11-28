@@ -22,9 +22,8 @@ public class NoDistanceCardioExercise extends CardioExercise {
         this.person = person;
     }
 
-    public NoDistanceCardioExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        super(exerciseName, startTime, endTime);
-        this.person = user;
+    public NoDistanceCardioExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
+        super(person, exerciseName, startTime, endTime);
     }
 
     public NoDistanceCardioExercise() {}
