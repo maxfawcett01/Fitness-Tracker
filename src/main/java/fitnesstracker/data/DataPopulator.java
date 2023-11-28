@@ -2,6 +2,7 @@ package fitnesstracker.data;
 
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.entities.exercise.WeightLiftingExercise;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
@@ -82,6 +83,11 @@ public class DataPopulator {
         exercise2.setEquipmentRequired("Barbell and free weights");
         exercise2.setDescription("Just don't pop your shoulder");
         exerciseHistoryService.addExercise(exercise2);
+
+        WeightLiftingExercise exercise3 = new WeightLiftingExercise(person1, "Deadlifts", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 100);
+        exercise3.setEquipmentRequired("Barbell and free weights");
+        exercise3.setDescription("Just don't pop your shoulder");
+        exerciseHistoryService.addExercise(exercise3);
 
     }
 }

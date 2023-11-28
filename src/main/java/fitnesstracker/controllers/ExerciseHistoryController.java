@@ -31,4 +31,7 @@ public class ExerciseHistoryController {
         return exerciseHistoryService.addExercise(exercise);
     }
 
+    //TODO: GetAllExercisesByExerciseName
+    //TODO: DeleteExeriseById
+    //TODO:
 }

@@ -9,22 +9,10 @@ import java.time.LocalDateTime;
 @Entity
 public class WeightLiftingExercise extends StrengthTrainingExercise {
 
-
-    @ManyToOne
-    private Person person;
-
     private double weightInKg;
-
-    public Person getPerson() {
-        return person;
-    }
 
     public double getWeightInKg() {
         return weightInKg;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public void setWeightInKg(double weightInKg) {
