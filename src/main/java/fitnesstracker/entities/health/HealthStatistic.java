@@ -17,7 +17,8 @@ public class HealthStatistic {
         return id;
     }
 
-    private Duration sleep;
+    private LocalDate date;
+    private double sleep;
     private double weight;
     private double bloodPressure;
     private double hydration;
@@ -25,6 +26,7 @@ public class HealthStatistic {
     private double calorieOut;
     private double heartRate;
     private double stress;
+
 
     // Map to store dynamic health parameters
     @ElementCollection
@@ -34,7 +36,8 @@ public class HealthStatistic {
     public HealthStatistic() {
     }
 
-    public HealthStatistic(LocalDate date, Duration sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
+       public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
+        this.date = LocalDate.now();
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;
@@ -46,13 +49,11 @@ public class HealthStatistic {
     }
 
     // getters, and setters
-
-
-    public Duration getSleep() {
+    public double getSleep() {
         return sleep;
     }
 
-    public void setSleep(Duration sleep) {
+    public void setSleep(double sleep) {
         this.sleep = sleep;
     }
 
@@ -118,5 +119,13 @@ public class HealthStatistic {
 
     public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
