@@ -8,8 +8,12 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Ingredient {
 
-    public Ingredient(Meal meal) {
+    public Ingredient() {
+    }
+
+    public Ingredient(Meal meal, String ingredientName) {
         this.meal = meal;
+        this.ingredientName = ingredientName;
     }
 
     @Id
@@ -19,4 +23,12 @@ public class Ingredient {
 
     @ManyToOne
     Meal meal;
+
+    String ingredientName;
+    public String getIngredientName() {
+        return ingredientName;
+    }
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
+    }
 }
