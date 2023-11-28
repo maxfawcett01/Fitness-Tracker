@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface HealthStatisticRepository extends ListCrudRepository<HealthStatistic, Long> {
-    List<HealthStatistic> findByDate(LocalDate date);
+    //List<HealthStatistic> findByDate(LocalDate date);
 }
