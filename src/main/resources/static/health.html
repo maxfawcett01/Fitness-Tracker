@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Statistics Dashboard</title>
+    <!-- Your existing stylesheets and scripts go here -->
+</head>
+<body>
+
+<div id="healthDashboard">
+    <h2>Health Statistics Dashboard</h2>
+
+    <!-- Display health statistics here -->
+    <ul id="healthList">
+        <!-- Health statistics will be dynamically added here -->
+    </ul>
+
+    <!-- Button to open the modal form for adding health statistics -->
+    <button id="addHealthButton">Add Health Statistic</button>
+</div>
+
+<!-- Modal form for adding health statistics -->
+<div id="addHealthModal" style="display: none;">
+    <h3>Add Health Statistic</h3>
+    <form id="healthForm">
+        <!-- Your form elements go here -->
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+        <label for="sleep">Sleep Duration (in minutes):</label>
+        <input type="number" id="sleep" name="sleep" required>
+        <br>
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="weight" step="0.1" required>
+        <br>
+        <label for="bloodPressure">Blood Pressure:</label>
+        <input type="number" id="bloodPressure" name="bloodPressure" step="0.1" required>
+        <br>
+        <label for="hydration">Hydration Level:</label>
+        <input type="number" id="hydration" name="hydration" step="0.1" required>
+        <br>
+        <!-- Add other health parameters as needed -->
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<script>
+    // Function to fetch and display health statistics
+    function fetchAndDisplayHealthStatistics() {
+        // Fetch health statistics from the server (adjust the URL if needed)
+        fetch('/health-statistics')
+            .then(response => response.json())
+            .then(data => {
+                // Clear the existing health list
+                const healthList = document.getElementById('healthList');
+                healthList.innerHTML = '';
+
+                // Populate the health list with fetched data
+                data.forEach(healthStatistic => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Date: ${healthStatistic.date}, Sleep: ${healthStatistic.sleep} minutes, Weight: ${healthStatistic.weight}, Blood Pressure: ${healthStatistic.bloodPressure}, Hydration: ${healthStatistic.hydration}`;
+                    healthList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching health statistics:', error));
+    }
+
+    // Event listener for the "Add Health Statistic" button
+    document.getElementById('addHealthButton').addEventListener('click', function() {
+        // Show the modal form
+        document.getElementById('addHealthModal').style.display = 'block';
+    });
+
+    // Event listener for the health form submission
+    document.getElementById('healthForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Placeholder logic to handle saving the health statistic
+        const date = document.getElementById('date').value;
+        const sleep = document.getElementById('sleep').value;
+        const weight = document.getElementById('weight').value;
+        const bloodPressure = document.getElementById('bloodPressure').value;
+        const hydration = document.getElementById('hydration').value;
+
+        // Placeholder logic to send the new health statistic to the server (adjust the URL if needed)
+        fetch('/health-statistics', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                date: date,
+                sleep: sleep,
+                weight: weight,
+                bloodPressure: bloodPressure,
+                hydration: hydration,
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                // Clear the form
+                document.getElementById('date').value = '';
+                document.getElementById('sleep').value = '';
+                document.getElementById('weight').value = '';
+                document.getElementById('bloodPressure').value = '';
+                document.getElementById('hydration').value = '';
+
+                // Hide the modal form after saving
+                document.getElementById('addHealthModal').style.display = 'none';
+
+                // Fetch and display updated health statistics
+                fetchAndDisplayHealthStatistics();
+            } else {
+                console.error('Error saving health statistic:', response.status);
+            }
+        })
+        .catch(error => console.error('Error saving health statistic:', error));
+    });
+
+    // Fetch and display health statistics when the page loads
+    fetchAndDisplayHealthStatistics();
+</script>
+
+</body>
+</html>
