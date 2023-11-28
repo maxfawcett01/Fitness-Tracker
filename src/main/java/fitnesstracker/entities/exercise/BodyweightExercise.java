@@ -1,16 +1,32 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.entities.User;
+import fitnesstracker.entities.Person;
 import jakarta.persistence.Entity;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class BodyweightExercise extends WeightExercise {
+public class BodyweightExercise extends StrengthTrainingExercise {
 
-    @Autowired
-    public BodyweightExercise(User user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
-        super(user, exerciseName, startTime, endTime, sets, reps);
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    private final Person person;
+    public Long getId() {
+        return id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public BodyweightExercise(Person user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
+        super(exerciseName, startTime, endTime, sets, reps);
+        this.person = user;
     }
 }

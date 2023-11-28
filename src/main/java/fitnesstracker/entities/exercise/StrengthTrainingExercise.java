@@ -1,19 +1,14 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.entities.User;
-import jakarta.persistence.MappedSuperclass;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDateTime;
 
-@MappedSuperclass
-public abstract class WeightExercise extends Exercise {
+public abstract class StrengthTrainingExercise extends Exercise {
 
-    private int sets;
+    protected int sets;
 
-    private int reps;
+    protected int reps;
 
-    private String targetMuscle;
+    protected String targetMuscle;
 
     public int getSets() {
         return sets;
@@ -39,10 +34,11 @@ public abstract class WeightExercise extends Exercise {
         this.targetMuscle = targetMuscle;
     }
 
-    @Autowired
-    public WeightExercise(User user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
-        super(user, exerciseName, startTime, endTime);
+    public StrengthTrainingExercise(String exerciseName, LocalDateTime startTime, LocalDateTime endTime, int sets, int reps) {
+        super(exerciseName, startTime, endTime);
         this.sets = sets;
         this.reps = reps;
     }
+
+    public StrengthTrainingExercise() {}
 }

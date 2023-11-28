@@ -1,41 +1,18 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.entities.User;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.Duration;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
 public abstract class Exercise {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    public Long getId() {
-        return id;
-    }
+    protected String exerciseName;
 
-    @ManyToOne
-    private final User user;
+    protected String equipmentRequired;
 
-    private String exerciseName;
+    protected LocalDateTime startTime;
 
-    private String equipmentRequired;
+    protected LocalDateTime endTime;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-
-    private String description;
-
-    public User getUser() {
-        return user;
-    }
+    protected String description;
 
     public String getExerciseName() {
         return exerciseName;
@@ -55,10 +32,6 @@ public abstract class Exercise {
 
     public String getDescription() {
         return description;
-    }
-
-    public Duration getDuration() {
-        return Duration.between(startTime, endTime);
     }
 
     public void setExerciseName(String exerciseName) {
@@ -81,11 +54,11 @@ public abstract class Exercise {
         this.description = description;
     }
 
-    @Autowired
-    public Exercise(User user, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        this.user = user;
+    public Exercise(String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
         this.exerciseName = exerciseName;
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    public Exercise() {}
 }
