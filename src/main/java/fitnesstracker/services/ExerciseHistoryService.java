@@ -40,6 +40,6 @@ public class ExerciseHistoryService {
     }
 
     public List<Exercise> getExerciseByPersonId(Long personId) {
-        return exerciseHistoryRepository.findByPerson_Id(personId);
+        return exerciseHistoryRepository.findByPersonId(personId);
     }
 }

@@ -71,17 +71,17 @@ public class DataPopulator {
         Person person2 = new Person(2L, "Tom", "tom123", "password2");
         personService.savePerson(person2);
 
-        Exercise exercise1 = new Exercise(person1,"Barbell rows", LocalDateTime.of(2023, 11, 28, 10, 0), LocalDateTime.of(2023, 11, 28, 11, 0));
+        Exercise exercise1 = new Exercise(person1.getId(),"Barbell rows", LocalDateTime.of(2023, 11, 28, 10, 0), LocalDateTime.of(2023, 11, 28, 11, 0), 250);
         exercise1.setEquipmentRequired("Barbell and free weights");
         exercise1.setDescription("Just do whatever man");
         exerciseHistoryService.addExercise(exercise1);
 
-        Exercise exercise2 = new Exercise(person2, "Bench press", LocalDateTime.of(2023, 11, 25, 10, 0), LocalDateTime.of(2023, 11, 25, 11, 0));
+        Exercise exercise2 = new Exercise(person2.getId(), "Bench press", LocalDateTime.of(2023, 11, 25, 10, 0), LocalDateTime.of(2023, 11, 25, 11, 0), 200);
         exercise2.setEquipmentRequired("Barbell and free weights");
         exercise2.setDescription("Just don't pop your shoulder");
         exerciseHistoryService.addExercise(exercise2);
 
-        WeightLiftingExercise exercise3 = new WeightLiftingExercise(person1, "Deadlifts", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 100);
+        WeightLiftingExercise exercise3 = new WeightLiftingExercise(person1.getId(), "Deadlifts", LocalDateTime.now(), LocalDateTime.now(), 200, 3, 12, 100);
         exerciseHistoryService.addExercise(exercise3);
 
     }
