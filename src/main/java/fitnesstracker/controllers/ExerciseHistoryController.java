@@ -4,6 +4,7 @@ import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.services.ExerciseHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,29 +24,29 @@ public class ExerciseHistoryController {
         Iterable<Exercise> exercises = exerciseHistoryService.getAllExercises();
         for (Exercise exercise : exercises) {
             Long personId = exercise.getPerson().getId();
-            exercise.setPersonId(personId);
             return exerciseHistoryService.getAllExercises();
         }
         return exercises;
     }
 
     @GetMapping("/{exerciseId}")
-    public Exercise getExerciseById(@PathVariable long exerciseId){
+    public ResponseEntity<Exercise> getExerciseById(@PathVariable long exerciseId) {
         Exercise exercise = exerciseHistoryService.getExerciseById(exerciseId);
-        return exercise;
+        if (exercise != null) {
+            return ResponseEntity.ok(exercise);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    //TODO: Fix this - Throws exemption
-//    @GetMapping("/{exerciseName}")
-//    public List<Exercise> getExerciseByName(@PathVariable String exerciseName){
-//        List<Exercise> exercises = exerciseHistoryService.getExerciseByName(exerciseName);
-//        return exercises;
-//    }
+    @GetMapping("/name/{name}")
+    public List<Exercise> getExerciseByName(@PathVariable String name){
+        return exerciseHistoryService.getExerciseByName(name);
+    }
 
     @PostMapping
     public Exercise addNewExercise(@RequestBody Exercise exercise){
         Long personId = exercise.getPerson().getId();
-        exercise.setPersonId(personId);
         return exerciseHistoryService.addExercise(exercise);
     }
 
@@ -54,6 +55,10 @@ public class ExerciseHistoryController {
         exerciseHistoryService.deleteById(id);
     }
 
+    @GetMapping("/person/{personId}")
+    public List<Exercise> getExerciseByPersonId(@PathVariable Long personId) {
+        return exerciseHistoryService.getExerciseByPersonId(personId);
+    }
 
     //TODO: Get Exercise by muscle group
 

@@ -27,15 +27,19 @@ public class ExerciseHistoryService {
         return exercise.orElse(null);
     }
 
-    public Exercise addExercise(Exercise exercise){
-        return exerciseHistoryRepository.save(exercise);
+    public Exercise addExercise(Exercise name){
+        return exerciseHistoryRepository.save(name);
     }
 
     public void deleteById(long id) {
        exerciseHistoryRepository.deleteById(id);
     }
 
-//    public List<Exercise> getExerciseByName(String exercise) {
-//        return exerciseHistoryRepository.findExerciseByNameIgnoreCase(exercise);
-//    }
+    public List<Exercise> getExerciseByName(String exerciseName) {
+        return exerciseHistoryRepository.findExerciseByNameIgnoreCase(exerciseName);
+    }
+
+    public List<Exercise> getExerciseByPersonId(Long personId) {
+        return exerciseHistoryRepository.findByPerson_Id(personId);
+    }
 }
