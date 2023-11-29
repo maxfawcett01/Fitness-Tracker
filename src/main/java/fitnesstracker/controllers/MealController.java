@@ -33,6 +33,7 @@ public class MealController {
     @ResponseStatus(HttpStatus.CREATED)
     public Meal addMeal(@RequestBody Meal meal) {
         Meal newMeal;
+        meal.getPersonId();
 
         try {
             newMeal = this.mealService.saveMeal(meal);
