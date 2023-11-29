@@ -1,10 +1,12 @@
 package fitnesstracker.controllers;
 
-import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.services.ExerciseHistoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,7 @@ public class ExerciseHistoryController {
     public Iterable<Exercise> getAllExercises() {
         Iterable<Exercise> exercises = exerciseHistoryService.getAllExercises();
         for (Exercise exercise : exercises) {
-            Long personId = exercise.getPerson().getId();
-            return exerciseHistoryService.getAllExercises();
+             exercise.getPersonId();
         }
         return exercises;
     }
@@ -39,16 +40,22 @@ public class ExerciseHistoryController {
         }
     }
 
-    @GetMapping("/name/{name}")
-    public List<Exercise> getExerciseByName(@PathVariable String name){
-        return exerciseHistoryService.getExerciseByName(name);
+    @GetMapping("/name/{exerciseName}")
+    public List<Exercise> getExerciseByName(@PathVariable String exerciseName){
+        return exerciseHistoryService.getExerciseByName(exerciseName);
     }
 
     @PostMapping
-    public Exercise addNewExercise(@RequestBody Exercise exercise){
-        Long personId = exercise.getPerson().getId();
-        return exerciseHistoryService.addExercise(exercise);
+    public ResponseEntity<Object> addNewExercise(@RequestBody @Valid Exercise exercise, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        exercise.getPersonId();
+        Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
+        return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteExercise(@PathVariable long id){

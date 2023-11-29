@@ -1,6 +1,6 @@
 package fitnesstracker;
 
-import fitnesstracker.data.DataPopulator;
+import fitnesstracker.data.DataPopulate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +12,7 @@ public class FitnessTrackerApplication {
 
 		ApplicationContext context = SpringApplication.run(FitnessTrackerApplication.class, args);
 
-		DataPopulator populator = context.getBean(DataPopulator.class);
+		DataPopulate populator = context.getBean(DataPopulate.class);
 
 		populator.populateData();
 	}

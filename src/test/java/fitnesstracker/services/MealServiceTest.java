@@ -3,41 +3,59 @@ package fitnesstracker.services;
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
+import fitnesstracker.exceptions.MealServiceException;
 import fitnesstracker.repositories.MealRepository;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 class MealServiceTest {
+
+    @MockBean
+    private MealRepository mockMealRepository;
 
     @Autowired
     private MealService mealService;
 
     @Test
     void testFindAll() {
-        assertTrue(mealService.findAll().isEmpty());
+        List<Meal> mockMeals = Collections.singletonList(new Meal(/* provide necessary Meal details */));
+        when(mockMealRepository.findAll()).thenReturn(mockMeals);
+
+        List<Meal> result = mealService.findAll();
+
+        assertEquals(mockMeals, result);
     }
 
     @Test
-    @Transactional
+    void testFindAllWithException() {
+        when(mockMealRepository.findAll()).thenThrow(new RuntimeException("Simulated database exception"));
+
+        MealServiceException exception = assertThrows(MealServiceException.class, () -> mealService.findAll());
+    }
+
+    @Test
     void testSaveMeal() {
         Meal meal = new Meal();
 
-        assertSame(meal, mealService.saveMeal(meal));
+        mealService.saveMeal(meal);
+
+        verify(mockMealRepository,times(1)).save(meal);
     }
 
     @Test
@@ -46,12 +64,13 @@ class MealServiceTest {
     }
 
     @Test
-    @Transactional
     void testSaveMeal3() {
         Meal meal = new Meal();
         meal.setMealName("Meal Name");
 
-        assertSame(meal, mealService.saveMeal(meal));
+        mealService.saveMeal(meal);
+
+        verify(mockMealRepository,times(1)).save(meal);
     }
 
     @Test

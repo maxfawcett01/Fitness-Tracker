@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HealthStatisticRepository extends ListCrudRepository<HealthStatistic, Long> {
-    //List<HealthStatistic> findByDate(LocalDate date);
 }

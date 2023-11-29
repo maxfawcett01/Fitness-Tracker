@@ -23,15 +23,8 @@ public class MealController {
     @GetMapping
     public List<Meal> getAllMeals() {
         try {
-            List<Meal> meals = mealService.findAll();
-            meals.forEach(meal -> {
-                System.out.println("Meal: " + meal.getMealName());
-                System.out.println("Ingredients: " + meal.getIngredientList());
-            });
             return mealService.findAll();
         } catch (Exception e) {
-            // Log the exception or handle it according to your application's needs
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching meals", e);
         }
     }
