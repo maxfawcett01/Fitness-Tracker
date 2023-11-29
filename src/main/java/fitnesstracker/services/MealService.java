@@ -1,6 +1,7 @@
 package fitnesstracker.services;
 
 import fitnesstracker.entities.meal.Meal;
+import fitnesstracker.exceptions.MealServiceException;
 import fitnesstracker.repositories.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,9 @@ public class MealService {
 
     public List<Meal> findAll() {
         try {
-            List<Meal> meals = this.mealRepository.findAll();
-            System.out.println(meals);
             return this.mealRepository.findAll();
         } catch (Exception e) {
-            // Log the exception or handle it according to your application's needs
-            e.printStackTrace();
-            throw new RuntimeException("An error occurred while fetching meals", e);
+            throw new MealServiceException("An error occurred while fetching meals", e);
         }
     }
 
