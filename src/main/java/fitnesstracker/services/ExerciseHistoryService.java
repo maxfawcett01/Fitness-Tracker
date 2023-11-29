@@ -18,6 +18,10 @@ public class ExerciseHistoryService {
         this.exerciseRepository = exerciseRepository;
     }
 
+    public boolean repoIsEmpty() {
+        return exerciseRepository.findAll().isEmpty();
+    }
+
     public List<Exercise> getAllExercises() {
         return this.exerciseRepository.findAll();
     }

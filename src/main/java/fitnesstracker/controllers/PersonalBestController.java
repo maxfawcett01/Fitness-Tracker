@@ -19,8 +19,8 @@ public class PersonalBestController {
     }
 
     @GetMapping("/test")
-    public Exercise getPersonalBestWeightForBenchPress() {
-        return personalBestService.getPersonalBestWeightByExerciseName("Bench press");
+    public Exercise getBestDeadlifts() {
+        return this.personalBestService.getPersonalBestWeightByExerciseNameIgnoreCase("deadlifts");
     }
 
 }

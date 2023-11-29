@@ -1,8 +1,10 @@
 package fitnesstracker.entities.exercise;
 
+import fitnesstracker.comparators.SortByDuration;
 import fitnesstracker.entities.Person;
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 
@@ -24,6 +26,7 @@ public class Exercise {
 
     protected String description;
 
+    protected Duration duration;
 
     public Person getPerson() {
         return person;
@@ -51,6 +54,10 @@ public class Exercise {
         return description;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
     public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
     }
@@ -76,6 +83,7 @@ public class Exercise {
         this.startTime = startTime;
         this.endTime = endTime;
         this.person = person;
+        this.duration = Duration.between(startTime, endTime);
     }
 
     public Exercise() {}

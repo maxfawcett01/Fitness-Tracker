@@ -12,8 +12,8 @@ public class FitnessTrackerApplication {
 
 		ApplicationContext context = SpringApplication.run(FitnessTrackerApplication.class, args);
 
-//		DataPopulator populator = context.getBean(DataPopulator.class);
-//
-//		populator.populateData();
+		DataPopulator populator = context.getBean(DataPopulator.class);
+
+		populator.populateData();
 	}
 }

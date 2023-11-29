@@ -18,6 +18,10 @@ public class MealService {
 
     MealRepository mealRepository;
 
+    public boolean repoIsEmpty() {
+        return mealRepository.findAll().isEmpty();
+    }
+
     public List<Meal> findAll() {
         try {
             List<Meal> meals = this.mealRepository.findAll();

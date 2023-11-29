@@ -1,5 +1,7 @@
 package fitnesstracker.entities.exercise;
 
+import fitnesstracker.comparators.SortByDistance;
+import fitnesstracker.comparators.SortByWeight;
 import fitnesstracker.entities.Person;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -23,6 +25,5 @@ public class WeightLiftingExercise extends StrengthTrainingExercise {
         super(person, exerciseName, startTime, endTime, sets, reps);
         this.weightInKg = weightInKg;
     }
-
     public WeightLiftingExercise() {}
 }
