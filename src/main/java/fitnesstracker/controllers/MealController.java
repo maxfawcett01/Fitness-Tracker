@@ -20,19 +20,20 @@ public class MealController {
         this.mealService = mealService;
     }
 
-    @Autowired
-    public void setMealService(MealService mealService) {
-        this.mealService = mealService;
-    }
-
     @GetMapping
     public List<Meal> getAllMeals() {
-        List<Meal> meals = mealService.findAll();
-        meals.forEach(meal -> {
-            System.out.println("Meal: " + meal.getMealName());
-            System.out.println("Ingredients: " + meal.getIngredientList());
-        });
-        return meals;
+        try {
+            List<Meal> meals = mealService.findAll();
+            meals.forEach(meal -> {
+                System.out.println("Meal: " + meal.getMealName());
+                System.out.println("Ingredients: " + meal.getIngredientList());
+            });
+            return mealService.findAll();
+        } catch (Exception e) {
+            // Log the exception or handle it according to your application's needs
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching meals", e);
+        }
     }
 
     @PostMapping
@@ -54,5 +55,10 @@ public class MealController {
         if(meal == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Meal not found");
         return meal;
+    }
+
+    @Autowired
+    public void setMealService(MealService mealService) {
+        this.mealService = mealService;
     }
 }
