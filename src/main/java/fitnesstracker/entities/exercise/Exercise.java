@@ -14,7 +14,7 @@ public class Exercise {
     @GeneratedValue
     private Long id;
 
-    protected String exerciseName;
+    protected String name;
 
     protected String equipmentRequired;
 
@@ -25,11 +25,14 @@ public class Exercise {
     protected String description;
 
 
+    public Person getPerson() {
+        return person;
+    }
+
     @ManyToOne
     private Person person;
-
-    public String getExerciseName() {
-        return exerciseName;
+    public String getName() {
+        return name;
     }
 
     public String getEquipmentRequired() {
@@ -48,8 +51,8 @@ public class Exercise {
         return description;
     }
 
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName = exerciseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEquipmentRequired(String equipmentRequired) {
@@ -68,8 +71,8 @@ public class Exercise {
         this.description = description;
     }
 
-    public Exercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        this.exerciseName = exerciseName;
+    public Exercise(Person person, String name, LocalDateTime startTime, LocalDateTime endTime) {
+        this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.person = person;

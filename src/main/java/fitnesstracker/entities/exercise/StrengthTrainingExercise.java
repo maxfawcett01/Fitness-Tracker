@@ -2,10 +2,12 @@ package fitnesstracker.entities.exercise;
 
 import fitnesstracker.entities.Person;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 import java.time.LocalDateTime;
 
 
+@MappedSuperclass
 public class StrengthTrainingExercise extends Exercise {
 
     protected int sets;
