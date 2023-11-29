@@ -1,6 +1,8 @@
 package fitnesstracker.entities.exercise;
 
 import jakarta.persistence.*;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 
@@ -18,9 +20,11 @@ public class Exercise {
     protected LocalDateTime endTime;
     protected Integer caloriesBurned;
     protected String description;
+    protected Duration duration;
 
     @Column(name = "person_id")
     private Long personId;
+
 
     //constructors
     public Exercise() {}
@@ -30,6 +34,7 @@ public class Exercise {
         this.endTime = endTime;
         this.personId = personId;
         this.caloriesBurned = caloriesBurned;
+        this.duration = Duration.between(startTime, endTime);
     }
 
     //getters
@@ -57,8 +62,12 @@ public class Exercise {
     public String getDescription() {
         return description;
     }
+    public Duration getDuration() {
+        return duration;
+    }
 
     //setters
+
     public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
     }

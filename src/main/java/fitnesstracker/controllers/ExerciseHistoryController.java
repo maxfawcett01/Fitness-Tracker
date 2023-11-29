@@ -48,12 +48,22 @@ public class ExerciseHistoryController {
 
     @PostMapping
     public ResponseEntity<Object> addNewExercise(@RequestBody @Valid Exercise exercise, BindingResult result) {
+        if (exercise == null) {
+            return new ResponseEntity<>("Request body is empty.", HttpStatus.BAD_REQUEST);
+        }
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        Long personId = exercise.getPersonId();
+
+        List<Exercise> exercisesByPersonId = exerciseHistoryService.findByPersonId(personId);
+        if (exercisesByPersonId.isEmpty()) {
+            return new ResponseEntity<>("Person with ID: " + personId + " cannot be found in the database.", HttpStatus.NOT_FOUND);
         }
 
         @SuppressWarnings("unused")
         Long personId = exercise.getPersonId();
+
         Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
         return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);
     }
@@ -65,8 +75,8 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping("/person/{personId}")
-    public List<Exercise> getExerciseByPersonId(@PathVariable Long personId) {
-        return exerciseHistoryService.getExerciseByPersonId(personId);
+    public List<Exercise> findByPersonId(@PathVariable Long personId) {
+        return exerciseHistoryService.findByPersonId(personId);
     }
 
 }

@@ -1,7 +1,7 @@
 package fitnesstracker.services;
 
 import fitnesstracker.entities.exercise.Exercise;
-import fitnesstracker.repositories.ExerciseHistoryRepository;
+import fitnesstracker.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,35 +11,39 @@ import java.util.Optional;
 @Service
 public class ExerciseHistoryService {
 
-    ExerciseHistoryRepository exerciseHistoryRepository;
+    ExerciseRepository exerciseRepository;
 
     @Autowired
-    public ExerciseHistoryService(ExerciseHistoryRepository exerciseHistoryRepository) {
-        this.exerciseHistoryRepository = exerciseHistoryRepository;
+    public ExerciseHistoryService(ExerciseRepository exerciseRepository) {
+        this.exerciseRepository = exerciseRepository;
+    }
+
+    public boolean repoIsEmpty() {
+        return exerciseRepository.findAll().isEmpty();
     }
 
     public List<Exercise> getAllExercises() {
-        return this.exerciseHistoryRepository.findAll();
+        return this.exerciseRepository.findAll();
     }
 
     public Exercise getExerciseById(long exerciseId){
-        Optional<Exercise> exercise = this.exerciseHistoryRepository.findById(exerciseId);
+        Optional<Exercise> exercise = this.exerciseRepository.findById(exerciseId);
         return exercise.orElse(null);
     }
 
     public Exercise addExercise(Exercise name){
-        return exerciseHistoryRepository.save(name);
+        return exerciseRepository.save(name);
     }
 
     public void deleteById(long id) {
-       exerciseHistoryRepository.deleteById(id);
+       exerciseRepository.deleteById(id);
     }
 
     public List<Exercise> getExerciseByName(String exerciseName) {
-        return exerciseHistoryRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
+        return exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
     }
 
-    public List<Exercise> getExerciseByPersonId(Long personId) {
-        return exerciseHistoryRepository.findByPersonId(personId);
+    public List<Exercise> findByPersonId(Long personId) {
+        return exerciseRepository.findByPersonId(personId);
     }
 }
