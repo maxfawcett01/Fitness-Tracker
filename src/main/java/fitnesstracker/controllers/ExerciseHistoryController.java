@@ -25,7 +25,8 @@ public class ExerciseHistoryController {
     public Iterable<Exercise> getAllExercises() {
         Iterable<Exercise> exercises = exerciseHistoryService.getAllExercises();
         for (Exercise exercise : exercises) {
-             exercise.getPersonId();
+             @SuppressWarnings("unused")
+             Long personId = exercise.getPersonId();
         }
         return exercises;
     }
@@ -59,6 +60,9 @@ public class ExerciseHistoryController {
         if (exercisesByPersonId.isEmpty()) {
             return new ResponseEntity<>("Person with ID: " + personId + " cannot be found in the database.", HttpStatus.NOT_FOUND);
         }
+
+        @SuppressWarnings("unused")
+        Long personId = exercise.getPersonId();
 
         Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
         return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);

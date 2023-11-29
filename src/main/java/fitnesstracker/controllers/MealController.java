@@ -2,6 +2,13 @@ package fitnesstracker.controllers;
 
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.MealService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/meals")
+@Tag(name = "Meals", description = "Meal APIs")
 public class MealController {
 
     MealService mealService;
@@ -21,6 +29,12 @@ public class MealController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all Meals", description = "Returns a list of all Meals",
+            tags = {"meals", "get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Meal.class), mediaType = "application/json") }, description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(schema = @Schema()) })
+    })
     public List<Meal> getAllMeals() {
         try {
             return mealService.findAll();
@@ -31,9 +45,16 @@ public class MealController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Meal addMeal(@RequestBody Meal meal) {
+    @Operation(summary = "Add a new Meal", description = "Adds a new Meal",
+            tags = {"meals", "post"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", content = { @Content(schema = @Schema(implementation = Meal.class), mediaType = "application/json") }, description = "Successfully created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(schema = @Schema()) })
+    })
+    public Meal addMeal(@RequestBody @NotNull Meal meal) {
         Meal newMeal;
-        meal.getPersonId();
+        @SuppressWarnings("unused")
+        Long personId = meal.getPersonId();
 
         try {
             newMeal = this.mealService.saveMeal(meal);
@@ -44,6 +65,12 @@ public class MealController {
     }
 
     @GetMapping("/{mealId}")
+    @Operation(summary = "Get a Meal by ID", description = "Returns a Meal based on its ID",
+            tags = {"meals", "get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Meal.class), mediaType = "application/json") }, description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(schema = @Schema()) })
+    })
     public Meal getMealById(@PathVariable Long mealId) {
         Meal meal = mealService.getMealById(mealId);
         if(meal == null)
@@ -56,3 +83,4 @@ public class MealController {
         this.mealService = mealService;
     }
 }
+

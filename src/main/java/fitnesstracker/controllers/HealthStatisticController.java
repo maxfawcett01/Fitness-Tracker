@@ -3,23 +3,21 @@ package fitnesstracker.controllers;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
-@SuppressWarnings("ALL")
 @RestController
-@RequestMapping("/stat")
+@RequestMapping("/stats")
 @Tag(name = "Health Statistics", description = "Health Statistics APIs")
 public class HealthStatisticController {
 
@@ -38,9 +36,6 @@ public class HealthStatisticController {
             @ApiResponse(responseCode = "404", description = "Not found - The Health Statistics were not found", content = { @Content(schema = @Schema()) })
     })
     public List<HealthStatistic> getAllHealthStatistics(
-            @Parameter(description = "Search Health Statistics by date") @RequestParam() LocalDate date,
-            @Parameter(description = "Search Health Statistics by sleep", required = true) @RequestParam(defaultValue = "0") String sleep,
-            @Parameter(description = "Search Health Statistics by weight", required = true) @RequestParam(defaultValue = "0") String weight
     ) {
         return healthStatisticService.getAllHealthStatistics();
     }
@@ -58,8 +53,9 @@ public class HealthStatisticController {
     }
 
     @PostMapping
-    public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody HealthStatistic healthStatistic) {
-        healthStatistic.getPersonId();
+    public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
+        @SuppressWarnings("unused")
+        Long ignoredPersonId = healthStatistic.getPersonId();
         HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
     }
@@ -68,10 +64,5 @@ public class HealthStatisticController {
     public ResponseEntity<Void> deleteHealthStatistic(@PathVariable Long id) {
         healthStatisticService.deleteHealthStatistic(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/all")
-    public List<HealthStatistic> getAllHealthStatisticsForTesting() {
-        return healthStatisticService.getAllHealthStatistics();
     }
 }
