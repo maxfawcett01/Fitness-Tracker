@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fitnesstracker.entities.Person;
 import org.junit.jupiter.api.Test;
 
 class MealTest {
@@ -31,9 +33,11 @@ class MealTest {
 
     @Test
     void testConstructor2() {
+        LocalDate date = null;
+        Person person1 = new Person(1L, "Bob", "bob123", "password1");
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
-        Meal actualMeal = new Meal("Meal Name", "Meal Type", 1, "Cooking Instructions", ingredientList);
+        Meal actualMeal = new Meal(date,"Meal Name", "Meal Type", 1, "Cooking Instructions", ingredientList, person1.getId());
         actualMeal.setCalories(1);
         actualMeal.setCookingInstructions("Cooking Instructions");
         ArrayList<Ingredient> ingredientList1 = new ArrayList<>();

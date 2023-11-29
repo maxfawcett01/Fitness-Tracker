@@ -1,5 +1,6 @@
 package fitnesstracker.services;
 
+import fitnesstracker.entities.Person;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.exceptions.MealServiceException;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +34,7 @@ class MealServiceTest {
 
     @Test
     void testFindAll() {
-        List<Meal> mockMeals = Collections.singletonList(new Meal(/* provide necessary Meal details */));
+        List<Meal> mockMeals = Collections.singletonList(new Meal());
         when(mockMealRepository.findAll()).thenReturn(mockMeals);
 
         List<Meal> result = mealService.findAll();
@@ -73,10 +75,12 @@ class MealServiceTest {
 
     @Test
     void testGetMealById() {
+        LocalDate date = null;
+        Person person1 = new Person(1L, "Bob", "bob123", "password1");
         MealRepository mockMealRepo = mock(MealRepository.class);
         mealService = new MealService(mockMealRepo);
 
-        Meal meal = new Meal("Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>());
+        Meal meal = new Meal(date,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal.getIngredientList().add(new Ingredient(meal, "Chicken"));
         meal.getIngredientList().add(new Ingredient(meal, "Vegetables"));
         meal.getIngredientList().add(new Ingredient(meal, "Soy Sauce"));
