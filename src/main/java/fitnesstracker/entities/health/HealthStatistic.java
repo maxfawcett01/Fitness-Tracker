@@ -1,25 +1,29 @@
 package fitnesstracker.entities.health;
 
-import jakarta.persistence.ElementCollection;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
-@SuppressWarnings("unused")
+
 @Entity
+@Schema(description = "Health Statistics")
 public class HealthStatistic {
 
     @Id
     @GeneratedValue
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "Health Statistics ID", example = "1")
     private Long id;
 
+    @Schema(description = "Date of the Health Statistics", example = "2020-01-01")
     private LocalDate date;
+
+    @Schema(description = "Sleep of the Health Statistics", example = "10")
     private double sleep;
+
+    @Schema(description = "Weight of the Health Statistics", example = "10")
     private double weight;
     private double bloodPressure;
     private double hydration;
