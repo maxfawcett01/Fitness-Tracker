@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/stat")
 @Tag(name = "Health Statistics", description = "Health Statistics APIs")
@@ -58,6 +59,7 @@ public class HealthStatisticController {
 
     @PostMapping
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody HealthStatistic healthStatistic) {
+        healthStatistic.getPersonId();
         HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
     }
@@ -72,5 +74,4 @@ public class HealthStatisticController {
     public List<HealthStatistic> getAllHealthStatisticsForTesting() {
         return healthStatisticService.getAllHealthStatistics();
     }
-
 }
