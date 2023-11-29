@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ExerciseHistoryRepository extends ListCrudRepository<Exercise, Long> {
 
-    Optional<WeightLiftingExercise> findTopByExerciseNameOrderByWeightInKgDesc(String exerciseName);
+    Optional<Exercise> findTopByExerciseNameOrderByWeightInKgDesc(String exerciseName);
 }
