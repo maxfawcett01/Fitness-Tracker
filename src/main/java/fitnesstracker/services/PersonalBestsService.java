@@ -1,25 +1,21 @@
 package fitnesstracker.services;
 
-import fitnesstracker.entities.exercise.Exercise;
-import fitnesstracker.repositories.ExerciseHistoryRepository;
+import fitnesstracker.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonalBestsService {
 
-    ExerciseHistoryRepository exerciseHistoryRepository;
+    ExerciseRepository exerciseRepository;
 
     @Autowired
-    public PersonalBestsService(ExerciseHistoryRepository exerciseHistoryRepository) {
-        this.exerciseHistoryRepository = exerciseHistoryRepository;
+    public PersonalBestsService(ExerciseRepository exerciseRepository) {
+        this.exerciseRepository = exerciseRepository;
     }
 
 //    public List<Exercise> getPersonalBestByExerciseName(String exerciseName) {
-//        List<Exercise> exercises = this.exerciseHistoryRepository.findAll();
+//        List<Exercise> exercises = this.exerciseRepository.findAll();
 //        g
 //        return
 //    }
