@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public class CardioExercise extends Exercise {
 
-    public CardioExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        super(person, exerciseName, startTime, endTime);
+    public CardioExercise(Long personId, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, Integer caloriesBurned) {
+        super(personId, exerciseName, startTime, endTime, caloriesBurned);
     }
 
     public CardioExercise() {}

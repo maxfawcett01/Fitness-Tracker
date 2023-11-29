@@ -44,6 +44,6 @@ public class ExerciseHistoryService {
     }
 
     public List<Exercise> getExerciseByPersonId(Long personId) {
-        return exerciseRepository.findByPerson_Id(personId);
+        return exerciseRepository.findByPersonId(personId);
     }
 }

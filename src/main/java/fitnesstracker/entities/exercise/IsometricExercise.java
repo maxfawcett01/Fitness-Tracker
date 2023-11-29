@@ -1,9 +1,7 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.entities.Person;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 
+import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,8 +16,8 @@ public class IsometricExercise extends Exercise {
         this.targetMuscle = targetMuscle;
     }
 
-    public IsometricExercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        super(person, exerciseName, startTime, endTime);
+    public IsometricExercise(Long personId, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, Integer caloriesBurned) {
+        super(personId, exerciseName, startTime, endTime, caloriesBurned);
     }
 
     public IsometricExercise() {}
