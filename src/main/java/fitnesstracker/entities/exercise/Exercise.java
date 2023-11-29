@@ -14,7 +14,7 @@ public class Exercise {
     @GeneratedValue
     private Long id;
 
-    protected String exerciseName;
+    protected String name;
 
     protected String equipmentRequired;
 
@@ -30,22 +30,9 @@ public class Exercise {
     }
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
     private Person person;
-
-    @Transient
-    private Long personId;
-
-    public Long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Long personId) {
-        this.personId = personId;
-    }
-
-    public String getExerciseName() {
-        return exerciseName;
+    public String getName() {
+        return name;
     }
 
     public String getEquipmentRequired() {
@@ -64,8 +51,8 @@ public class Exercise {
         return description;
     }
 
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName = exerciseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEquipmentRequired(String equipmentRequired) {
@@ -84,8 +71,8 @@ public class Exercise {
         this.description = description;
     }
 
-    public Exercise(Person person, String exerciseName, LocalDateTime startTime, LocalDateTime endTime) {
-        this.exerciseName = exerciseName;
+    public Exercise(Person person, String name, LocalDateTime startTime, LocalDateTime endTime) {
+        this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.person = person;

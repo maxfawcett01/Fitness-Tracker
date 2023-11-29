@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ExerciseHistoryRepository extends ListCrudRepository<Exercise, Long> {
-//    List<Exercise> findExerciseByNameIgnoreCase(String exercise);
+    List<Exercise> findExerciseByNameIgnoreCase(String name);
+    List<Exercise> findByPerson_Id(Long personId);
 }
