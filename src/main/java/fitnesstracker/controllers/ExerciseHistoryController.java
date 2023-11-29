@@ -39,9 +39,9 @@ public class ExerciseHistoryController {
         }
     }
 
-    @GetMapping("/name/{name}")
-    public List<Exercise> getExerciseByName(@PathVariable String name){
-        return exerciseHistoryService.getExerciseByName(name);
+    @GetMapping("/name/{exerciseName}")
+    public List<Exercise> getExerciseByName(@PathVariable String exerciseName){
+        return exerciseHistoryService.getExerciseByName(exerciseName);
     }
 
     @PostMapping
