@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ExerciseHistoryRepository extends ListCrudRepository<Exercise, Long> {
+public interface ExerciseRepository extends ListCrudRepository<Exercise, Long> {
+
     List<Exercise> findExerciseByExerciseNameIgnoreCase(String exerciseName);
-    Optional<WeightLiftingExercise> findTopByExerciseNameOrderByWeightInKgDesc(String exerciseName);
+
     List<Exercise> findByPerson_Id(Long personId);
+
+    Optional<Exercise> findTopByExerciseNameOrderByWeightInKgDesc(String exerciseName);
 }
