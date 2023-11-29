@@ -2,19 +2,25 @@ package fitnesstracker.controllers;
 
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/stat")
-@Api(tags = "Health Statistics")
+@Tag(name = "Health Statistics", description = "Health Statistics APIs")
 public class HealthStatisticController {
 
     private final HealthStatisticService healthStatisticService ;
@@ -25,16 +31,22 @@ public class HealthStatisticController {
     }
 
     @GetMapping
-    @ApiOperation("Get all health statistics")
-    public List<HealthStatistic> getAllHealthStatistics() {
-        List<HealthStatistic> statistics = healthStatisticService.getAllHealthStatistics();
-        System.out.println("Fetched Health Statistics: " + statistics);
-        return statistics;
+    @Operation(summary = "Get all Health Statistics", description = "Returns all Health Statistics as per the id",
+    tags = {"stats", "get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = HealthStatistic.class), mediaType = "application/json") }, description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found - The Health Statistics were not found", content = { @Content(schema = @Schema()) })
+    })
+    public List<HealthStatistic> getAllHealthStatistics(
+            @Parameter(description = "Search Health Statistics by date") @RequestParam() LocalDate date,
+            @Parameter(description = "Search Health Statistics by sleep", required = true) @RequestParam(defaultValue = "0") String sleep,
+            @Parameter(description = "Search Health Statistics by weight", required = true) @RequestParam(defaultValue = "0") String weight
+    ) {
+        return healthStatisticService.getAllHealthStatistics();
     }
 
 
     @GetMapping("/{id}")
-    @ApiOperation("Get a health statistic by ID")
     public ResponseEntity<HealthStatistic> getHealthStatisticById(@PathVariable Long id) {
         HealthStatistic healthStatistic = healthStatisticService.getHealthStatisticById(id);
 
@@ -46,7 +58,6 @@ public class HealthStatisticController {
     }
 
     @PostMapping
-    @ApiOperation("Create a new health statistic")
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody HealthStatistic healthStatistic) {
         healthStatistic.getPersonId();
         HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
@@ -54,14 +65,12 @@ public class HealthStatisticController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation("Delete a health statistic by ID")
     public ResponseEntity<Void> deleteHealthStatistic(@PathVariable Long id) {
         healthStatisticService.deleteHealthStatistic(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/all")
-    @ApiOperation("Get all health statistics for testing purposes")
     public List<HealthStatistic> getAllHealthStatisticsForTesting() {
         return healthStatisticService.getAllHealthStatistics();
     }

@@ -34,7 +34,7 @@ class MealServiceTest {
 
     @Test
     void testFindAll() {
-        List<Meal> mockMeals = Collections.singletonList(new Meal(/* provide necessary Meal details */));
+        List<Meal> mockMeals = Collections.singletonList(new Meal());
         when(mockMealRepository.findAll()).thenReturn(mockMeals);
 
         List<Meal> result = mealService.findAll();
