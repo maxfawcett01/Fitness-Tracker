@@ -43,7 +43,7 @@ public class ExerciseHistoryService {
         return exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
     }
 
-    public List<Exercise> getExerciseByPersonId(Long personId) {
+    public List<Exercise> findByPersonId(Long personId) {
         return exerciseRepository.findByPersonId(personId);
     }
 }

@@ -39,8 +39,8 @@ class PersonalBestServiceTest {
     void testBestWeightFound() {
         Person person = new Person(1L, "Bob", "bob123", "password1");
         personService.savePerson(person);
-        Exercise exercise1 = uut.saveExercise(new WeightLiftingExercise(person, "Bench press", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 100));
-        Exercise exercise2 = uut.saveExercise(new WeightLiftingExercise(person, "Bench press", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 60));
+        Exercise exercise1 = uut.saveExercise(new WeightLiftingExercise(1L, "Bench press", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 100, 10));
+        Exercise exercise2 = uut.saveExercise(new WeightLiftingExercise(1L, "Bench press", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 60, 10));
         Exercise best = uut.getPersonalBestWeightByExerciseNameIgnoreCase("bench press");
 //        assertEquals(exercise1.getId(), best.getId());
     }
