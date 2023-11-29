@@ -37,17 +37,26 @@ public class DataPopulator {
 
 
     public void populateData() {
+
+        LocalDate date = null;
+
+        //*******************************************************************************
+        Person person1 = new Person(1L, "Bob", "bob123", "password1");
+        personService.savePerson(person1);
+        Person person2 = new Person(2L, "Tom", "tom123", "password2");
+        personService.savePerson(person2);
+        //*******************************************************************************
         // Insert sample meals with ingredients
-        Meal meal1 = new Meal("Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>());
+        Meal meal1 = new Meal(date,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal1.getIngredientList().add(new Ingredient(meal1, "Chicken"));
         meal1.getIngredientList().add(new Ingredient(meal1, "Vegetables"));
         meal1.getIngredientList().add(new Ingredient(meal1, "Soy Sauce"));
 
-        Meal meal2 = new Meal("Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>());
+        Meal meal2 = new Meal(date,"Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(), person2.getId());
         meal2.getIngredientList().add(new Ingredient(meal2, "Salmon"));
         meal2.getIngredientList().add(new Ingredient(meal2, "Fresh Salad"));
 
-        Meal meal3 = new Meal("Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>());
+        Meal meal3 = new Meal(date,"Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
         meal3.getIngredientList().add(new Ingredient(meal3, "Pasta"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Tomato Sauce"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Vegetables"));
@@ -59,18 +68,14 @@ public class DataPopulator {
         mealService.saveMeal(meal3);
 
 //*******************************************************************************
-        LocalDate date = null;
-        HealthStatistic healthStatistic1 = new HealthStatistic( date, 23.0,60.0, 80.0, 90.0,480.0, 620.0, 65.0, 10.0);
-
+        HealthStatistic healthStatistic1 = new HealthStatistic( date, 23.0,60.0, 80.0, 90.0,480, 620.0, 65.0, 10.0,person1.getId());
         healthStatisticService.createHealthStatistic(healthStatistic1) ;
-        HealthStatistic healthStatistic2 = new HealthStatistic( date, 24.0,61.0, 81.0, 91.0,481.0, 621.0, 66.0, 11.0);
+        HealthStatistic healthStatistic2 = new HealthStatistic( date, 24.0,61.0, 81.0, 91.0,481, 621.0, 66.0, 11.0,person2.getId());
         healthStatisticService.createHealthStatistic(healthStatistic2) ;
+        HealthStatistic healthStatistic3 = new HealthStatistic( date, 24.0,61.0, 81.0, 91.0,481, 621.0, 66.0, 11.0,person1.getId());
+        healthStatisticService.createHealthStatistic(healthStatistic3) ;
 
-        Person person1 = new Person(1L, "Bob", "bob123", "password1");
-        personService.savePerson(person1);
-        Person person2 = new Person(2L, "Tom", "tom123", "password2");
-        personService.savePerson(person2);
-
+//*******************************************************************************
         Exercise exercise1 = new Exercise(person1,"Barbell rows", LocalDateTime.of(2023, 11, 28, 10, 0), LocalDateTime.of(2023, 11, 28, 11, 0));
         exercise1.setEquipmentRequired("Barbell and free weights");
         exercise1.setDescription("Just do whatever man");

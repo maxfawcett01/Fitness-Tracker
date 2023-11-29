@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -42,13 +43,14 @@
     <form id="addHealthForm">
         Date: <input type="date" name="date" required><br>
         Sleep: <input type="number" name="sleep" required><br>
-        Weight: <input type="number" name="weight" required><br>
+        Weight(KG): <input type="number" name="weight" required><br>
         Blood Pressure: <input type="number" name="bloodPressure" required><br>
         Hydration: <input type="number" name="hydration" required><br>
         Calorie In: <input type="number" name="calorieIn" required><br>
         Calorie Out: <input type="number" name="calorieOut" required><br>
         Heart Rate: <input type="number" name="heartRate" required><br>
         Stress: <input type="number" name="stress" required><br>
+        personId: <input type="number" name="personId" required><br>
 
         <!-- Button with the specified id -->
         <button type="button" id="addHealthBtn">Submit</button>
@@ -62,13 +64,15 @@
         <th>Row Number</th>
         <th>Date</th>
         <th>Sleep</th>
-        <th>Weight</th>
+        <th>Weight(KG)</th>
         <th>Blood Pressure</th>
         <th>Hydration</th>
         <th>Calorie In</th>
         <th>Calorie Out</th>
         <th>Heart Rate</th>
         <th>Stress</th>
+        <th>personId</th>
+
     </tr>
     <!-- Table rows will be populated dynamically using JavaScript -->
 </table>

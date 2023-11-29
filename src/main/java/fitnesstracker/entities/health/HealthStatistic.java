@@ -1,14 +1,11 @@
 package fitnesstracker.entities.health;
 
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 @SuppressWarnings("unused")
 @Entity
@@ -23,16 +20,22 @@ public class HealthStatistic {
     private double weight;
     private double bloodPressure;
     private double hydration;
-    private double calorieIn;
+    private int calorieIn;
     private double calorieOut;
     private double heartRate;
     private double stress;
+
+    @Column(name = "person_id")
+    private Long personId;
+    public Long getPersonId() {
+        return personId;
+    }
 
     // constructors
     public HealthStatistic() {
     }
 
-       public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, double calorieIn, double calorieOut, double heartRate, double stress) {
+    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
         this.date = LocalDate.now();
         this.sleep = sleep;
         this.weight = weight;
@@ -42,6 +45,7 @@ public class HealthStatistic {
         this.calorieOut = calorieOut;
         this.heartRate = heartRate;
         this.stress = stress;
+        this.personId = personId;
     }
 
     // getters, and setters
@@ -81,11 +85,11 @@ public class HealthStatistic {
         this.hydration = hydration;
     }
 
-    public double getCalorieIn() {
+    public int getCalorieIn() {
         return calorieIn;
     }
 
-    public void setCalorieIn(double calorieIn) {
+    public void setCalorieIn(int calorieIn) {
         this.calorieIn = calorieIn;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/stat")
 @Api(tags = "Health Statistics")
@@ -47,6 +48,7 @@ public class HealthStatisticController {
     @PostMapping
     @ApiOperation("Create a new health statistic")
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody HealthStatistic healthStatistic) {
+        healthStatistic.getPersonId();
         HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
     }
@@ -63,5 +65,4 @@ public class HealthStatisticController {
     public List<HealthStatistic> getAllHealthStatisticsForTesting() {
         return healthStatisticService.getAllHealthStatistics();
     }
-
 }
