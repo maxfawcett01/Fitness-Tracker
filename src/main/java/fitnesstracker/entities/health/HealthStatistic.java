@@ -1,6 +1,7 @@
 package fitnesstracker.entities.health;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -43,7 +44,7 @@ public class HealthStatistic {
     }
 
     public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
-        this.date = LocalDate.now();
+        this.date = date != null ? date : LocalDate.now();
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;
