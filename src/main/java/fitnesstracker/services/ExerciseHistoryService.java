@@ -36,7 +36,7 @@ public class ExerciseHistoryService {
     }
 
     public List<Exercise> getExerciseByName(String exerciseName) {
-        return exerciseHistoryRepository.findExerciseByNameIgnoreCase(exerciseName);
+        return exerciseHistoryRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
     }
 
     public List<Exercise> getExerciseByPersonId(Long personId) {
