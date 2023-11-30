@@ -61,9 +61,6 @@ public class ExerciseHistoryController {
             return new ResponseEntity<>("Person with ID: " + personId + " cannot be found in the database.", HttpStatus.NOT_FOUND);
         }
 
-        @SuppressWarnings("unused")
-        Long personId = exercise.getPersonId();
-
         Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
         return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);
     }
