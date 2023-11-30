@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .dashboard-section {
+            border: 1px solid #ddd;
+            overflow: hidden;
+            padding: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        #header {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #4CAF50;
+            padding: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <h1>Fitness Tracker</h1>
+    <div id="date-time"></div>
+</div>
+
+<div class="dashboard-container">
+    <div class="dashboard-section">
+        <h2>Line Graph</h2>
+        <label for="personSelector">Select Person:</label>
+        <select id="personSelector" onchange="updateLineGraphs()">
+            <option value="all">All Persons</option>
+            <!-- Add options for each person dynamically -->
+        </select>
+        <canvas id="lineGraph" height="200"></canvas>
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Pie Chart</h2>
+        <!-- Placeholder for Pie Chart -->
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Bar Graph</h2>
+        <!-- Placeholder for Bar Graph -->
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Heatmap</h2>
+        <!-- Placeholder for Heatmap -->
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Exercise List</h2>
+        <iframe src="exercise.html"></iframe>
+    </div>
+    <div class="dashboard-section">
+        <h2>Health Dashboard</h2>
+        <iframe src="health.html"></iframe>
+    </div>
+    <div class="dashboard-section">
+        <h2>Meal Tracker</h2>
+        <iframe src="meals.html"></iframe>
+    </div>
+</div>
+
+<script>
+    function updateDateTime() {
+        const dateTimeElement = document.getElementById('date-time');
+        const now = new Date();
+        const dateTimeString = now.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+        dateTimeElement.textContent = dateTimeString;
+    }
+
+    setInterval(updateDateTime, 1000); // Update every second
+
+    // Mock data (replace with actual data)
+    const personData = [
+        { personId: 1, weight: [70, 72, 73, 71, 75], calorieIn: [2000, 2100, 2200, 2000, 2300], calorieOut: [300, 400, 350, 320, 450] },
+        { personId: 2, weight: [65, 67, 68, 66, 70], calorieIn: [1800, 1900, 2000, 1800, 2100], calorieOut: [280, 380, 330, 300, 420] },
+        // Add more persons as needed
+    ];
+
+    // Get unique person IDs
+    const personIds = ['all', ...personData.map(person => person.personId)];
+
+    // Populate person selector
+    const personSelector = document.getElementById('personSelector');
+    personIds.forEach(personId => {
+        const option = document.createElement('option');
+        option.value = personId;
+        option.textContent = personId === 'all' ? 'All Persons' : `Person ${personId}`;
+        personSelector.appendChild(option);
+    });
+
+    // Initial line graph setup
+    const lineGraphCanvas = document.getElementById('lineGraph');
+    const lineGraphCtx = lineGraphCanvas.getContext('2d');
+    const lineGraph = new Chart(lineGraphCtx, {
+        type: 'line',
+        data: {
+            labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
+            datasets: [],
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Function to update line graphs based on selected person
+    function updateLineGraphs() {
+        const selectedPersonId = document.getElementById('personSelector').value;
+
+        // Filter data based on selected person
+        const filteredData = selectedPersonId === 'all'
+            ? personData
+            : personData.find(person => person.personId == selectedPersonId);
+
+        // Update line graph data
+        lineGraph.data.datasets = [
+            {
+                label: 'Weight',
+                data: filteredData.weight,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: 'Calorie In',
+                data: filteredData.calorieIn,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false,
+            },
+            {
+                label: 'Calorie Out',
+                data: filteredData.calorieOut,
+                borderColor: 'rgba(255, 205, 86, 1)',
+                borderWidth: 2,
+                fill: false,
+            },
+        ];
+
+        // Update chart
+        lineGraph.update();
+    }
+
+    // Fetch data and update charts
+    async function fetchDataAndPopulateCharts() {
+        // Fetch data for Pie Chart
+        const pieChartData = await fetchPieChartData();
+        const pieChartCanvas = document.getElementById('pieChart');
+        const pieChartCtx = pieChartCanvas.getContext('2d');
+        const pieChart = new Chart(pieChartCtx, {
+            type: 'pie',
+            data: pieChartData,
+        });
+
+        // Fetch data for Bar Graph
+        const barGraphData = await fetchBarGraphData();
+        const barGraphCanvas = document.getElementById('barGraph');
+        const barGraphCtx = barGraphCanvas.getContext('2d');
+        const barGraph = new Chart(barGraphCtx, {
+            type: 'bar',
+            data: barGraphData,
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Fetch data for Heatmap
+        const heatmapData = await fetchHeatmapData();
+        const heatmapContainer = document.getElementById('heatmap-container');
+        const heatmapInstance = h337.create({
+            container: heatmapContainer,
+        });
+        heatmapInstance.addData(heatmapData);
+    }
+
+    // Update date-time and charts on page load
+    updateDateTime();
+    fetchDataAndPopulateCharts();
+    updateLineGraphs(); // Call this function to populate the line graph
+
+    // Function to fetch data for the Pie Chart
+    async function fetchPieChartData() {
+        // Replace this with actual data fetching logic
+        return {
+            labels: ['Label 1', 'Label 2', 'Label 3'],
+            datasets: [{
+                data: [30, 50, 20],
+                backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', 'rgba(255, 205, 86, 1)'],
+            }],
+        };
+    }
+
+    // Function to fetch data for the Bar Graph
+    async function fetchBarGraphData() {
+        // Replace this with actual data fetching logic
+        return {
+            labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
+            datasets: [{
+                label: 'Dataset 1',
+                data: [12, 19, 3, 5, 2],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+            }],
+        };
+    }
+
+    // Function to fetch data for the Heatmap
+    async function fetchHeatmapData() {
+        // Replace this with actual data fetching logic
+        return [
+            { x: 10, y: 20, value: 5 },
+            // Add more data points as needed
+        ];
+    }
+</script>
+</body>
+</html>
