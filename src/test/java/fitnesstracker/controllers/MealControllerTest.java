@@ -1,7 +1,7 @@
 package fitnesstracker.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fitnesstracker.TestUtilities;
+import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.MealService;
 import org.junit.jupiter.api.Test;

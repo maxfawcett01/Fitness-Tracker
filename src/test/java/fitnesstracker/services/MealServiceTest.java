@@ -80,7 +80,7 @@ class MealServiceTest {
         MealRepository mockMealRepo = mock(MealRepository.class);
         mealService = new MealService(mockMealRepo);
 
-        Meal meal = new Meal(date,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
+        Meal meal = new Meal(null,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal.getIngredientList().add(new Ingredient(meal, "Chicken"));
         meal.getIngredientList().add(new Ingredient(meal, "Vegetables"));
         meal.getIngredientList().add(new Ingredient(meal, "Soy Sauce"));
@@ -89,6 +89,28 @@ class MealServiceTest {
         Meal actual = mealService.getMealById(1L);
 
         assertEquals(meal.getMealName(), actual.getMealName());
+    }
+
+    @Test
+    void testRepoIsEmptyWhenEmpty() {
+        when(mockMealRepository.findAll()).thenReturn(Collections.emptyList());
+
+        boolean result = mealService.repoIsEmpty();
+
+        // Assert
+        assertTrue(result);
+        verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testRepoIsEmptyWhenNotEmpty() {
+        List<Meal> nonEmptyList = List.of(new Meal());
+        when(mockMealRepository.findAll()).thenReturn(nonEmptyList);
+
+        boolean result = mealService.repoIsEmpty();
+
+        assertFalse(result);
+        verify(mockMealRepository, times(1)).findAll();
     }
 }
 
