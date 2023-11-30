@@ -33,31 +33,25 @@ public class PersonalBestService {
     public Exercise getPersonalBestDistanceByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
         List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
         List<DistanceCardioExercise> distanceCardioExercises = new ArrayList<>();
-
         for (Exercise exercise : exercises) {
-            if (exercise instanceof DistanceCardioExercise distancecardioexercise) {
-                distanceCardioExercises.add(distancecardioexercise);
+            if (exercise instanceof DistanceCardioExercise) {
+                distanceCardioExercises.add((DistanceCardioExercise) exercise);
             }
         }
-
         distanceCardioExercises.sort(new SortByDistance());
-
-        return distanceCardioExercises.isEmpty() ? null : distanceCardioExercises.get(0);
+        return exercises.get(0);
     }
 
     public Exercise getPersonalBestWeightByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
         List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
         List<WeightLiftingExercise> weightLiftingExercises = new ArrayList<>();
-
         for (Exercise exercise : exercises) {
-            if (exercise instanceof WeightLiftingExercise weightLiftingExercise) {
-                weightLiftingExercises.add(weightLiftingExercise);
+            if (exercise instanceof WeightLiftingExercise) {
+                weightLiftingExercises.add((WeightLiftingExercise) exercise);
             }
         }
-
         weightLiftingExercises.sort(new SortByWeight());
-
-        return weightLiftingExercises.isEmpty() ? null : weightLiftingExercises.get(0);
+        return exercises.get(0);
     }
 
     public Exercise getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
