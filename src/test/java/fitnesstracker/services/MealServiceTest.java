@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -97,7 +98,6 @@ class MealServiceTest {
 
         boolean result = mealService.repoIsEmpty();
 
-        // Assert
         assertTrue(result);
         verify(mockMealRepository, times(1)).findAll();
     }
@@ -111,6 +111,22 @@ class MealServiceTest {
 
         assertFalse(result);
         verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetMealByPersonIdAndDate() {
+        Long personId = 1L;
+        LocalDate date = LocalDate.now();
+        List<Meal> expectedMeals = List.of(new Meal());
+
+        when(mockMealRepository.findByPersonIdAndDate(personId, date))
+                .thenReturn(expectedMeals);
+
+        List<Meal> actualMeals = mealService.getMealByPersonIdAndDate(personId, date);
+
+        assertThat(actualMeals).isEqualTo(expectedMeals);
+
+        verify(mockMealRepository, times(1)).findByPersonIdAndDate(personId, date);
     }
 }
 
