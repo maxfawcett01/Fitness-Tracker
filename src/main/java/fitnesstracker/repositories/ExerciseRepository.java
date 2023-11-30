@@ -11,4 +11,5 @@ public interface ExerciseRepository extends ListCrudRepository<Exercise, Long> {
 
     List<Exercise> findExerciseByExerciseNameIgnoreCase(String exerciseName);
     List<Exercise> findByPersonId(Long personId);
+    List<Exercise> findExerciseByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName);
 }
