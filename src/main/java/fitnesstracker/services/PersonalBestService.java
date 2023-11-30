@@ -7,6 +7,7 @@ import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.exercise.StrengthTrainingExercise;
 import fitnesstracker.entities.exercise.WeightLiftingExercise;
 import fitnesstracker.repositories.ExerciseRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,90 +23,53 @@ public class PersonalBestService {
         this.exerciseRepository = exerciseRepository;
     }
 
-    public Exercise getPersonalBestDurationByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
+    public <T extends Exercise> Exercise getPersonalBestByPersonIdAndExerciseNameIgnoreCase(
+            Long personId, String exerciseName, Comparator<T> comparator, Class<T> typeToken) {
         try {
             List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
-            exercises.sort(new SortByDuration());
-            return exercises.get(0);
+            List<T> typedExercises = new ArrayList<>(exercises.size());
+
+            for (Exercise exercise : exercises) {
+                if (typeToken.isInstance(exercise)) {
+                    typedExercises.add(typeToken.cast(exercise));
+                }
+            }
+
+            typedExercises.sort(comparator);
+            return typedExercises.isEmpty() ? null : typedExercises.get(0);
         } catch (IndexOutOfBoundsException ioobe) {
             return null;
         }
+    }
+
+
+    public Exercise getPersonalBestDurationByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
+        return getPersonalBestByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName, new SortByDuration(), Exercise.class);
     }
 
     public Exercise getPersonalBestDistanceByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
-        try {
-            List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
-            List<DistanceCardioExercise> distanceCardioExercises = new ArrayList<>();
-            for (Exercise exercise : exercises) {
-                if (exercise instanceof DistanceCardioExercise) {
-                    distanceCardioExercises.add((DistanceCardioExercise) exercise);
-                }
-            }
-            distanceCardioExercises.sort(new SortByDistance());
-            return distanceCardioExercises.get(0);
-        } catch (IndexOutOfBoundsException ioobe) {
-            return null;
-        }
+        return getPersonalBestByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName, new SortByDistance(), DistanceCardioExercise.class);
     }
 
     public Exercise getPersonalBestWeightByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
-        try {
-            List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
-            List<WeightLiftingExercise> weightLiftingExercises = new ArrayList<>();
-            for (Exercise exercise : exercises) {
-                if (exercise instanceof WeightLiftingExercise) {
-                    weightLiftingExercises.add((WeightLiftingExercise) exercise);
-                }
-            }
-            weightLiftingExercises.sort(new SortByWeight());
-            Collections.reverse(weightLiftingExercises);
-            return weightLiftingExercises.get(0);
-        } catch (IndexOutOfBoundsException ioobe) {
-            return null;
-        }
+        return getPersonalBestByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName, new SortByWeight(), WeightLiftingExercise.class);
     }
 
     public Exercise getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
-        try {
-            List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
-            List<StrengthTrainingExercise> strengthTrainingExercises = new ArrayList<>();
-            for (Exercise exercise : exercises) {
-                if (exercise instanceof StrengthTrainingExercise) {
-                    strengthTrainingExercises.add((StrengthTrainingExercise) exercise);
-                }
-            }
-            strengthTrainingExercises.sort(new SortByReps());
-            Collections.reverse(strengthTrainingExercises);
-            return strengthTrainingExercises.get(0);
-        } catch (IndexOutOfBoundsException ioobe) {
-            return null;
-        }
+        return getPersonalBestByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName, new SortByReps(), StrengthTrainingExercise.class);
     }
 
     public Exercise getPersonalBestSetsByPersonIdAndExerciseNameIgnoreCase(Long personId, String exerciseName) {
-        try {
-            List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
-            List<StrengthTrainingExercise> strengthTrainingExercises = new ArrayList<>();
-            for (Exercise exercise : exercises) {
-                if (exercise instanceof StrengthTrainingExercise) {
-                    strengthTrainingExercises.add((StrengthTrainingExercise) exercise);
-                }
-            }
-            strengthTrainingExercises.sort(new SortBySets());
-            Collections.reverse(strengthTrainingExercises);
-            return strengthTrainingExercises.get(0);
-        } catch (IndexOutOfBoundsException ioobe) {
-            return null;
-        }
+        return getPersonalBestByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName, new SortBySets(), StrengthTrainingExercise.class);
     }
 
     public List<Exercise> getPersonalBestDurationByPersonId(Long personId) {
         List<Exercise> exercisesById = exerciseRepository.findByPersonId(personId);
-        List<Exercise> bestDurationExercises = new ArrayList<>();
         Set<String> exerciseNames = new HashSet<>();
         for (Exercise exercise : exercisesById) {
             exerciseNames.add(exercise.getExerciseName().toLowerCase());
         }
+        List<Exercise> bestDurationExercises = new ArrayList<>();
         for (String exerciseName : exerciseNames) {
             bestDurationExercises.add(getPersonalBestDurationByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName));
         }
@@ -114,12 +78,8 @@ public class PersonalBestService {
     }
 
     public List<Exercise> getPersonalBestDistanceByPersonId(Long personId) {
-        List<Exercise> exercisesById = exerciseRepository.findByPersonId(personId);
+        Set<String> exerciseNames = getExerciseNames(personId);
         List<Exercise> bestDistanceExercises = new ArrayList<>();
-        Set<String> exerciseNames = new HashSet<>();
-        for (Exercise exercise : exercisesById) {
-            exerciseNames.add(exercise.getExerciseName().toLowerCase());
-        }
         for (String exerciseName : exerciseNames) {
             bestDistanceExercises.add(getPersonalBestDistanceByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName));
         }
@@ -127,14 +87,19 @@ public class PersonalBestService {
         return bestDistanceExercises;
     }
 
-    public List<Exercise> getPersonalBestWeightByPersonId(Long personId) {
+    @NotNull
+    private Set<String> getExerciseNames(Long personId) {
         List<Exercise> exercisesById = exerciseRepository.findByPersonId(personId);
-        List<Exercise> bestWeightExercises = new ArrayList<>();
         Set<String> exerciseNames = new HashSet<>();
         for (Exercise exercise : exercisesById) {
             exerciseNames.add(exercise.getExerciseName().toLowerCase());
         }
-        for (String exerciseName : exerciseNames) {
+        return exerciseNames;
+    }
+
+    public List<Exercise> getPersonalBestWeightByPersonId(Long personId) {
+        List<Exercise> bestWeightExercises = new ArrayList<>();
+        for (String exerciseName : getExerciseNames(personId)) {
             bestWeightExercises.add(getPersonalBestWeightByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName));
         }
         Iterables.removeIf(bestWeightExercises, Objects::isNull);
@@ -142,13 +107,8 @@ public class PersonalBestService {
     }
 
     public List<Exercise> getPersonalBestRepsByPersonId(Long personId) {
-        List<Exercise> exercisesById = exerciseRepository.findByPersonId(personId);
         List<Exercise> bestRepsExercises = new ArrayList<>();
-        Set<String> exerciseNames = new HashSet<>();
-        for (Exercise exercise : exercisesById) {
-            exerciseNames.add(exercise.getExerciseName().toLowerCase());
-        }
-        for (String exerciseName : exerciseNames) {
+        for (String exerciseName : getExerciseNames(personId)) {
             bestRepsExercises.add(getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName));
         }
         Iterables.removeIf(bestRepsExercises, Objects::isNull);
@@ -156,13 +116,8 @@ public class PersonalBestService {
     }
 
     public List<Exercise> getPersonalBestSetsByPersonId(Long personId) {
-        List<Exercise> exercisesById = exerciseRepository.findByPersonId(personId);
         List<Exercise> bestSetsExercises = new ArrayList<>();
-        Set<String> exerciseNames = new HashSet<>();
-        for (Exercise exercise : exercisesById) {
-            exerciseNames.add(exercise.getExerciseName().toLowerCase());
-        }
-        for (String exerciseName : exerciseNames) {
+        for (String exerciseName : getExerciseNames(personId)) {
             bestSetsExercises.add(getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName));
         }
         Iterables.removeIf(bestSetsExercises, Objects::isNull);

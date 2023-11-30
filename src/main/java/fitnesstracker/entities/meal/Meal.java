@@ -1,6 +1,5 @@
 package fitnesstracker.entities.meal;
 
-import fitnesstracker.entities.health.HealthStatistic;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.time.LocalDate;
