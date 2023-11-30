@@ -76,7 +76,6 @@ class MealServiceTest {
 
     @Test
     void testGetMealById() {
-        LocalDate date = null;
         Person person1 = new Person(1L, "Bob", "bob123", "password1");
         MealRepository mockMealRepo = mock(MealRepository.class);
         mealService = new MealService(mockMealRepo);

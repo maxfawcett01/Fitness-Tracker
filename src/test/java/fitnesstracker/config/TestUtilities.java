@@ -2,6 +2,7 @@ package fitnesstracker.config;
 
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestUtilities {
+
     public static @NotNull ArrayList<Meal> getMealList() {
         Person person1 = new Person(1L, "Bob", "bob123", "password1");
         ArrayList<Meal> meals = new ArrayList<>();
@@ -35,6 +37,7 @@ public class TestUtilities {
         return meals;
     }
 
+
     public static @NotNull List<Exercise> getExerciseList() {
         Exercise exercise1 = new Exercise(1L, "running", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
         Exercise exercise2 = new Exercise(123L, "Weights", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
@@ -45,5 +48,19 @@ public class TestUtilities {
         exercises.add(exercise2);
         exercises.add(exercise3);
         return exercises;
+  
+    public static ArrayList<HealthStatistic> getStatsList() {
+        Person person2 = new Person(1L, "Tom", "tom123", "password1");
+        ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
+        HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
+        HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+        HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+        HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+
+        healthStatistics.add(healthStatistic1);
+        healthStatistics.add(healthStatistic2);
+        healthStatistics.add(healthStatistic3);
+        healthStatistics.add(healthStatistic4);
+        return  healthStatistics;
     }
 }

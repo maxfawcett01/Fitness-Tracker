@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.List;
 @Tag(name = "Health Statistics", description = "Health Statistics APIs")
 public class HealthStatisticController {
 
-    private final HealthStatisticService healthStatisticService ;
+    private final HealthStatisticService healthStatisticService;
 
     @Autowired
     public HealthStatisticController(HealthStatisticService healthStatisticService) {
@@ -30,24 +31,22 @@ public class HealthStatisticController {
 
     @GetMapping
     @Operation(summary = "Get all Health Statistics", description = "Returns all Health Statistics as per the id",
-    tags = {"stats", "get"})
+            tags = {"stats", "get"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = HealthStatistic.class), mediaType = "application/json") }, description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "404", description = "Not found - The Health Statistics were not found", content = { @Content(schema = @Schema()) })
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = HealthStatistic.class), mediaType = "application/json")}, description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found - The Health Statistics were not found", content = {@Content(schema = @Schema())})
     })
     public List<HealthStatistic> getAllHealthStatistics(
     ) {
         return healthStatisticService.getAllHealthStatistics();
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<HealthStatistic> getHealthStatisticById(@PathVariable Long id) {
-        HealthStatistic healthStatistic = healthStatisticService.getHealthStatisticById(id);
-
-        if (healthStatistic != null) {
+        try {
+            HealthStatistic healthStatistic = healthStatisticService.getHealthStatisticById(id);
             return ResponseEntity.ok(healthStatistic);
-        } else {
+        } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -55,8 +54,9 @@ public class HealthStatisticController {
     @PostMapping
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
         @SuppressWarnings("unused")
-        Long ignoredPersonId = healthStatistic.getPersonId();
+        Long ignorePersonId = healthStatistic.getPersonId();
         HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
     }
 

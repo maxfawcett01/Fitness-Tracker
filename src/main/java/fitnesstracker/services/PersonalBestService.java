@@ -28,14 +28,13 @@ public class PersonalBestService {
         try {
             List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
             List<T> typedExercises = new ArrayList<>(exercises.size());
-
             for (Exercise exercise : exercises) {
                 if (typeToken.isInstance(exercise)) {
                     typedExercises.add(typeToken.cast(exercise));
                 }
             }
-
             typedExercises.sort(comparator);
+            Collections.reverse(typedExercises);
             return typedExercises.isEmpty() ? null : typedExercises.get(0);
         } catch (IndexOutOfBoundsException ioobe) {
             return null;
@@ -134,5 +133,4 @@ public class PersonalBestService {
     public Exercise saveExercise(Exercise exercise) {
         return exerciseRepository.save(exercise);
     }
-
 }
