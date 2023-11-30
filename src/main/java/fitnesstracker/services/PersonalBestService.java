@@ -26,6 +26,7 @@ public class PersonalBestService {
         try {
             List<Exercise> exercises = exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
             exercises.sort(new SortByDuration());
+            Collections.reverse(exercises);
             return exercises.get(0);
         } catch (IndexOutOfBoundsException ioobe) {
             return null;
@@ -42,6 +43,7 @@ public class PersonalBestService {
                 }
             }
             distanceCardioExercises.sort(new SortByDistance());
+            Collections.reverse(distanceCardioExercises);
             return distanceCardioExercises.get(0);
         } catch (IndexOutOfBoundsException ioobe) {
             return null;
@@ -179,5 +181,4 @@ public class PersonalBestService {
     public Exercise saveExercise(Exercise exercise) {
         return exerciseRepository.save(exercise);
     }
-
 }
