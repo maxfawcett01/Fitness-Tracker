@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -85,6 +89,43 @@ class MealServiceTest {
         Meal actual = mealService.getMealById(1L);
 
         assertEquals(meal.getMealName(), actual.getMealName());
+    }
+
+    @Test
+    void testRepoIsEmptyWhenEmpty() {
+        when(mockMealRepository.findAll()).thenReturn(Collections.emptyList());
+
+        boolean result = mealService.repoIsEmpty();
+
+        assertTrue(result);
+        verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testRepoIsEmptyWhenNotEmpty() {
+        List<Meal> nonEmptyList = List.of(new Meal());
+        when(mockMealRepository.findAll()).thenReturn(nonEmptyList);
+
+        boolean result = mealService.repoIsEmpty();
+
+        assertFalse(result);
+        verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetMealByPersonIdAndDate() {
+        Long personId = 1L;
+        LocalDate date = LocalDate.now();
+        List<Meal> expectedMeals = List.of(new Meal());
+
+        when(mockMealRepository.findByPersonIdAndDate(personId, date))
+                .thenReturn(expectedMeals);
+
+        List<Meal> actualMeals = mealService.getMealByPersonIdAndDate(personId, date);
+
+        assertThat(actualMeals).isEqualTo(expectedMeals);
+
+        verify(mockMealRepository, times(1)).findByPersonIdAndDate(personId, date);
     }
 }
 
