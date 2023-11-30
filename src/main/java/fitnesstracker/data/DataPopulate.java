@@ -68,12 +68,12 @@ public class DataPopulate {
             mealService.saveMeal(meal3);
 
 //*******************************************************************************
-            Exercise exercise1 = new Exercise(person1.getId(), "Barbell rows", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 250);
+            Exercise exercise1 = new WeightLiftingExercise(person1.getId(), "Barbell rows", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 250, 5, 5,12);
             exercise1.setEquipmentRequired("Barbell and free weights");
             exercise1.setDescription("Just do whatever man");
             exerciseHistoryService.addExercise(exercise1);
 
-            Exercise exercise2 = new Exercise(person2.getId(), "Bench press", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 200);
+            Exercise exercise2 = new WeightLiftingExercise(person1.getId(), "Deadlifts", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 250, 5, 5,50);
             exercise2.setEquipmentRequired("Barbell and free weights");
             exercise2.setDescription("Just don't pop your shoulder");
             exerciseHistoryService.addExercise(exercise2);
