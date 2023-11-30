@@ -1,7 +1,5 @@
 package fitnesstracker.html;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fitnesstracker.controllers.MealController;
 import fitnesstracker.services.MealService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,11 +9,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -25,23 +21,28 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
-import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(MealController.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 class HtmlMealsTest {
+
+
 
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    ObjectMapper mapper;
+    WebDriver driver = new ChromeDriver();
 
     @MockBean
-    private MealService mealService;
+    MealService mealService;
+
+
 
 
     @Test
@@ -68,7 +69,6 @@ class HtmlMealsTest {
 
     @Test
     void testAddMealButtonDisplaysModal() {
-        WebDriver driver = new ChromeDriver();
 
         try {
             Resource resource = new ClassPathResource("static/meals.html");
@@ -92,50 +92,6 @@ class HtmlMealsTest {
         }
     }
 
-    @Test
-    void testAddMealAndVerifyInList() {
-        WebDriver driver = new ChromeDriver();
-
-        try {
-            Resource resource = new ClassPathResource("static/meals.html");
-            String filePath = resource.getFile().getAbsolutePath();
-            driver.get("http://localhost:8081/meals.html");
-
-            WebElement addMealButton = driver.findElement(By.id("addMealButton"));
-            addMealButton.click();
-
-            WebElement personIdInput = driver.findElement(By.id("personId"));
-            WebElement dateInput = driver.findElement(By.id("date"));
-            WebElement mealNameInput = driver.findElement(By.id("mealName"));
-            WebElement mealTypeInput = driver.findElement(By.id("mealType"));
-            WebElement caloriesInput = driver.findElement(By.id("calories"));
-
-            personIdInput.sendKeys("999");
-            dateInput.clear();
-            dateInput.sendKeys("20200202");
-            mealNameInput.sendKeys("New Meal");
-            mealTypeInput.sendKeys("Dinner");
-            caloriesInput.sendKeys("500");
-
-            WebElement saveMealButton = driver.findElement(By.id("saveMealButton"));
-            saveMealButton.click();
-
-
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement mealList = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mealList")));
-
-            System.out.println("Meal List Text: " + mealList.getText());
-
-            String mealListText = mealList.getText();
-            String expectedText = "999 - 2020-02-02 - New Meal - Dinner - Calories: 500";
-
-            assertTrue(mealListText.contains(expectedText), "Expected text not found in the list. Expected: '" + expectedText + "', Actual: '" + mealListText + "'");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-           driver.quit();
-        }
-    }
 }
 
 

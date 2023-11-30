@@ -21,28 +21,33 @@ public class PersonalBestController {
     }
 
     @GetMapping("/weight/{personId}/{exerciseName}")
-    public Exercise getPersonalBestWeightByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
-        return this.personalBestService.getPersonalBestWeightByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+    public List<Exercise> getPersonalBestWeightByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
+        Exercise exercise = this.personalBestService.getPersonalBestWeightByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+        return this.personalBestService.listifyIfNotNull(exercise);
     }
 
     @GetMapping("/duration/{personId}/{exerciseName}")
-    public Exercise getPersonalBestDurationByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
-        return this.personalBestService.getPersonalBestDurationByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+    public List<Exercise> getPersonalBestDurationByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
+        Exercise exercise = this.personalBestService.getPersonalBestDurationByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+        return this.personalBestService.listifyIfNotNull(exercise);
     }
 
     @GetMapping("/distance/{personId}/{exerciseName}")
-    public Exercise getPersonalBestDistanceByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
-        return this.personalBestService.getPersonalBestDistanceByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+    public List<Exercise> getPersonalBestDistanceByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
+        Exercise exercise = this.personalBestService.getPersonalBestDistanceByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+        return this.personalBestService.listifyIfNotNull(exercise);
     }
 
     @GetMapping("/reps/{personId}/{exerciseName}")
-    public Exercise getPersonalBestRepsByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
-        return this.personalBestService.getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+    public List<Exercise> getPersonalBestRepsByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
+        Exercise exercise = this.personalBestService.getPersonalBestRepsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+        return this.personalBestService.listifyIfNotNull(exercise);
     }
 
     @GetMapping("/sets/{personId}/{exerciseName}")
-    public Exercise getPersonalBestSetsByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
-        return this.personalBestService.getPersonalBestSetsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+    public List<Exercise> getPersonalBestSetsByExerciseNameAndPersonId(@PathVariable Long personId, @PathVariable String exerciseName) {
+        Exercise exercise = this.personalBestService.getPersonalBestSetsByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName);
+        return this.personalBestService.listifyIfNotNull(exercise);
     }
 
     @GetMapping("/weight/{personId}")

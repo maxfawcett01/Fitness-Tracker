@@ -10,6 +10,6 @@ public class SortByWeight implements Comparator<WeightLiftingExercise> {
 
     @Override
     public int compare(WeightLiftingExercise a, WeightLiftingExercise b) {
-        return (int) signum(a.getWeightInKg()- b.getWeightInKg());
+        return (int) signum(a.getWeightInKg() - b.getWeightInKg());
     }
 }

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -80,7 +81,7 @@ class MealServiceTest {
         MealRepository mockMealRepo = mock(MealRepository.class);
         mealService = new MealService(mockMealRepo);
 
-        Meal meal = new Meal(date,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
+        Meal meal = new Meal(null,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal.getIngredientList().add(new Ingredient(meal, "Chicken"));
         meal.getIngredientList().add(new Ingredient(meal, "Vegetables"));
         meal.getIngredientList().add(new Ingredient(meal, "Soy Sauce"));
@@ -89,6 +90,43 @@ class MealServiceTest {
         Meal actual = mealService.getMealById(1L);
 
         assertEquals(meal.getMealName(), actual.getMealName());
+    }
+
+    @Test
+    void testRepoIsEmptyWhenEmpty() {
+        when(mockMealRepository.findAll()).thenReturn(Collections.emptyList());
+
+        boolean result = mealService.repoIsEmpty();
+
+        assertTrue(result);
+        verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testRepoIsEmptyWhenNotEmpty() {
+        List<Meal> nonEmptyList = List.of(new Meal());
+        when(mockMealRepository.findAll()).thenReturn(nonEmptyList);
+
+        boolean result = mealService.repoIsEmpty();
+
+        assertFalse(result);
+        verify(mockMealRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetMealByPersonIdAndDate() {
+        Long personId = 1L;
+        LocalDate date = LocalDate.now();
+        List<Meal> expectedMeals = List.of(new Meal());
+
+        when(mockMealRepository.findByPersonIdAndDate(personId, date))
+                .thenReturn(expectedMeals);
+
+        List<Meal> actualMeals = mealService.getMealByPersonIdAndDate(personId, date);
+
+        assertThat(actualMeals).isEqualTo(expectedMeals);
+
+        verify(mockMealRepository, times(1)).findByPersonIdAndDate(personId, date);
     }
 }
 
