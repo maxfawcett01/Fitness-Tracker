@@ -31,7 +31,7 @@ public class ExerciseHistoryController {
         return exercises;
     }
 
-    @GetMapping("/{exerciseId}")
+    @GetMapping("/exercise/{exerciseId}")
     public ResponseEntity<Exercise> getExerciseById(@PathVariable long exerciseId) {
         Exercise exercise = exerciseHistoryService.getExerciseById(exerciseId);
         if (exercise != null) {
@@ -47,12 +47,9 @@ public class ExerciseHistoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> addNewExercise(@RequestBody @Valid Exercise exercise, BindingResult result) {
+    public ResponseEntity<Object> addNewExercise(@RequestBody(required = false) @Valid Exercise exercise, BindingResult result) {
         if (exercise == null) {
-            return new ResponseEntity<>("Request body is empty.", HttpStatus.BAD_REQUEST);
-        }
-        if (result.hasErrors()) {
-            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Request body is empty. Please provide a request body!", HttpStatus.BAD_REQUEST);
         }
         Long personId = exercise.getPersonId();
 
@@ -61,22 +58,23 @@ public class ExerciseHistoryController {
             return new ResponseEntity<>("Person with ID: " + personId + " cannot be found in the database.", HttpStatus.NOT_FOUND);
         }
 
-        @SuppressWarnings("unused")
-        Long personId = exercise.getPersonId();
-
         Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
         return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/exercise/{id}")
     public void deleteExercise(@PathVariable long id){
         exerciseHistoryService.deleteById(id);
     }
 
     @GetMapping("/person/{personId}")
-    public List<Exercise> findByPersonId(@PathVariable Long personId) {
+    public List<Exercise> findAllExercisesByPersonId(@PathVariable Long personId) {
         return exerciseHistoryService.findByPersonId(personId);
     }
 
+    @GetMapping("/person/{personId}/{exerciseName}")
+    public List<Exercise> findAllExercisesByPersonIdAndExerciseName(@PathVariable  Long personId, @PathVariable String exerciseName) {
+        return exerciseHistoryService.findExerciseByPersonIdAndExerciseName(personId, exerciseName);
+    }
 }
