@@ -8,16 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.List;
 
-@SuppressWarnings("unused")
+
 @Entity
+@Schema(description = "Health Statistics")
 public class HealthStatistic {
 
     @Id
     @GeneratedValue
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "Health Statistics ID", example = "1")
     private Long id;
 
+    @Schema(description = "Date of the Health Statistics", example = "2020-01-01")
     private LocalDate date;
+
+    @Schema(description = "Sleep of the Health Statistics", example = "10")
     private double sleep;
+
+    @Schema(description = "Weight of the Health Statistics", example = "10")
     private double weight;
     private double bloodPressure;
     private double hydration;
@@ -49,9 +56,9 @@ public class HealthStatistic {
     public HealthStatistic() {
     }
 
-    @Autowired
-    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, int calorieOut, double heartRate, double stress, Long personId) {
-        this.date = LocalDate.now();
+    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
+        this.date = date != null ? date : LocalDate.now();
+
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;

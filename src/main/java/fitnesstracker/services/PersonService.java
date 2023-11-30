@@ -14,6 +14,10 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
+    public boolean repoIsEmpty() {
+        return personRepository.findAll().isEmpty();
+    }
+
     public Person savePerson(Person person){
         return this.personRepository.save(person);
 

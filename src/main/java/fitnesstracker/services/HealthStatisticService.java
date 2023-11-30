@@ -23,6 +23,10 @@ public class HealthStatisticService {
         this.mealService = mealService;
     }
 
+    public boolean repoIsEmpty() {
+        return healthStatisticRepository.findAll().isEmpty();
+    }
+
     public List<HealthStatistic> getAllHealthStatistics() {
         return healthStatisticRepository.findAll();
     }
