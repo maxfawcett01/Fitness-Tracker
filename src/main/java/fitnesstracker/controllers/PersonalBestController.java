@@ -1,7 +1,6 @@
 package fitnesstracker.controllers;
 
 import fitnesstracker.entities.exercise.Exercise;
-import fitnesstracker.services.ExerciseHistoryService;
 import fitnesstracker.services.PersonalBestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

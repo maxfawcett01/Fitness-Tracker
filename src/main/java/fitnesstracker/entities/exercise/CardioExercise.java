@@ -1,9 +1,7 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.entities.Person;
 import jakarta.persistence.MappedSuperclass;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 
