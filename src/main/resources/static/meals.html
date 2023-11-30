@@ -17,6 +17,12 @@
 
 <div id="addMealModal" style="display: none;">
     <h3>Add Meal</h3>
+    <label for="personId">Person ID:</label>
+    <input type="text" id="personId" name="personId" required>
+    <br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" pattern="\d{4}" min="1000-01-01" max="9999-12-31" required>
+    <br>
     <label for="mealName">Meal Name:</label>
     <input type="text" id="mealName" name="mealName" required>
     <br>
@@ -40,7 +46,7 @@
                 data.forEach(meal => {
                     const listItem = document.createElement('li');
                     listItem.className = 'list-group-item';
-                    listItem.textContent = `${meal.mealName} - ${meal.mealType} - Calories: ${meal.calories}`;
+                    listItem.textContent = `${meal.personId} - ${meal.date} - ${meal.mealName} - ${meal.mealType} - Calories: ${meal.calories}`;
                     mealList.appendChild(listItem);
                 });
             })
@@ -52,6 +58,8 @@
     });
 
     document.getElementById('saveMealButton').addEventListener('click', function() {
+        const personId = document.getElementById('personId').value;
+        const date = document.getElementById('date').value;
         const mealName = document.getElementById('mealName').value;
         const mealType = document.getElementById('mealType').value;
         const calories = document.getElementById('calories').value;
@@ -62,6 +70,8 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                personId: personId,
+                date: date,
                 mealName: mealName,
                 mealType: mealType,
                 calories: calories,
@@ -69,6 +79,8 @@
         })
         .then(response => {
             if (response.ok) {
+                document.getElementById('personId').value = '';
+                document.getElementById('date').value = '';
                 document.getElementById('mealName').value = '';
                 document.getElementById('mealType').value = '';
                 document.getElementById('calories').value = '';

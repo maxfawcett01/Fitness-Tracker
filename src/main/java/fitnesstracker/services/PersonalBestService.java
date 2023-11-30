@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonalBestService {
@@ -33,26 +32,34 @@ public class PersonalBestService {
     public Exercise getPersonalBestDistanceByExerciseNameIgnoreCase(String exerciseName) {
         List<Exercise> exercises = exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
         List<DistanceCardioExercise> distanceCardioExercises = new ArrayList<>();
+
         for (Exercise exercise : exercises) {
-            if (exercise instanceof DistanceCardioExercise) {
-                distanceCardioExercises.add((DistanceCardioExercise) exercise);
+            if (exercise instanceof DistanceCardioExercise distancecardioexercise) {
+                distanceCardioExercises.add(distancecardioexercise);
             }
         }
+
         distanceCardioExercises.sort(new SortByDistance());
-        return exercises.get(0);
+
+        return distanceCardioExercises.isEmpty() ? null : distanceCardioExercises.get(0);
     }
+
 
     public Exercise getPersonalBestWeightByExerciseNameIgnoreCase(String exerciseName) {
         List<Exercise> exercises = exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
         List<WeightLiftingExercise> weightLiftingExercises = new ArrayList<>();
+
         for (Exercise exercise : exercises) {
-            if (exercise instanceof WeightLiftingExercise) {
-                weightLiftingExercises.add((WeightLiftingExercise) exercise);
+            if (exercise instanceof WeightLiftingExercise weightLiftingExercise) {
+                weightLiftingExercises.add(weightLiftingExercise);
             }
         }
+
         weightLiftingExercises.sort(new SortByWeight());
-        return exercises.get(0);
+
+        return weightLiftingExercises.isEmpty() ? null : weightLiftingExercises.get(0);
     }
+
 
     public Exercise saveExercise(Exercise exercise) {
         return exerciseRepository.save(exercise);
