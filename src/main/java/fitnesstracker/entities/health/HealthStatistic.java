@@ -4,6 +4,7 @@ import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.meal.Meal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Schema(description = "Health Statistics")
 public class HealthStatistic {
+
 
     @Id
     @GeneratedValue
@@ -35,7 +37,9 @@ public class HealthStatistic {
 
     @Column(name = "person_id")
     private Long personId;
-
+    public void setPersonId(Long personId) {
+        this.personId = personId;
+    }
     public Long getPersonId() {
         return personId;
     }
@@ -55,9 +59,10 @@ public class HealthStatistic {
     // constructors
     public HealthStatistic() {
     }
-
-    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, double heartRate, double stress, Long personId) {
+    @Autowired
+    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
         this.date = date != null ? date : LocalDate.now();
+
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;
