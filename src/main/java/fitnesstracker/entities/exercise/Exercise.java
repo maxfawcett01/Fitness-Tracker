@@ -14,6 +14,8 @@ public class Exercise {
     @GeneratedValue
     private Long id;
 
+    private LocalDateTime startInclusive;
+    private LocalDateTime endExclusive;
     protected String exerciseName;
     protected String equipmentRequired;
     protected LocalDateTime startTime;
@@ -61,8 +63,12 @@ public class Exercise {
         return description;
     }
     public Duration getDuration() {
-        return Duration.between(startTime, endTime);
+        if (startInclusive != null && endExclusive != null) {
+            return Duration.between(startInclusive, endExclusive);
+        }
+        return Duration.ZERO; // or handle the null case appropriately
     }
+
 
     //setters
 
@@ -83,6 +89,12 @@ public class Exercise {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public void setStartInclusive(LocalDateTime startInclusive) {
+        this.startInclusive = startInclusive;
+    }
+    public void setEndExclusive(LocalDateTime endExclusive) {
+        this.endExclusive = endExclusive;
     }
 
     public String tokenizeExerciseName() {

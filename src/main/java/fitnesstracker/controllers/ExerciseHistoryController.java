@@ -5,9 +5,8 @@ import fitnesstracker.services.ExerciseHistoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 public class ExerciseHistoryController {
 
     ExerciseHistoryService exerciseHistoryService;
+
     @Autowired
     public ExerciseHistoryController(ExerciseHistoryService exerciseHistoryService) {
         this.exerciseHistoryService = exerciseHistoryService;
@@ -23,21 +23,20 @@ public class ExerciseHistoryController {
 
     @GetMapping
     public Iterable<Exercise> getAllExercises() {
-        Iterable<Exercise> exercises = exerciseHistoryService.getAllExercises();
-        for (Exercise exercise : exercises) {
-             @SuppressWarnings("unused")
-             Long personId = exercise.getPersonId();
+        try {
+            return exerciseHistoryService.findAll();
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while fetching meals", e);
         }
-        return exercises;
     }
 
     @GetMapping("/exercise/{exerciseId}")
-    public ResponseEntity<Exercise> getExerciseById(@PathVariable long exerciseId) {
+    public Exercise getExerciseById(@PathVariable Long exerciseId) {
         Exercise exercise = exerciseHistoryService.getExerciseById(exerciseId);
         if (exercise != null) {
-            return ResponseEntity.ok(exercise);
+            return exercise;
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found");
         }
     }
 
@@ -47,19 +46,16 @@ public class ExerciseHistoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> addNewExercise(@RequestBody(required = false) @Valid Exercise exercise, BindingResult result) {
-        if (exercise == null) {
-            return new ResponseEntity<>("Request body is empty. Please provide a request body!", HttpStatus.BAD_REQUEST);
-        }
-        Long personId = exercise.getPersonId();
+    @ResponseStatus(HttpStatus.CREATED)
+    public Exercise addNewExercise(@RequestBody(required = false) @Valid Exercise exercise) {
+        Exercise newExercise;
 
-        List<Exercise> exercisesByPersonId = exerciseHistoryService.findByPersonId(personId);
-        if (exercisesByPersonId.isEmpty()) {
-            return new ResponseEntity<>("Person with ID: " + personId + " cannot be found in the database.", HttpStatus.NOT_FOUND);
+        try {
+            newExercise = exerciseHistoryService.addExercise(exercise);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
-        Exercise addedExercise = exerciseHistoryService.addExercise(exercise);
-        return new ResponseEntity<>(addedExercise, HttpStatus.CREATED);
+        return newExercise;
     }
 
 

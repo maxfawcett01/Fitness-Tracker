@@ -53,8 +53,6 @@ public class MealController {
     })
     public Meal addMeal(@RequestBody @NotNull Meal meal) {
         Meal newMeal;
-        @SuppressWarnings("unused")
-        Long personId = meal.getPersonId();
 
         try {
             newMeal = this.mealService.saveMeal(meal);

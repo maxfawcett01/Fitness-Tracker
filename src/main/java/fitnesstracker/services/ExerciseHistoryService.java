@@ -1,6 +1,7 @@
 package fitnesstracker.services;
 
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.exceptions.ExerciseServiceException;
 import fitnesstracker.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,12 @@ public class ExerciseHistoryService {
         return exerciseRepository.findAll().isEmpty();
     }
 
-    public List<Exercise> getAllExercises() {
-        return this.exerciseRepository.findAll();
+    public List<Exercise> findAll() {
+        try {
+            return this.exerciseRepository.findAll();
+        } catch (Exception e) {
+            throw new ExerciseServiceException("An error occurred while fetching exercises", e);
+        }
     }
 
     public Exercise getExerciseById(long exerciseId){
@@ -32,6 +37,9 @@ public class ExerciseHistoryService {
     }
 
     public Exercise addExercise(Exercise name){
+        if (name == null) {
+            throw new IllegalArgumentException("Entity must not be null");
+        }
         return exerciseRepository.save(name);
     }
 

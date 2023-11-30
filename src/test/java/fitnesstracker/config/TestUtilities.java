@@ -1,11 +1,14 @@
 package fitnesstracker.config;
 
 import fitnesstracker.entities.Person;
+import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestUtilities {
     public static @NotNull ArrayList<Meal> getMealList() {
@@ -30,5 +33,17 @@ public class TestUtilities {
         meals.add(meal2);
         meals.add(meal3);
         return meals;
+    }
+
+    public static @NotNull List<Exercise> getExerciseList() {
+        Exercise exercise1 = new Exercise(1L, "running", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
+        Exercise exercise2 = new Exercise(123L, "Weights", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
+        Exercise exercise3 = new Exercise(134L, "running", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+
+        exercises.add(exercise1);
+        exercises.add(exercise2);
+        exercises.add(exercise3);
+        return exercises;
     }
 }
