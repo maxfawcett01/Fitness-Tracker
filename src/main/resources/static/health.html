@@ -28,6 +28,24 @@
             margin-top: 10px;
             padding: 10px;
         }
+
+        /* Add this CSS to align the input fields to the left and labels to the right */
+        #addHealthForm {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #addHealthForm label {
+            text-align: right;
+            margin-right: 10px;
+            width: 150px; /* Adjust the width as needed */
+        }
+
+        #addHealthForm input {
+            width: 200px; /* Adjust the width as needed */
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -103,25 +121,40 @@
 
     let rowCount = localStorage.getItem('rowCount') || 1;
 
-    function addHealthStat() {
-        const formData = new FormData(document.getElementById("addHealthForm"));
+// Function to add a new health stat to the table
+function addHealthStat() {
+    // Fetch form data and create a new row
+    var formData = new FormData(document.getElementById("addHealthForm"));
 
-        const newRow = document.getElementById("healthTable").insertRow(-1);
+    var newRow = document.getElementById("healthTable").insertRow(-1);
 
-        let cell = newRow.insertCell();
-        cell.innerHTML = rowCount;
+    // Add row number to the new row
+    var cell = newRow.insertCell();
+    cell.innerHTML = rowCount;
 
-        rowCount++;
+    // Increment row count for the next record
+    rowCount++;
 
-        for (const [value] of formData.entries()) {
-            cell = newRow.insertCell();
-            cell.innerHTML = value;
-        }
+    // Populate the new row with form data
+    for (var [key, value] of formData.entries()) {
+        var cell = newRow.insertCell();
 
-        localStorage.setItem('rowCount', rowCount);
+        // Add a class to the cells containing field values
+        cell.classList.add('field-value');
 
-        closeForm();
+        cell.innerHTML = value;
+    }
 
+    // Align the field values in the new row
+    alignFieldValues();
+
+    // Save the updated rowCount to local storage
+    localStorage.setItem('rowCount', rowCount);
+
+    // Close the form after submission
+    closeForm();
+
+    // Send data to the server
     fetch('/stats', {
         method: 'POST',
         headers: {
@@ -132,7 +165,17 @@
     .then(response => response.json())
     .then(data => console.log('Data saved:', data))
     .catch(error => console.error('Error saving data:', error));
-    }
+}
+
+    // Function to align the field values in the table
+function alignFieldValues() {
+    var fieldValueCells = document.querySelectorAll('.field-value');
+
+    // Apply styling to align the field values
+    fieldValueCells.forEach(cell => {
+        cell.style.textAlign = 'left'; // Adjust the alignment as needed
+    });
+}
 
     function displayExistingStats() {
         const apiUrl = '/stats';

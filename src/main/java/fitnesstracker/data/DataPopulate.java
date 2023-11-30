@@ -68,28 +68,30 @@ public class DataPopulate {
             mealService.saveMeal(meal3);
 
 //*******************************************************************************
-
-            HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 480, 620.0, 65.0, 10.0, person1.getId());
-
-            healthStatisticService.createHealthStatistic(healthStatistic1);
-            HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 481, 621.0, 66.0, 11.0, person2.getId());
-            healthStatisticService.createHealthStatistic(healthStatistic2);
-            HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 481, 621.0, 66.0, 11.0, person1.getId());
-            healthStatisticService.createHealthStatistic(healthStatistic3);
-
-//*******************************************************************************
-            Exercise exercise1 = new Exercise(person1.getId(), "Barbell rows", LocalDateTime.of(2023, 11, 28, 10, 0), LocalDateTime.of(2023, 11, 28, 11, 0), 250);
+            Exercise exercise1 = new Exercise(person1.getId(), "Barbell rows", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 250);
             exercise1.setEquipmentRequired("Barbell and free weights");
             exercise1.setDescription("Just do whatever man");
             exerciseHistoryService.addExercise(exercise1);
 
-            Exercise exercise2 = new Exercise(person2.getId(), "Bench press", LocalDateTime.of(2023, 11, 25, 10, 0), LocalDateTime.of(2023, 11, 25, 11, 0), 200);
+            Exercise exercise2 = new Exercise(person2.getId(), "Bench press", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 200);
             exercise2.setEquipmentRequired("Barbell and free weights");
             exercise2.setDescription("Just don't pop your shoulder");
             exerciseHistoryService.addExercise(exercise2);
 
             WeightLiftingExercise exercise3 = new WeightLiftingExercise(person1.getId(), "Deadlifts", LocalDateTime.now(), LocalDateTime.now(), 200, 3, 12, 100);
             exerciseHistoryService.addExercise(exercise3);
+
+            //*******************************************************************************
+
+            HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person1.getId());
+
+            healthStatisticService.createHealthStatistic(healthStatistic1);
+            HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+            healthStatisticService.createHealthStatistic(healthStatistic2);
+            HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person1.getId());
+            healthStatisticService.createHealthStatistic(healthStatistic3);
+            HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+            healthStatisticService.createHealthStatistic(healthStatistic4);
         }
     }
 }
