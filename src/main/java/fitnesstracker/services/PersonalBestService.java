@@ -34,7 +34,7 @@ public class PersonalBestService {
                 }
             }
             typedExercises.sort(comparator);
-            Collections.reverse(typedExercises)
+            Collections.reverse(typedExercises);
             return typedExercises.isEmpty() ? null : typedExercises.get(0);
         } catch (IndexOutOfBoundsException ioobe) {
             return null;
