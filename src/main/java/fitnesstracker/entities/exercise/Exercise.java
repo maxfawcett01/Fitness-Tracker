@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "exercise_type", discriminatorType = DiscriminatorType.STRING)
 public class Exercise {
 
     @Id
