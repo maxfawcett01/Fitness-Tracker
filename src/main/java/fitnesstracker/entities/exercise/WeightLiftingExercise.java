@@ -1,8 +1,5 @@
 package fitnesstracker.entities.exercise;
 
-import fitnesstracker.comparators.SortByDistance;
-import fitnesstracker.comparators.SortByWeight;
-import fitnesstracker.entities.Person;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
