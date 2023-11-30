@@ -13,7 +13,6 @@ public class FitnessTrackerApplication {
 		ApplicationContext context = SpringApplication.run(FitnessTrackerApplication.class, args);
 
 		DataPopulate populate = context.getBean(DataPopulate.class);
-
 		populate.populateData();
 	}
 }

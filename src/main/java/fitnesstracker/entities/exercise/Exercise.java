@@ -20,7 +20,6 @@ public class Exercise {
     protected LocalDateTime endTime;
     protected Integer caloriesBurned;
     protected String description;
-    protected Duration duration;
 
     @Column(name = "person_id")
     private Long personId;
@@ -34,7 +33,6 @@ public class Exercise {
         this.endTime = endTime;
         this.personId = personId;
         this.caloriesBurned = caloriesBurned;
-        this.duration = Duration.between(startTime, endTime);
     }
 
     //getters
@@ -63,7 +61,7 @@ public class Exercise {
         return description;
     }
     public Duration getDuration() {
-        return duration;
+        return Duration.between(startTime, endTime);
     }
 
     //setters
