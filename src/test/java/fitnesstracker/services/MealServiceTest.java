@@ -11,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -75,12 +72,11 @@ class MealServiceTest {
 
     @Test
     void testGetMealById() {
-        LocalDate date = null;
         Person person1 = new Person(1L, "Bob", "bob123", "password1");
         MealRepository mockMealRepo = mock(MealRepository.class);
         mealService = new MealService(mockMealRepo);
 
-        Meal meal = new Meal(date,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
+        Meal meal = new Meal(null,"Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal.getIngredientList().add(new Ingredient(meal, "Chicken"));
         meal.getIngredientList().add(new Ingredient(meal, "Vegetables"));
         meal.getIngredientList().add(new Ingredient(meal, "Soy Sauce"));
