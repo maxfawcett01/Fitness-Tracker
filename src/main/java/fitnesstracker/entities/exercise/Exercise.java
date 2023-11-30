@@ -85,6 +85,8 @@ public class Exercise {
         this.description = description;
     }
 
-
+    public String tokenizeExerciseName() {
+        return exerciseName.toLowerCase().replace(" ", "_");
+    }
 
 }
