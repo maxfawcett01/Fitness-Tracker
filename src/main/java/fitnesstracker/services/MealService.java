@@ -6,6 +6,7 @@ import fitnesstracker.repositories.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class MealService {
         }
     }
 
-    public  Meal getMealById(long mealId) {
+    public Meal getMealById(long mealId) {
         Optional<Meal> meal = this.mealRepository.findById(mealId);
         return meal.orElse(null);
     }
@@ -36,9 +37,10 @@ public class MealService {
         if (meal == null) {
             throw new IllegalArgumentException("Entity must not be null");
         }
-
         return this.mealRepository.save(meal);
     }
 
-
+    public List<Meal> getMealByPersonIdAndDate(Long id, LocalDate date) {
+        return this.mealRepository.findByPersonIdAndDate(id, date);
+    }
 }

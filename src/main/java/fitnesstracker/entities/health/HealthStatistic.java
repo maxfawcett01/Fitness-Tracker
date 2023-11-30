@@ -1,11 +1,12 @@
 package fitnesstracker.entities.health;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.entities.meal.Meal;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @SuppressWarnings("unused")
 @Entity
@@ -21,28 +22,42 @@ public class HealthStatistic {
     private double bloodPressure;
     private double hydration;
     private int calorieIn;
-    private double calorieOut;
+    private int calorieOut;
     private double heartRate;
     private double stress;
 
     @Column(name = "person_id")
     private Long personId;
+
     public Long getPersonId() {
         return personId;
+    }
+
+    @Transient
+    private int calculatedCalorieIn;
+    public int getCalculatedCalorieOut() {
+        return calculatedCalorieOut;
+    }
+
+    @Transient
+    private int calculatedCalorieOut;
+    public int getCalculatedCalorieIn() {
+        return calculatedCalorieIn;
     }
 
     // constructors
     public HealthStatistic() {
     }
 
-    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
+    @Autowired
+    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, int calorieOut, double heartRate, double stress, Long personId) {
         this.date = LocalDate.now();
         this.sleep = sleep;
         this.weight = weight;
         this.bloodPressure = bloodPressure;
         this.hydration = hydration;
-        this.calorieIn = calorieIn;
-        this.calorieOut = calorieOut;
+        this.calorieIn = getCalculatedCalorieIn();
+        this.calorieOut = getCalculatedCalorieOut();
         this.heartRate = heartRate;
         this.stress = stress;
         this.personId = personId;
@@ -93,11 +108,11 @@ public class HealthStatistic {
         this.calorieIn = calorieIn;
     }
 
-    public double getCalorieOut() {
+    public int getCalorieOut() {
         return calorieOut;
     }
 
-    public void setCalorieOut(double calorieOut) {
+    public void setCalorieOut(int calorieOut) {
         this.calorieOut = calorieOut;
     }
 
@@ -124,4 +139,22 @@ public class HealthStatistic {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public int calculateCalorieOutFromExercise(List<Exercise> exercises) {
+        calculatedCalorieOut = 0;
+        for (Exercise exercise : exercises) {
+            if (exercise.getEndTime().toLocalDate().equals(getDate())) {
+                calculatedCalorieOut += exercise.getCaloriesBurned();
+            }
+        }
+        return calculatedCalorieOut;
+    }
+
+    public int calculateCalorieInFromMeals(List<Meal> meals) {
+        if (meals != null) {
+            calculatedCalorieIn = meals.stream().mapToInt(Meal::getCalories).sum();
+        }
+        return calculatedCalorieIn;
+    }
 }
+

@@ -29,6 +29,24 @@
             margin-top: 10px;
             padding: 10px;
         }
+
+        /* Add this CSS to align the input fields to the left and labels to the right */
+        #addHealthForm {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #addHealthForm label {
+            text-align: right;
+            margin-right: 10px;
+            width: 150px; /* Adjust the width as needed */
+        }
+
+        #addHealthForm input {
+            width: 200px; /* Adjust the width as needed */
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -91,40 +109,40 @@
     // Initialize rowCount from local storage or set to 1 if not present
     var rowCount = localStorage.getItem('rowCount') || 1;
 
-    // Function to add a new health stat to the table
-    function addHealthStat() {
-        // Fetch form data and create a new row
-        var formData = new FormData(document.getElementById("addHealthForm"));
+// Function to add a new health stat to the table
+function addHealthStat() {
+    // Fetch form data and create a new row
+    var formData = new FormData(document.getElementById("addHealthForm"));
 
-<!--        // Check if the form is canceled-->
-<!--        if (!formData.get("date")) {-->
-<!--            // Close the form without adding a new row-->
-<!--            closeForm();-->
-<!--            return;-->
-<!--        }-->
+    var newRow = document.getElementById("healthTable").insertRow(-1);
 
-        var newRow = document.getElementById("healthTable").insertRow(-1);
+    // Add row number to the new row
+    var cell = newRow.insertCell();
+    cell.innerHTML = rowCount;
 
-        // Add row number to the new row
+    // Increment row count for the next record
+    rowCount++;
+
+    // Populate the new row with form data
+    for (var [key, value] of formData.entries()) {
         var cell = newRow.insertCell();
-        cell.innerHTML = rowCount;
 
-        // Increment row count for the next record
-        rowCount++;
+        // Add a class to the cells containing field values
+        cell.classList.add('field-value');
 
-        // Populate the new row with form data
-        for (var [key, value] of formData.entries()) {
-            var cell = newRow.insertCell();
-            cell.innerHTML = value;
-        }
+        cell.innerHTML = value;
+    }
 
-        // Save the updated rowCount to local storage
-        localStorage.setItem('rowCount', rowCount);
+    // Align the field values in the new row
+    alignFieldValues();
 
-        // Close the form after submission
-        closeForm();
+    // Save the updated rowCount to local storage
+    localStorage.setItem('rowCount', rowCount);
 
-        // Send data to the server
+    // Close the form after submission
+    closeForm();
+
+    // Send data to the server
     fetch('http://localhost:8080/stat', {
         method: 'POST',
         headers: {
@@ -135,7 +153,17 @@
     .then(response => response.json())
     .then(data => console.log('Data saved:', data))
     .catch(error => console.error('Error saving data:', error));
-    }
+}
+
+    // Function to align the field values in the table
+function alignFieldValues() {
+    var fieldValueCells = document.querySelectorAll('.field-value');
+
+    // Apply styling to align the field values
+    fieldValueCells.forEach(cell => {
+        cell.style.textAlign = 'left'; // Adjust the alignment as needed
+    });
+}
 
     // Function to fetch and display existing health statistics
     function displayExistingStats() {
