@@ -30,4 +30,5 @@ class PersonalBestServiceTest {
         Exercise exercise2 = uut.saveExercise(new WeightLiftingExercise(1L, "Bench press", LocalDateTime.now(), LocalDateTime.now(), 3, 12, 60, 10));
 //        Exercise best = uut.getPersonalBestWeightByExerciseNameIgnoreCase("bench press");
 //        assertEquals(exercise1.getId(), best.getId());
+    }
 }
