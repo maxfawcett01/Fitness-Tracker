@@ -74,7 +74,6 @@
                 data.forEach(meal => {
                     const tableRow = document.createElement('tr');
 
-                    // Create table cells for each attribute
                     const personIdCell = document.createElement('td');
                     personIdCell.textContent = meal.personId;
 
@@ -93,7 +92,6 @@
                     const instructionsCell = document.createElement('td');
                     instructionsCell.textContent = meal.cookingInstructions;
 
-                    // Append cells to the row
                     tableRow.appendChild(personIdCell);
                     tableRow.appendChild(dateCell);
                     tableRow.appendChild(mealNameCell);
@@ -101,7 +99,6 @@
                     tableRow.appendChild(caloriesCell);
                     tableRow.appendChild(instructionsCell);
 
-                    // Append the row to the table body
                     mealList.appendChild(tableRow);
                 });
             })
