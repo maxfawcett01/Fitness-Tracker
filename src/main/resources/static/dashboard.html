@@ -50,14 +50,9 @@
         <label for="personSelector">Select Person:</label>
         <select id="personSelector" onchange="updateLineGraphs()">
             <option value="all">All Persons</option>
-            <!-- Add options for each person dynamically -->
+            <!-- Options will be dynamically added here -->
         </select>
         <canvas id="lineGraph" height="200"></canvas>
-    </div>
-
-    <div class="dashboard-section">
-        <h2>Pie Chart</h2>
-        <canvas id="pieChart" height="200"></canvas>
     </div>
 </div>
 
@@ -73,9 +68,9 @@
 
     setInterval(updateDateTime, 1000); // Update every second
 
-    // Function to fetch data from the stats HTML page
-    async function fetchStatsData() {
-        const response = await fetch('stats.html');
+    // Function to fetch data from the health HTML page
+    async function fetchHealthData() {
+        const response = await fetch('health.html');
         const data = await response.text();
 
         // Parse the HTML content and return the relevant data
@@ -84,7 +79,7 @@
 
         // Example: Extracting weight, calorieIn, and calorieOut from table rows
         const rows = doc.querySelectorAll('table tr');
-        const statsData = Array.from(rows).slice(1).map(row => {
+        const healthData = Array.from(rows).slice(1).map(row => {
             const columns = row.querySelectorAll('td');
             return {
                 personId: parseInt(columns[0].innerText),
@@ -94,15 +89,15 @@
             };
         });
 
-        return statsData;
+        return healthData;
     }
 
     // Function to fetch and populate data for the Line Graph
     async function fetchDataForLineGraph() {
-        const statsData = await fetchStatsData();
+        const healthData = await fetchHealthData();
 
         // Map the data to match the structure of mockLineGraphData
-        const lineGraphData = statsData.map(entry => ({
+        lineGraphData = healthData.map(entry => ({
             personId: entry.personId,
             weight: [entry.weight], // Convert to array for consistency
             calorieIn: [entry.calorieIn], // Convert to array for consistency
@@ -155,9 +150,11 @@
     }
 
     // Fetch and log data for the Line Graph
-    fetchDataForLineGraph().then(data => {
-        lineGraphData = data; // Store the data globally for later use
-        updateLineGraphs(); // Call this function to populate the line graph
+    fetchDataForLineGraph().then(() => {
+        // Call this function to populate the line graph and selector
+        updateLineGraphs();
+        // Populate person selector after fetching the data
+        populatePersonSelector();
     });
 
     // Initial line graph setup
@@ -176,49 +173,23 @@
         }
     });
 
-    // Function to fetch data for the Pie Chart
-    async function fetchPieChartData() {
-        const statsData = await fetchStatsData();
+    // Function to populate person selector options
+    function populatePersonSelector() {
+        // Get unique person IDs for the selector
+        const personIds = ['all', ...lineGraphData.map(person => person.personId)];
 
-        // Sum up calorieIn and calorieOut for all persons
-        const totalCalorieIn = statsData.reduce((sum, entry) => sum + entry.calorieIn, 0);
-        const totalCalorieOut = statsData.reduce((sum, entry) => sum + entry.calorieOut, 0);
-
-        return {
-            labels: ['Calorie In', 'Calorie Out'],
-            datasets: [{
-                data: [totalCalorieIn, totalCalorieOut],
-                backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(255, 205, 86, 1)'],
-            }],
-        };
-    }
-
-    // Fetch data and populate the Pie Chart
-    async function populatePieChart() {
-        const pieChartData = await fetchPieChartData();
-        const pieChartCanvas = document.getElementById('pieChart');
-        const pieChartCtx = pieChartCanvas.getContext('2d');
-        const pieChart = new Chart(pieChartCtx, {
-            type: 'pie',
-            data: pieChartData,
+        // Populate person selector
+        const personSelector = document.getElementById('personSelector');
+        personIds.forEach(personId => {
+            const option = document.createElement('option');
+            option.value = personId;
+            option.textContent = personId === 'all' ? 'All Persons' : `Person ${personId}`;
+            personSelector.appendChild(option);
         });
     }
 
-    // Update date-time and charts on page load
+    // Update date-time on page load
     updateDateTime();
-    populatePieChart(); // Call this function to populate the pie chart
-
-    // Get unique person IDs for the selector
-    const personIds = ['all', ...lineGraphData.map(person => person.personId)];
-
-    // Populate person selector
-    const personSelector = document.getElementById('personSelector');
-    personIds.forEach(personId => {
-        const option = document.createElement('option');
-        option.value = personId;
-        option.textContent = personId === 'all' ? 'All Persons' : `Person ${personId}`;
-        personSelector.appendChild(option);
-    });
 </script>
 
 </body>

@@ -30,7 +30,7 @@ public class HealthStatisticController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all Health Statistics", description = "Returns all Health Statistics as per the id",
+    @Operation(summary = "Get all Health Statistics", description = "Returns all Health Statistics data",
             tags = {"stats", "get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = HealthStatistic.class), mediaType = "application/json")}, description = "Successfully retrieved"),
@@ -40,7 +40,8 @@ public class HealthStatisticController {
     ) {
         return healthStatisticService.getAllHealthStatistics();
     }
-
+    @Operation(summary = "Get all Health Statistics", description = "Get all Health Statistics per id",
+            tags = {"stats", "get"})
     @GetMapping("/{id}")
     public ResponseEntity<HealthStatistic> getHealthStatisticById(@PathVariable Long id) {
         try {
@@ -50,7 +51,8 @@ public class HealthStatisticController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @Operation(summary = "Post data to Health Statistics", description = "Post Health Statistics",
+            tags = {"stats", "post"})
     @PostMapping
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
         @SuppressWarnings("unused")
@@ -66,7 +68,8 @@ public class HealthStatisticController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
         }
     }
-
+    @Operation(summary = "Delete data from Health Statistics", description = "Delete Health Statistics",
+            tags = {"stats", "delete"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHealthStatistic(@PathVariable Long id) {
         healthStatisticService.deleteHealthStatistic(id);
