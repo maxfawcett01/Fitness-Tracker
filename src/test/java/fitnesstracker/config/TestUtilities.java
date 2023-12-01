@@ -48,8 +48,9 @@ public class TestUtilities {
         exercises.add(exercise2);
         exercises.add(exercise3);
         return exercises;
+    }
   
-    public static ArrayList<HealthStatistic> getStatsList() {
+    public static List<HealthStatistic> getStatsList() {
         Person person2 = new Person(1L, "Tom", "tom123", "password1");
         ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
         HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
@@ -61,6 +62,6 @@ public class TestUtilities {
         healthStatistics.add(healthStatistic2);
         healthStatistics.add(healthStatistic3);
         healthStatistics.add(healthStatistic4);
-        return  healthStatistics;
+        return healthStatistics;
     }
 }

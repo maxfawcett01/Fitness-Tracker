@@ -54,10 +54,17 @@ public class HealthStatisticController {
     @PostMapping
     public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
         @SuppressWarnings("unused")
-        Long ignorePersonId = healthStatistic.getPersonId();
-        HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
+        Long personId = healthStatistic.getPersonId();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
+        // Check if personId already exists
+        if (!healthStatisticService.existsByPersonId(personId)) {
+            // PersonId does not exists, return an error response
+            throw new NotFoundException("Person with ID " + personId + " not found.");
+        } else {
+            HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdHealthStatistic);
+        }
     }
 
     @DeleteMapping("/{id}")

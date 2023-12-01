@@ -43,7 +43,7 @@ class HealthStatisticServiceTest {
     }
 
     @Test
-    void createHealthStatistic() {
+    void  createHealthStatistic() {
         healthStatisticService.createHealthStatistic(healthStatistic);
 
         verify(mockHealthStatisticRepository, times(1)).save(healthStatistic);
