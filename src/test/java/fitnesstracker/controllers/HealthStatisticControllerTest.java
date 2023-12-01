@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ class HealthStatisticControllerTest {
         long healthStatisticId = 99999;
 
         HealthStatistic healthStatistic = new HealthStatistic();
-        when(mockHealthStatisticService.getHealthStatisticById(healthStatisticId)).thenThrow(NotFoundException.class);
+        when(mockHealthStatisticService.getHealthStatisticById(healthStatisticId)).thenThrow(EntityNotFoundException.class);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/stats/" + healthStatisticId);
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isNotFound())

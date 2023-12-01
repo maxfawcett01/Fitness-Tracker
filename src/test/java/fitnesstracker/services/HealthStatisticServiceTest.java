@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+
 @SpringBootTest
 class HealthStatisticServiceTest {
 
@@ -61,5 +61,14 @@ class HealthStatisticServiceTest {
         healthStatisticService.repoIsEmpty();
 
         verify(mockHealthStatisticRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testExistsByPersonId() {
+        Long personId = 123L;
+        when(mockHealthStatisticRepository.existsByPersonId(personId)).thenReturn(true);
+        boolean result = healthStatisticService.existsByPersonId(personId);
+        assertTrue(result);
+        verify(mockHealthStatisticRepository, times(1)).existsByPersonId(personId);
     }
 }

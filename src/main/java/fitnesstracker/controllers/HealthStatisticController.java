@@ -8,8 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +46,7 @@ public class HealthStatisticController {
         try {
             HealthStatistic healthStatistic = healthStatisticService.getHealthStatisticById(id);
             return ResponseEntity.ok(healthStatistic);
-        } catch (NotFoundException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -59,7 +59,7 @@ public class HealthStatisticController {
         // Check if personId already exists
         if (!healthStatisticService.existsByPersonId(personId)) {
             // PersonId does not exists, return an error response
-            throw new NotFoundException("Person with ID " + personId + " not found.");
+            throw new EntityNotFoundException("Person with ID " + personId + " not found.");
         } else {
             HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
 
