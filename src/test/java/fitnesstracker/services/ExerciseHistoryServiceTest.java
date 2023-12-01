@@ -40,17 +40,17 @@ class ExerciseHistoryServiceTest {
         verify(exerciseRepository, times(1)).findAll();
     }
 
-//    @Test
-//    void getAllExercises_ReturnsExerciseList() {
-//        List<Exercise> exercises = Arrays.asList(new Exercise(), new Exercise());
-//        when(exerciseRepository.findAll()).thenReturn(exercises);
-//
-//        List<Exercise> result = exerciseHistoryService.getAllExercises();
-//
-//        assertEquals(exercises, result);
-//
-//        verify(exerciseRepository, times(1)).findAll();
-//    }
+    @Test
+    void getAllExercises_ReturnsExerciseList() {
+        List<Exercise> exercises = Arrays.asList(new Exercise(), new Exercise());
+        when(exerciseRepository.findAll()).thenReturn(exercises);
+
+        List<Exercise> result = exerciseHistoryService.findAll();
+
+        assertEquals(exercises, result);
+
+        verify(exerciseRepository, times(1)).findAll();
+    }
 
     @Test
     void getExerciseById_WithValidId_ReturnsExercise() {

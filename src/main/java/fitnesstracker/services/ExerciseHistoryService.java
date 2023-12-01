@@ -40,7 +40,7 @@ public class ExerciseHistoryService {
         if (name == null) {
             throw new IllegalArgumentException("Entity must not be null");
         }
-        return exerciseRepository.save(name);
+        return this.exerciseRepository.save(name);
     }
 
     public void deleteById(long id) {
@@ -48,7 +48,7 @@ public class ExerciseHistoryService {
     }
 
     public List<Exercise> getExerciseByName(String exerciseName) {
-        return exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
+        return this.exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName);
     }
 
     public List<Exercise> findByPersonId(Long personId) {

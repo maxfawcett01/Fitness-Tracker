@@ -1,7 +1,6 @@
 package fitnesstracker.entities.exercise;
 
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
