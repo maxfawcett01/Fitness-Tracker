@@ -1,6 +1,7 @@
 package fitnesstracker.services;
 
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.exceptions.ExerciseServiceException;
 import fitnesstracker.repositories.ExerciseRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -101,54 +102,51 @@ class ExerciseHistoryServiceTest {
 
     @Test
     void testGetExerciseByName() {
-        // Arrange
         Long personId = 1L;
         String exerciseName = "Weightlifting";
         List<Exercise> exercises = new ArrayList<>();
         exercises.add(new Exercise(personId, "Weightlifting", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 200));
         when(exerciseRepository.findExerciseByExerciseNameIgnoreCase(exerciseName)).thenReturn(exercises);
 
-        // Act
         ExerciseHistoryService exerciseHistoryService = new ExerciseHistoryService(exerciseRepository);
         List<Exercise> result = exerciseHistoryService.getExerciseByName(exerciseName);
 
-        // Assert
         assertEquals(exercises, result);
     }
 
     @Test
     void testFindByPersonId() {
-        // Arrange
         Long personId = 1L;
         List<Exercise> exercises = new ArrayList<>();
         exercises.add(new Exercise(personId, "Weightlifting", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 200));
         when(exerciseRepository.findByPersonId(personId)).thenReturn(exercises);
 
-        // Act
         ExerciseHistoryService exerciseHistoryService = new ExerciseHistoryService(exerciseRepository);
         List<Exercise> result = exerciseHistoryService.findByPersonId(personId);
 
-        // Assert
         assertEquals(exercises, result);
     }
 
     @Test
     void testFindExerciseByPersonIdAndExerciseName() {
-        // Arrange
         Long personId = 1L;
         String exerciseName = "Weightlifting";
         List<Exercise> exercises = new ArrayList<>();
         exercises.add(new Exercise(personId, "Weightlifting", LocalDateTime.of(2023, 11, 30, 10, 0), LocalDateTime.of(2023, 11, 30, 11, 0), 200));
         when(exerciseRepository.findExerciseByPersonIdAndExerciseNameIgnoreCase(personId, exerciseName)).thenReturn(exercises);
 
-        // Act
         ExerciseHistoryService exerciseHistoryService = new ExerciseHistoryService(exerciseRepository);
         List<Exercise> result = exerciseHistoryService.findExerciseByPersonIdAndExerciseName(personId, exerciseName);
 
-        // Assert
         assertEquals(exercises, result);
     }
 
+    @Test
+    void testFindAllWithException() {
+        when(exerciseRepository.findAll()).thenThrow(new RuntimeException("Simulated database exception"));
+
+        ExerciseServiceException exception = assertThrows(ExerciseServiceException.class, () -> exerciseHistoryService.findAll());
+    }
 
 
 }

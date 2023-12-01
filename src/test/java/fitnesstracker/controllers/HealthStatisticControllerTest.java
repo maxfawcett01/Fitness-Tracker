@@ -1,19 +1,15 @@
 package fitnesstracker.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.health.HealthStatistic;
-import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.HealthStatisticService;
-import fitnesstracker.services.MealService;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -23,7 +19,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,6 +71,8 @@ class HealthStatisticControllerTest {
     @Test
     void createHealthStatistic() throws Exception {
         HealthStatistic testHealthStatistic = new HealthStatistic();
+        when(mockHealthStatisticService.existsByPersonId(1L)).thenReturn(Boolean.TRUE);
+        testHealthStatistic.setPersonId(1L);  // Set a valid personId
         String json = mapper.writeValueAsString(testHealthStatistic);
         mockMvc.perform(MockMvcRequestBuilders.post("/stats")
                         .contentType(MediaType.APPLICATION_JSON)

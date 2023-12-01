@@ -2,6 +2,7 @@ package fitnesstracker.config;
 
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.entities.exercise.WeightLiftingExercise;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
@@ -13,8 +14,9 @@ import java.util.List;
 
 public class TestUtilities {
 
+    static Person person1 = new Person(1L, "Bob", "bob123", "password1");
+
     public static @NotNull ArrayList<Meal> getMealList() {
-        Person person1 = new Person(1L, "Bob", "bob123", "password1");
         ArrayList<Meal> meals = new ArrayList<>();
         Meal meal1 = new Meal(null, "Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal1.getIngredientList().add(new Ingredient(meal1, "Chicken"));
@@ -49,20 +51,19 @@ public class TestUtilities {
         exercises.add(exercise3);
         return exercises;
     }
+    public static @NotNull List<HealthStatistic> getStatsList() {
+        Person person2 = new Person(1L, "Tom", "tom123", "password1");
+        ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
+        HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
+        HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+        HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+        HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
 
-        public static @NotNull List<HealthStatistic> getStatsList() {
-            Person person2 = new Person(1L, "Tom", "tom123", "password1");
-            ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
-            HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
-            HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-            HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-            HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-
-            healthStatistics.add(healthStatistic1);
-            healthStatistics.add(healthStatistic2);
-            healthStatistics.add(healthStatistic3);
-            healthStatistics.add(healthStatistic4);
-            return healthStatistics;
-        }
+        healthStatistics.add(healthStatistic1);
+        healthStatistics.add(healthStatistic2);
+        healthStatistics.add(healthStatistic3);
+        healthStatistics.add(healthStatistic4);
+        return healthStatistics;
     }
+  }
 

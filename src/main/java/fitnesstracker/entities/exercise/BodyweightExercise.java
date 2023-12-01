@@ -1,6 +1,5 @@
 package fitnesstracker.entities.exercise;
 
-
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
