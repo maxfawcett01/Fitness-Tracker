@@ -4,6 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercises</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#exerciseListContainer {
+    margin: 20px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+#addExerciseModal {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: none;
+    max-width: 400px;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+
+.add-exercise-button {
+    display: block;
+    margin: 20px auto;
+    padding: 15px;
+    font-size: 16px;
+}
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
@@ -21,11 +69,6 @@
             <th>Calories Burned</th>
             <th>Description</th>
             <th>Person ID</th>
-            <th>Weight (kg)</th>
-            <th>Distance</th>
-            <th>Reps</th>
-            <th>Sets</th>
-            <th>Exercise Type</th>
         </tr>
         </thead>
         <tbody>
@@ -59,65 +102,10 @@
     <label for="personId">Person ID:</label>
     <input type="number" id="personId" name="personId" required>
     <br>
-    <label for="weightInKg">Weight (kg):</label>
-    <input type="number" id="weightInKg" name="weightInKg">
-    <br>
-    <label for="distance">Distance:</label>
-    <input type="text" id="distance" name="distance">
-    <br>
-    <label for="reps">Reps:</label>
-    <input type="number" id="reps" name="reps">
-    <br>
-    <label for="sets">Sets:</label>
-    <input type="number" id="sets" name="sets">
-    <br>
-    <label for="exerciseType">Exercise Type:</label>
-    <select id="exerciseType" name="exerciseType" required>
-        <option value="ISOMETRIC">Isometric</option>
-        <option value="NODISTANCE">No Distance Cardio</option>
-        <option value="DISTANCE">Distance Cardio</option>
-        <option value="BODYWEIGHT">Bodyweight</option>
-        <option value="WEIGHT">Weight Lifting</option>
-    </select>
-    <br>
     <button id="saveExerciseButton">Save</button>
 </div>
 
 <script>
-    // Add a mapping function for discriminator values to exercise types
-    function mapDiscriminatorToExerciseType(discriminatorValue) {
-        switch (discriminatorValue) {
-            case 'ISOMETRIC':
-                return 'Isometric';
-            case 'NODISTANCE':
-                return 'No Distance Cardio';
-            case 'DISTANCE':
-                return 'Distance Cardio';
-            case 'BODYWEIGHT':
-                return 'Bodyweight';
-            case 'WEIGHT':
-                return 'Weight Lifting';
-            default:
-                return 'Unknown Exercise Type';
-        }
-    }
-
-    // Modify the getExerciseType function to use the mapping function
-    function getExerciseType(exercise) {
-        if (exercise instanceof Object && exercise.hasOwnProperty('exerciseType')) {
-            return mapDiscriminatorToExerciseType(exercise.exerciseType);
-        }
-        return '';
-    }
-
-    function formatDuration(duration) {
-        const hours = duration.hours();
-        const minutes = duration.minutes();
-        const seconds = duration.seconds();
-
-        return `${hours}h ${minutes}m ${seconds}s`;
-    }
-
     function fetchAndDisplayExercises() {
         fetch('/exercises')
             .then(response => response.json())
@@ -137,11 +125,6 @@
                         <td>${exercise.caloriesBurned}</td>
                         <td>${exercise.description}</td>
                         <td>${exercise.personId}</td>
-                        <td>${exercise.weightInKg || ''}</td>
-                        <td>${exercise.distance || ''}</td>
-                        <td>${exercise.reps || ''}</td>
-                        <td>${exercise.sets || ''}</td>
-                        <td>${getExerciseType(exercise)}</td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -161,11 +144,6 @@
         const caloriesBurned = parseInt(document.getElementById('caloriesBurned').value);
         const description = document.getElementById('description').value;
         const personId = parseInt(document.getElementById('personId').value);
-        const weightInKg = document.getElementById('weightInKg').value;
-        const distance = document.getElementById('distance').value;
-        const reps = document.getElementById('reps').value;
-        const sets = document.getElementById('sets').value;
-        const exerciseType = document.getElementById('exerciseType').value;
 
         // Check if start and end times are filled out
         if (!startTime || !endTime) {
@@ -182,17 +160,12 @@
 
         const data = {
             exerciseName: exerciseName,
-            exerciseType: exerciseType,
             equipmentRequired: equipmentRequired,
             startTime: startTime,
             endTime: endTime,
             caloriesBurned: caloriesBurned,
             description: description,
             personId: personId,
-            weightInKg: weightInKg,
-            distance: distance,
-            reps: reps,
-            sets: sets,
         };
 
         fetch('/exercises', {
@@ -211,11 +184,6 @@
                 document.getElementById('caloriesBurned').value = '';
                 document.getElementById('description').value = '';
                 document.getElementById('personId').value = '';
-                document.getElementById('weightInKg').value = '';
-                document.getElementById('distance').value = '';
-                document.getElementById('reps').value = '';
-                document.getElementById('sets').value = '';
-                document.getElementById('exerciseType').value = '';
 
                 document.getElementById('addExerciseModal').style.display = 'none';
 
