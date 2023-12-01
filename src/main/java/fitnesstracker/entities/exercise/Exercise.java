@@ -1,5 +1,6 @@
 package fitnesstracker.entities.exercise;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.Duration;
@@ -12,18 +13,33 @@ public class Exercise {
 
     @Id
     @GeneratedValue
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "Exercise ID", example = "1")
     private Long id;
 
     private LocalDateTime startInclusive;
+
     private LocalDateTime endExclusive;
+
+    @Schema(description = "Name of exercise.", example = "bench press")
     protected String exerciseName;
+
+    @Schema(description = "Equipment required for exercise.", example = "barbell")
     protected String equipmentRequired;
+
+    @Schema(description = "Exercise start time.", example = "2023-12-01 11:00:00")
     protected LocalDateTime startTime;
+
+    @Schema(description = "Exercise end time.", example = "2023-12-01 12:00:00")
     protected LocalDateTime endTime;
+
+    @Schema(description = "Calories burned during exercise.", example = "200")
     protected Integer caloriesBurned;
+
+    @Schema(description = "Description of exercise.", example = "Lie on a bench, grip a barbell, lower it to your chest, then push it back up. Keep your back on the bench and use a spotter for safety.")
     protected String description;
 
     @Column(name = "person_id")
+    @Schema(description = "ID associated with person who completed exercise.", example = "1")
     private Long personId;
 
 
