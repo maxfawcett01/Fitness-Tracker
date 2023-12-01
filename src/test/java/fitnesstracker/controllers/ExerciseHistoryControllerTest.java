@@ -3,6 +3,7 @@ package fitnesstracker.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.exceptions.ExerciseServiceException;
 import fitnesstracker.services.ExerciseHistoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

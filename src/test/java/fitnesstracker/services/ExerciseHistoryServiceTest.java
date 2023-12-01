@@ -45,7 +45,7 @@ class ExerciseHistoryServiceTest {
         List<Exercise> exercises = Arrays.asList(new Exercise(), new Exercise());
         when(exerciseRepository.findAll()).thenReturn(exercises);
 
-        List<Exercise> result = exerciseHistoryService.getAllExercises();
+        List<Exercise> result = exerciseHistoryService.findAll();
 
         assertEquals(exercises, result);
 

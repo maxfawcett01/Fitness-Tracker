@@ -2,7 +2,7 @@ package fitnesstracker.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fitnesstracker.TestUtilities;
+import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.HealthStatisticService;
@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -42,7 +43,7 @@ class HealthStatisticControllerTest {
 
     @Test
     void getAllHealthStatistics() throws Exception {
-        ArrayList<HealthStatistic> healthStatistics = TestUtilities.getStatsList();
+        List<HealthStatistic> healthStatistics = TestUtilities.getStatsList();
         String expectedJson = mapper.writeValueAsString(healthStatistics);
 
         when(mockHealthStatisticService.getAllHealthStatistics()).thenReturn(healthStatistics);

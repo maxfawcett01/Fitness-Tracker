@@ -1,11 +1,9 @@
 package fitnesstracker.entities.exercise;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("WEIGHT")
 public class WeightLiftingExercise extends StrengthTrainingExercise {
 
     private double weightInKg;
