@@ -13,8 +13,8 @@ import java.util.List;
 public class HealthStatisticService {
 
     private final HealthStatisticRepository healthStatisticRepository;
-    private MealService mealService;
-    private ExerciseHistoryService exerciseHistoryService;
+    private final MealService mealService;
+    private final ExerciseHistoryService exerciseHistoryService;
 
     @Autowired
     public HealthStatisticService(HealthStatisticRepository healthStatisticRepository, MealService mealService, ExerciseHistoryService exerciseHistoryService) {
