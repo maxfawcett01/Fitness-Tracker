@@ -9,6 +9,10 @@ import org.springframework.context.ApplicationContext;
 public class FitnessTrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FitnessTrackerApplication.class, args);
+		ApplicationContext context =  SpringApplication.run(FitnessTrackerApplication.class, args);
+
+		DataPopulate dataPopulate = context.getBean(DataPopulate.class);
+
+		dataPopulate.populateData();
 	}
 }

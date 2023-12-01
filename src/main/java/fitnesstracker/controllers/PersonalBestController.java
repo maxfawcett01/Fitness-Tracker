@@ -1,7 +1,6 @@
 package fitnesstracker.controllers;
 
 import fitnesstracker.entities.exercise.Exercise;
-import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.PersonalBestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
