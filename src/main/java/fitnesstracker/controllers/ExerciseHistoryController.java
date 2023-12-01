@@ -47,11 +47,10 @@ public class ExerciseHistoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Exercise addNewExercise(@RequestBody(required = false) @Valid Exercise exercise) {
+    public Exercise addNewExercise(@RequestBody @Valid Exercise exercise) {
         Exercise newExercise;
-
         try {
-            newExercise = exerciseHistoryService.addExercise(exercise);
+                newExercise = exerciseHistoryService.addExercise(exercise);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
