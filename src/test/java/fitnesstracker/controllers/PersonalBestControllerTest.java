@@ -1,10 +1,7 @@
 package fitnesstracker.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.services.PersonalBestService;
-import org.hibernate.annotations.Source;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,8 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PersonalBestController.class)
@@ -37,7 +34,7 @@ class PersonalBestControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"weight", "duration", "distance", "sets", "reps"})
-    public void testGetPersonalBestsByMetric(String metric) throws Exception {
+    void testGetPersonalBestsByMetric(String metric) throws Exception {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/exercises/pb/{metric}/{personId}", metric, personId);
         mockMvc.perform(requestBuilder)
@@ -55,7 +52,7 @@ class PersonalBestControllerTest {
 
     @ParameterizedTest
     @CsvSource({"weight, bench press", "duration, plank", "distance, run", "sets, deadlifts", "reps, push ups"})
-    public void testGetPersonalBestsByMetricAndExerciseName(String metric, String exerciseName) throws Exception {
+    void testGetPersonalBestsByMetricAndExerciseName(String metric, String exerciseName) throws Exception {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/exercises/pb/{metric}/{personId}/{exerciseName}", metric, personId, exerciseName);
         mockMvc.perform(requestBuilder)
