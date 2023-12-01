@@ -2,6 +2,7 @@ package fitnesstracker.config;
 
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
+import fitnesstracker.entities.exercise.WeightLiftingExercise;
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
@@ -13,8 +14,9 @@ import java.util.List;
 
 public class TestUtilities {
 
+    static Person person1 = new Person(1L, "Bob", "bob123", "password1");
+
     public static @NotNull ArrayList<Meal> getMealList() {
-        Person person1 = new Person(1L, "Bob", "bob123", "password1");
         ArrayList<Meal> meals = new ArrayList<>();
         Meal meal1 = new Meal(null, "Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
         meal1.getIngredientList().add(new Ingredient(meal1, "Chicken"));

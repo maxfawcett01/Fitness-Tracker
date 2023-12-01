@@ -10,8 +10,10 @@ public class FitnessTrackerApplication {
 
 	public static void main(String[] args) {
 
-		ApplicationContext context = SpringApplication.run(FitnessTrackerApplication.class, args);
+		ApplicationContext context =  SpringApplication.run(FitnessTrackerApplication.class, args);
+
 		DataPopulate dataPopulate = context.getBean(DataPopulate.class);
+
 		dataPopulate.populateData();
 	}
 }
