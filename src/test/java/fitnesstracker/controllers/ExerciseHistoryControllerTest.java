@@ -3,7 +3,6 @@ package fitnesstracker.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.exercise.Exercise;
-import fitnesstracker.exceptions.ExerciseServiceException;
 import fitnesstracker.services.ExerciseHistoryService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -102,7 +100,7 @@ class ExerciseHistoryControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andExpect(result -> {
                     ResponseStatusException exception = (ResponseStatusException) result.getResolvedException();
-                    String expectedErrorMessage = "An error occurred while fetching meals";
+                    String expectedErrorMessage = "An error occurred while fetching exercises";
 
                     assert exception != null;
                     String actualErrorMessage = exception.getMessage();
