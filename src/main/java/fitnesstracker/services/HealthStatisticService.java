@@ -49,4 +49,8 @@ public class HealthStatisticService {
     public void deleteHealthStatistic(Long id) {
         healthStatisticRepository.deleteById(id);
     }
+
+    public boolean existsByPersonId(Long personId) {
+        return healthStatisticRepository.existsByPersonId(personId);
+    }
 }

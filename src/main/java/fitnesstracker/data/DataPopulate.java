@@ -21,7 +21,6 @@ public class DataPopulate {
 
     private final MealService mealService;
     private final HealthStatisticService healthStatisticService;
-
     private final PersonService personService;
     private final ExerciseHistoryService exerciseHistoryService;
 
@@ -31,11 +30,9 @@ public class DataPopulate {
         this.healthStatisticService = healthStatisticService;
         this.exerciseHistoryService = exerciseHistoryService;
         this.personService = personService;
-
     }
 
     public void populateData() {
-
         if (mealService.repoIsEmpty() && personService.repoIsEmpty() && exerciseHistoryService.repoIsEmpty() && healthStatisticService.repoIsEmpty()) {
 
 
@@ -83,7 +80,6 @@ public class DataPopulate {
             //*******************************************************************************
 
             HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person1.getId());
-
             healthStatisticService.createHealthStatistic(healthStatistic1);
             HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
             healthStatisticService.createHealthStatistic(healthStatistic2);

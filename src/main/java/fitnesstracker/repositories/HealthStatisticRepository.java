@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HealthStatisticRepository extends ListCrudRepository<HealthStatistic, Long> {
+    boolean existsByPersonId(Long personId);
 }

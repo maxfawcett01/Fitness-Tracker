@@ -71,6 +71,8 @@ class HealthStatisticControllerTest {
     @Test
     void createHealthStatistic() throws Exception {
         HealthStatistic testHealthStatistic = new HealthStatistic();
+        when(mockHealthStatisticService.existsByPersonId(1L)).thenReturn(Boolean.TRUE);
+        testHealthStatistic.setPersonId(1L);  // Set a valid personId
         String json = mapper.writeValueAsString(testHealthStatistic);
         mockMvc.perform(MockMvcRequestBuilders.post("/stats")
                         .contentType(MediaType.APPLICATION_JSON)
