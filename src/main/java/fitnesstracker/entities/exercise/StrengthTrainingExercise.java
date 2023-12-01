@@ -1,15 +1,19 @@
 package fitnesstracker.entities.exercise;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class StrengthTrainingExercise extends Exercise {
 
+    @Schema(description = "Number of sets completed of exercise.", example = "3")
     protected int sets;
 
+    @Schema(description = "Number of reps completed of exercise.", example = "10")
     protected int reps;
 
+    @Schema(description = "Short description of target muscle(s) of exercise.", example = "Chest, shoulders, and triceps.")
     protected String targetMuscle;
 
     public int getSets() {
