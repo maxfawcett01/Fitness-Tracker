@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("DISTANCE")
 public class DistanceCardioExercise extends CardioExercise {
 
     private double distanceInKm;

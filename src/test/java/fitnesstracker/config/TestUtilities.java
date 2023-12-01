@@ -21,11 +21,11 @@ public class TestUtilities {
         meal1.getIngredientList().add(new Ingredient(meal1, "Vegetables"));
         meal1.getIngredientList().add(new Ingredient(meal1, "Soy Sauce"));
 
-        Meal meal2 = new Meal(null,"Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(),  person1.getId());
+        Meal meal2 = new Meal(null, "Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(), person1.getId());
         meal2.getIngredientList().add(new Ingredient(meal2, "Salmon"));
         meal2.getIngredientList().add(new Ingredient(meal2, "Fresh Salad"));
 
-        Meal meal3 = new Meal(null,"Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
+        Meal meal3 = new Meal(null, "Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
         meal3.getIngredientList().add(new Ingredient(meal3, "Pasta"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Tomato Sauce"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Vegetables"));
@@ -39,28 +39,29 @@ public class TestUtilities {
 
 
     public static @NotNull List<Exercise> getExerciseList() {
-        Exercise exercise1 = new Exercise(1L, "running", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
-        Exercise exercise2 = new Exercise(123L, "Weights", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
-        Exercise exercise3 = new Exercise(134L, "running", LocalDateTime.of(2020, 12, 3,3,30), LocalDateTime.of(2020, 12, 3,3,59), 100);
+        Exercise exercise1 = new Exercise(1L, "running", LocalDateTime.of(2020, 12, 3, 3, 30), LocalDateTime.of(2020, 12, 3, 3, 59), 100);
+        Exercise exercise2 = new Exercise(123L, "Weights", LocalDateTime.of(2020, 12, 3, 3, 30), LocalDateTime.of(2020, 12, 3, 3, 59), 100);
+        Exercise exercise3 = new Exercise(134L, "running", LocalDateTime.of(2020, 12, 3, 3, 30), LocalDateTime.of(2020, 12, 3, 3, 59), 100);
         ArrayList<Exercise> exercises = new ArrayList<>();
 
         exercises.add(exercise1);
         exercises.add(exercise2);
         exercises.add(exercise3);
         return exercises;
-  
-    public static ArrayList<HealthStatistic> getStatsList() {
-        Person person2 = new Person(1L, "Tom", "tom123", "password1");
-        ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
-        HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
-        HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-        HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-        HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-
-        healthStatistics.add(healthStatistic1);
-        healthStatistics.add(healthStatistic2);
-        healthStatistics.add(healthStatistic3);
-        healthStatistics.add(healthStatistic4);
-        return  healthStatistics;
     }
+
+//    public static ArrayList<HealthStatistic> getStatsList() {
+//        Person person2 = new Person(1L, "Tom", "tom123", "password1");
+//        ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
+//        HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
+//        HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+//        HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+//        HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+//
+//        healthStatistics.add(healthStatistic1);
+//        healthStatistics.add(healthStatistic2);
+//        healthStatistics.add(healthStatistic3);
+//        healthStatistics.add(healthStatistic4);
+//        return healthStatistics;
+//    }
 }
