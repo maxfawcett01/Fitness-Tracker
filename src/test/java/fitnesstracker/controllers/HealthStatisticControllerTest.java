@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -37,7 +38,7 @@ class HealthStatisticControllerTest {
 
     @Test
     void getAllHealthStatistics() throws Exception {
-        ArrayList<HealthStatistic> healthStatistics = TestUtilities.getStatsList();
+        List<HealthStatistic> healthStatistics = TestUtilities.getStatsList();
         String expectedJson = mapper.writeValueAsString(healthStatistics);
 
         when(mockHealthStatisticService.getAllHealthStatistics()).thenReturn(healthStatistics);

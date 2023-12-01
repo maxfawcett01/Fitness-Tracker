@@ -23,11 +23,11 @@ public class TestUtilities {
         meal1.getIngredientList().add(new Ingredient(meal1, "Vegetables"));
         meal1.getIngredientList().add(new Ingredient(meal1, "Soy Sauce"));
 
-        Meal meal2 = new Meal(null,"Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(),  person1.getId());
+        Meal meal2 = new Meal(null, "Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(), person1.getId());
         meal2.getIngredientList().add(new Ingredient(meal2, "Salmon"));
         meal2.getIngredientList().add(new Ingredient(meal2, "Fresh Salad"));
 
-        Meal meal3 = new Meal(null,"Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
+        Meal meal3 = new Meal(null, "Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
         meal3.getIngredientList().add(new Ingredient(meal3, "Pasta"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Tomato Sauce"));
         meal3.getIngredientList().add(new Ingredient(meal3, "Vegetables"));
@@ -52,34 +52,19 @@ public class TestUtilities {
         return exercises;
     }
 
-    public static @NotNull Exercise addExercise(Person person) {
-        Exercise exercise = new WeightLiftingExercise(
-                person.getId(),
-                "Barbell rows",
-                LocalDateTime.of(2023, 11, 30, 10, 0),
-                LocalDateTime.of(2023, 11, 30, 11, 0),
-                250,
-                5,
-                5,
-                12
-        );
-        exercise.setEquipmentRequired("Barbell and free weights");
-        exercise.setDescription("Just do whatever man");
-        return exercise;
-    }
-  
-    public static @NotNull ArrayList<HealthStatistic> getStatsList() {
-        Person person2 = new Person(1L, "Tom", "tom123", "password1");
-        ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
-        HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
-        HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-        HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
-        HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+        public static @NotNull List<HealthStatistic> getStatsList() {
+            Person person2 = new Person(1L, "Tom", "tom123", "password1");
+            ArrayList<HealthStatistic> healthStatistics = new ArrayList<>();
+            HealthStatistic healthStatistic1 = new HealthStatistic(null, 23.0, 60.0, 80.0, 90.0, 0, 0, 65.0, 10.0, person2.getId());
+            HealthStatistic healthStatistic2 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+            HealthStatistic healthStatistic3 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
+            HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
 
-        healthStatistics.add(healthStatistic1);
-        healthStatistics.add(healthStatistic2);
-        healthStatistics.add(healthStatistic3);
-        healthStatistics.add(healthStatistic4);
-        return  healthStatistics;
+            healthStatistics.add(healthStatistic1);
+            healthStatistics.add(healthStatistic2);
+            healthStatistics.add(healthStatistic3);
+            healthStatistics.add(healthStatistic4);
+            return healthStatistics;
+        }
     }
-}
+
