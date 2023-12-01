@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Bests</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="personalbests.css">
 </head>
 <body>
 
@@ -31,25 +32,30 @@
         <!-- Exercise data will be inserted here -->
         </tbody>
     </table>
+
+    <button id="findPersonalBestsButton">Find Personal Bests</button>
 </div>
 
-<div>
-    <label for="metric">Metric:</label>
-    <select id="metric" name="metric" required>
-        <option value="weight">Weight</option>
-        <option value="duration">Duration</option>
-        <option value="distance">Distance</option>
-        <option value="sets">Sets</option>
-        <option value="reps">Reps</option>
-    </select>
-    <br>
-    <label for="personId">Person ID:</label>
-    <input type="number" id="personId" name="personId" required>
-    <br>
-    <label for="exerciseName">Exercise Name (optional):</label>
-    <input type="text" id="exerciseName" name="exerciseName">
-    <br>
-    <button id="fetchExercisesButton">Fetch Exercises</button>
+<div id="personalBestsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <label for="metric">Metric:</label>
+        <select id="metric" name="metric" required>
+            <option value="weight">Weight</option>
+            <option value="duration">Duration</option>
+            <option value="distance">Distance</option>
+            <option value="sets">Sets</option>
+            <option value="reps">Reps</option>
+        </select>
+        <br>
+        <label for="personId">Person ID:</label>
+        <input type="number" id="personId" name="personId" required>
+        <br>
+        <label for="exerciseName">Exercise Name (optional):</label>
+        <input type="text" id="exerciseName" name="exerciseName">
+        <br>
+        <button id="fetchExercisesButton">Fetch Exercises</button>
+    </div>
 </div>
 
 <script>
@@ -85,7 +91,7 @@
                         <td>${moment(exercise.endTime).format('YYYY-MM-DD HH:mm')}</td>
                         <td>${exercise.caloriesBurned}</td>
                         <td>${exercise.weightInKg || '-'}</td>
-                        <td>${exercise.distanceInKm || '-'}</td> <!-- Updated field name -->
+                        <td>${exercise.distanceInKm || '-'}</td>
                         <td>${exercise.sets || '-'}</td>
                         <td>${exercise.reps || '-'}</td>
                         <td>${exercise.description}</td>
@@ -96,6 +102,20 @@
             })
             .catch(error => console.error('Error fetching exercises:', error));
     }
+
+    document.getElementById('findPersonalBestsButton').addEventListener('click', function() {
+        document.getElementById('personalBestsModal').style.display = 'block';
+    });
+
+    document.getElementsByClassName('close')[0].addEventListener('click', function() {
+        document.getElementById('personalBestsModal').style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target == document.getElementById('personalBestsModal')) {
+            document.getElementById('personalBestsModal').style.display = 'none';
+        }
+    });
 
     document.getElementById('fetchExercisesButton').addEventListener('click', function() {
         const metric = document.getElementById('metric').value;
@@ -108,8 +128,11 @@
         }
 
         fetchAndDisplayExercises(metric, personId, exerciseName);
+        document.getElementById('personalBestsModal').style.display = 'none';
     });
 </script>
 
 </body>
 </html>
+
+

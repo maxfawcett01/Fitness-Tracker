@@ -12,9 +12,9 @@ import fitnesstracker.services.MealService;
 import fitnesstracker.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 @Component
 public class DataPopulate {
@@ -35,7 +35,6 @@ public class DataPopulate {
     public void populateData() {
         if (mealService.repoIsEmpty() && personService.repoIsEmpty() && exerciseHistoryService.repoIsEmpty() && healthStatisticService.repoIsEmpty()) {
 
-            LocalDate date = null;
 
             //*******************************************************************************
             Person person1 = new Person(1L, "Bob", "bob123", "password1");
@@ -44,16 +43,16 @@ public class DataPopulate {
             personService.savePerson(person2);
             //*******************************************************************************
             // Insert sample meals with ingredients
-            Meal meal1 = new Meal(date, "Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
+            Meal meal1 = new Meal(null, "Chicken Stir Fry", "Lunch", 500, "Stir-fry chicken with vegetables and soy sauce", new ArrayList<>(), person1.getId());
             meal1.getIngredientList().add(new Ingredient(meal1, "Chicken"));
             meal1.getIngredientList().add(new Ingredient(meal1, "Vegetables"));
             meal1.getIngredientList().add(new Ingredient(meal1, "Soy Sauce"));
 
-            Meal meal2 = new Meal(date, "Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(), person2.getId());
+            Meal meal2 = new Meal(null, "Salmon Salad", "Dinner", 400, "Grilled salmon served with a fresh salad", new ArrayList<>(), person2.getId());
             meal2.getIngredientList().add(new Ingredient(meal2, "Salmon"));
             meal2.getIngredientList().add(new Ingredient(meal2, "Fresh Salad"));
 
-            Meal meal3 = new Meal(date, "Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
+            Meal meal3 = new Meal(null, "Vegetarian Pasta", "Dinner", 600, "Pasta with tomato sauce, vegetables, and cheese", new ArrayList<>(), person1.getId());
             meal3.getIngredientList().add(new Ingredient(meal3, "Pasta"));
             meal3.getIngredientList().add(new Ingredient(meal3, "Tomato Sauce"));
             meal3.getIngredientList().add(new Ingredient(meal3, "Vegetables"));
