@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("NODISTANCE")
 public class NoDistanceCardioExercise extends CardioExercise {
     public NoDistanceCardioExercise(Long personId, String exerciseName, LocalDateTime startTime, LocalDateTime endTime, Integer caloriesBurned) {
         super(personId, exerciseName, startTime, endTime, caloriesBurned);
