@@ -9,8 +9,8 @@ import java.util.List;
 @Schema(description = "Meal Information")
 public class Meal {
 
-    public Meal(LocalDate date, String mealName, String mealType, Integer calories, String cookingInstructions, List<Ingredient> ingredientList, Long personId) {
-        this.date = date != null ? date : LocalDate.now();
+    public Meal(LocalDate mealDate, String mealName, String mealType, Integer calories, String cookingInstructions, List<Ingredient> ingredientList, Long personId) {
+        this.mealDate = mealDate != null ? mealDate : LocalDate.now();
         this.mealName = mealName;
         this.mealType = mealType;
         this.calories = calories;
@@ -31,12 +31,12 @@ public class Meal {
     }
 
     @Schema(description = "Date of the Meal", example = "2020-01-01")
-    private LocalDate date;
-    public LocalDate getDate() {
-        return date;
+    private LocalDate mealDate;
+    public LocalDate getMealDate() {
+        return mealDate;
     }
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setMealDate(LocalDate date) {
+        this.mealDate = date;
     }
 
     @Schema(description = "Name of the Meal", example = "Beans on Toast")

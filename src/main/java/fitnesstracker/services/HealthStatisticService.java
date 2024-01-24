@@ -36,7 +36,7 @@ public class HealthStatisticService {
     }
 
     public HealthStatistic createHealthStatistic(HealthStatistic healthStatistic) {
-        List<Meal> meals = mealService.getMealByPersonIdAndDate(healthStatistic.getPersonId(), healthStatistic.getDate());
+        List<Meal> meals = mealService.getMealByPersonIdAndDate(healthStatistic.getPersonId(), healthStatistic.getHealthDate());
         int calorieIn = healthStatistic.calculateCalorieInFromMeals(meals);
         healthStatistic.setCalorieIn(calorieIn);
         List<Exercise> exercises = exerciseHistoryService.findByPersonId(healthStatistic.getPersonId());
