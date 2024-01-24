@@ -81,4 +81,3 @@ public class MealController {
         this.mealService = mealService;
     }
 }
-
