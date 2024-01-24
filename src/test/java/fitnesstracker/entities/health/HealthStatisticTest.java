@@ -20,7 +20,7 @@ class HealthStatisticTest {
     void testCalculateCalorieOutFromExercise() {
 
         HealthStatistic healthStatistic = new HealthStatistic();
-        healthStatistic.setDate(LocalDate.now());
+        healthStatistic.setHealthDate(LocalDate.now());
 
         List<Exercise> exercises = new ArrayList<>();
         Exercise exercise1 = new Exercise();
@@ -66,7 +66,7 @@ class HealthStatisticTest {
 
         Assertions.assertNotNull(healthStatistic);
 
-        assertNull(healthStatistic.getDate());
+        assertNull(healthStatistic.getHealthDate());
     }
 
     @Test
@@ -86,7 +86,7 @@ class HealthStatisticTest {
 
         Assertions.assertNotNull(healthStatistic);
 
-        assertEquals(date, healthStatistic.getDate());
+        assertEquals(date, healthStatistic.getHealthDate());
         assertEquals(sleep, healthStatistic.getSleep());
         assertEquals(weight, healthStatistic.getWeight());
         assertEquals(bloodPressure, healthStatistic.getBloodPressure());

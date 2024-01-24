@@ -21,7 +21,7 @@ public class HealthStatistic {
     private Long id;
 
     @Schema(description = "Date of the Health Statistics", example = "2020-01-01")
-    private LocalDate date;
+    private LocalDate healthDate;
 
     @Schema(description = "Sleep of the Health Statistics", example = "10")
     private double sleep;
@@ -60,8 +60,8 @@ public class HealthStatistic {
     public HealthStatistic() {
     }
     @Autowired
-    public HealthStatistic(LocalDate date, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
-        this.date = date != null ? date : LocalDate.now();
+    public HealthStatistic(LocalDate healthDate, double sleep, double weight, double bloodPressure, double hydration, int calorieIn, double calorieOut, double heartRate, double stress, Long personId) {
+        this.healthDate = healthDate != null ? healthDate : LocalDate.now();
 
         this.sleep = sleep;
         this.weight = weight;
@@ -143,18 +143,18 @@ public class HealthStatistic {
         this.stress = stress;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getHealthDate() {
+        return healthDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setHealthDate(LocalDate healthDate) {
+        this.healthDate = healthDate;
     }
 
     public int calculateCalorieOutFromExercise(List<Exercise> exercises) {
         calculatedCalorieOut = 0;
         for (Exercise exercise : exercises) {
-            if (exercise.getEndTime().toLocalDate().equals(getDate())) {
+            if (exercise.getEndTime().toLocalDate().equals(getHealthDate())) {
                 calculatedCalorieOut += exercise.getCaloriesBurned();
             }
         }
