@@ -13,6 +13,7 @@ public class FitnessTrackerApplication {
 
 		DataPopulate dataPopulate = context.getBean(DataPopulate.class);
 
+
 		dataPopulate.populateData();
 	}
 }

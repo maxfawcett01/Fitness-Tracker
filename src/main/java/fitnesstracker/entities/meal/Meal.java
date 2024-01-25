@@ -3,19 +3,19 @@ package fitnesstracker.entities.meal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Schema(description = "Meal Information")
 public class Meal {
 
-    public Meal(LocalDate mealDate, String mealName, String mealType, Integer calories, String cookingInstructions, List<Ingredient> ingredientList, Long personId) {
+    public Meal(LocalDate mealDate, String mealName, String mealType, Integer calories, String cookingInstructions, Long personId) {
         this.mealDate = mealDate != null ? mealDate : LocalDate.now();
         this.mealName = mealName;
         this.mealType = mealType;
         this.calories = calories;
         this.cookingInstructions = cookingInstructions;
-        this.ingredientList = ingredientList;
         this.personId = personId;
     }
 
@@ -75,13 +75,24 @@ public class Meal {
         this.cookingInstructions = cookingInstructions;
     }
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    List<Ingredient> ingredientList;
-    public List<Ingredient> getIngredientList() {
-        return ingredientList;
+    @ManyToMany
+    @JoinTable(name = "ingredient_meal",
+            joinColumns = @JoinColumn(name = "meal_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    Set<Ingredient> ingredients = new HashSet<>();
+
+
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
-    public void setIngredientList(List<Ingredient> ingredientList) {
-        this.ingredientList = ingredientList;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+
     }
 
     @Column(name = "person_id")

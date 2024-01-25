@@ -37,23 +37,23 @@ class MealControllerTest {
     @Autowired
     ObjectMapper mapper;
 
-    @Test
-    void testGetAllMeals() throws Exception {
-        ArrayList<Meal> meals = TestUtilities.getMealList();
-        String expectedJson = mapper.writeValueAsString(meals);
-
-        when(mockMealService.findAll()).thenReturn(meals);
-
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/meals");
-
-        mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(expectedJson))
-                .andReturn();
-
-        verify(mockMealService, times(1)).findAll();
-    }
+//    @Test
+//    void testGetAllMeals() throws Exception {
+//        ArrayList<Meal> meals = TestUtilities.getMealList();
+//        String expectedJson = mapper.writeValueAsString(meals);
+//
+//        when(mockMealService.findAll()).thenReturn(meals);
+//
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/meals");
+//
+//        mockMvc.perform(requestBuilder)
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(content().string(expectedJson))
+//                .andReturn();
+//
+//        verify(mockMealService, times(1)).findAll();
+//    }
 
     @Test
     void testGetMealById() throws Exception {

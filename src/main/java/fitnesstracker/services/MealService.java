@@ -45,6 +45,6 @@ public class MealService {
     }
 
     public List<Meal> getMealByPersonIdAndDate(Long id, LocalDate date) {
-        return this.mealRepository.findByPersonIdAndDate(id, date);
+        return this.mealRepository.findByPersonIdAndMealDate(id, date);
     }
 }

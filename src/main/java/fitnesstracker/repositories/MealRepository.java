@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MealRepository extends ListCrudRepository<Meal, Long> {
-    List<Meal> findByPersonIdAndDate(Long personId, LocalDate date);
+    List<Meal> findByPersonIdAndMealDate(Long personId, LocalDate date);
 }
