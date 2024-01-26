@@ -103,27 +103,22 @@ public class DataPopulate {
         HealthStatistic healthStatistic4 = new HealthStatistic(null, 24.0, 61.0, 81.0, 91.0, 0, 0, 66.0, 11.0, person2.getId());
         healthStatisticService.createHealthStatistic(healthStatistic4);
 
-
     }
     private void saveMeal(String @NotNull [] mealIngredientNames, Meal meal) {
         for (String ingredientName : mealIngredientNames) {
             if (ingredientService.getIngredientByIngredientName(ingredientName) == null) {
                 Ingredient ingredient = new Ingredient(ingredientName);
                 ingredientService.saveIngredient(ingredient);
-
             }
         }
 
         for (String ingredientName : mealIngredientNames) {
             Ingredient ingredient = ingredientService.getIngredientByIngredientName(ingredientName);
             meal.addIngredient(ingredient);
-            System.out.println(ingredient);
-            System.out.println(ingredientName);
             ingredient.addMeal(meal);
             ingredientService.saveIngredient(ingredient);
         }
 
         mealService.saveMeal(meal);
     }
-
 }
