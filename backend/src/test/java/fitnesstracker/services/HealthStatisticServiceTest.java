@@ -2,7 +2,6 @@ package fitnesstracker.services;
 
 import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.repositories.HealthStatisticRepository;
-import fitnesstracker.repositories.MealRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

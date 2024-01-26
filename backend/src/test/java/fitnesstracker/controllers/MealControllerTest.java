@@ -1,7 +1,6 @@
 package fitnesstracker.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fitnesstracker.config.TestUtilities;
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.services.MealService;
 import org.junit.jupiter.api.Test;
@@ -16,12 +15,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MealController.class)

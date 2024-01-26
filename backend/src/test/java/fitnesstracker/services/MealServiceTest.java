@@ -1,7 +1,6 @@
 package fitnesstracker.services;
 
 import fitnesstracker.entities.Person;
-import fitnesstracker.entities.meal.Ingredient;
 import fitnesstracker.entities.meal.Meal;
 import fitnesstracker.exceptions.MealServiceException;
 import fitnesstracker.repositories.MealRepository;
@@ -17,7 +16,6 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest

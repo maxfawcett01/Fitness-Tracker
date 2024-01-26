@@ -3,14 +3,11 @@ package fitnesstracker.config;
 import fitnesstracker.entities.Person;
 import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.health.HealthStatistic;
-import fitnesstracker.entities.meal.Ingredient;
-import fitnesstracker.entities.meal.Meal;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class TestUtilities {
 
