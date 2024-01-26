@@ -4,7 +4,6 @@ import fitnesstracker.entities.exercise.Exercise;
 import fitnesstracker.entities.meal.Meal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @Schema(description = "Health Statistics")
 public class HealthStatistic {
-
 
     @Id
     @GeneratedValue
