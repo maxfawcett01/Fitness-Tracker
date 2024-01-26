@@ -1,7 +1,6 @@
 package fitnesstracker.repositories;
 
 import fitnesstracker.entities.meal.Ingredient;
-import jakarta.validation.constraints.AssertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

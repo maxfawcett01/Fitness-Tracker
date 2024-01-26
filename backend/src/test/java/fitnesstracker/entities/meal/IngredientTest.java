@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
-
 class IngredientTest {
 
     @Test

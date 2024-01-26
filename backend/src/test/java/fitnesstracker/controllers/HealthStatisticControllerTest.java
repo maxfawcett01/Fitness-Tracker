@@ -6,7 +6,6 @@ import fitnesstracker.entities.health.HealthStatistic;
 import fitnesstracker.services.HealthStatisticService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
