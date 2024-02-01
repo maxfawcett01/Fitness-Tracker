@@ -1,5 +1,6 @@
 package fitnesstracker.entities.meal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
@@ -26,6 +27,7 @@ public class Ingredient {
         return id;
     }
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredients", fetch = FetchType.EAGER)
     Set<Meal> meals = new HashSet<>();
 

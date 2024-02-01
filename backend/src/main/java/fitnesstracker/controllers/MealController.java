@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/meals")
 @Tag(name = "Meals", description = "Meal APIs")
@@ -28,6 +29,7 @@ public class MealController {
         this.mealService = mealService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     @Operation(summary = "Get all Meals", description = "Returns a list of all Meals",
             tags = {"meals", "get"})
