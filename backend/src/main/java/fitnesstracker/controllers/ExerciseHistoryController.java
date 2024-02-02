@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exercises")
+@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Exercise History", description = "Exercise History APIs")
 public class ExerciseHistoryController {
 
@@ -29,6 +30,7 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get all Exercises", description = "Returns a list of all exercises",
             tags = {"exercises", "get"})
     @ApiResponses(value = {
@@ -44,6 +46,7 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping("/exercise/{exerciseId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get an exercise by exercise ID", description = "Returns an exercise based on its ID",
             tags = {"exercises", "get"})
     @ApiResponses(value = {
@@ -60,6 +63,7 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping("/name/{exerciseName}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get an exercise by exercise name", description = "Returns an exercise based on its name",
             tags = {"exercises", "get"})
     @ApiResponses(value = {
@@ -72,6 +76,7 @@ public class ExerciseHistoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Add a new Exercise", description = "Adds a new Exercise",
             tags = {"exercises", "post"})
     @ApiResponses(value = {
@@ -89,6 +94,7 @@ public class ExerciseHistoryController {
     }
 
     @DeleteMapping("/exercise/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Delete an Exercise by ID", description = "Deletes an Exercise based on its ID",
             tags = {"exercises", "delete"})
     @ApiResponses(value = {
@@ -100,6 +106,7 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping("/person/{personId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get an exercise by person ID", description = "Returns all the exercises based on a person's ID",
             tags = {"exercises", "get"})
     @ApiResponses(value = {
@@ -111,6 +118,7 @@ public class ExerciseHistoryController {
     }
 
     @GetMapping("/person/{personId}/{exerciseName}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @Operation(summary = "Get an exercise by person ID and exercise name", description = "Returns all the exercises with the same name that are under a specific person ID",
             tags = {"exercises", "get"})
     @ApiResponses(value = {
