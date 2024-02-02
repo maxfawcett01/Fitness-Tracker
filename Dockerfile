@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Copy only necessary files, excluding sensitive data
 COPY src /app/src
-COPY pom.xml /app/
+COPY backend/pom.xml /app/
 
 # Example: run your application
 CMD ["java", "-jar", "your-application.jar"]
