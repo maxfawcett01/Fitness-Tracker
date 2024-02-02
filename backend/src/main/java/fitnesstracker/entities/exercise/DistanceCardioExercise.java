@@ -1,10 +1,12 @@
 package fitnesstracker.entities.exercise;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
+@DiscriminatorValue("Distance cardio exercise")
 public class DistanceCardioExercise extends CardioExercise {
 
     @Schema(description = "Distance travelled during exercise in kilometres.", example = "5")
@@ -23,4 +25,9 @@ public class DistanceCardioExercise extends CardioExercise {
     }
 
     public DistanceCardioExercise() {}
+
+    @Override
+    public String getExerciseType(){
+        return "Distance Cardio Exercise";
+    }
 }

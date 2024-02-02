@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "exercise_type")
 public class Exercise {
 
     @Id
@@ -19,6 +20,10 @@ public class Exercise {
     private LocalDateTime startInclusive;
 
     private LocalDateTime endExclusive;
+
+    public String getExerciseType(){
+        return "Exercise";
+    }
 
     @Schema(description = "Name of exercise.", example = "bench press")
     protected String exerciseName;
