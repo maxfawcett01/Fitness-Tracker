@@ -15,10 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/stats")
+@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Health Statistics", description = "Health Statistics APIs")
 public class HealthStatisticController {
 
@@ -54,14 +57,16 @@ public class HealthStatisticController {
     @Operation(summary = "Post data to Health Statistics", description = "Post Health Statistics",
             tags = {"stats", "post"})
     @PostMapping
-    public ResponseEntity<HealthStatistic> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
+    public ResponseEntity<Object> createHealthStatistic(@RequestBody @NotNull HealthStatistic healthStatistic) {
         @SuppressWarnings("unused")
         Long personId = healthStatistic.getPersonId();
 
         // Check if personId already exists
         if (!healthStatisticService.existsByPersonId(personId)) {
             // PersonId does not exists, return an error response
-            throw new EntityNotFoundException("Person with ID " + personId + " not found.");
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error","Person with ID " + personId + " not found.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         } else {
             HealthStatistic createdHealthStatistic = healthStatisticService.createHealthStatistic(healthStatistic);
 
